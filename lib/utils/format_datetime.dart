@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import "dart:math";
@@ -565,7 +564,7 @@ class DateTimeCommon {
     String? dayName;
     switch (date.weekday) {
       case 1:
-        dayName = "Monday".toUpperCase().tr();
+        dayName = "Monday".toUpperCase();
         break;
       case 2:
         dayName = "Tuesday";

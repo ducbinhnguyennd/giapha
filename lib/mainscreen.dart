@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
+import 'package:giapha/screens/home_screen.dart';
+import 'package:giapha/screens/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         print('poped');
@@ -63,12 +65,10 @@ class _MainScreenState extends State<MainScreen>
         body: TabBarView(
           controller: _tabController,
           children: <Widget>[
-            // HomePage(),
-            // FavoriteMangaScreen(),
-
-            // BangTinScreen(),
-            // BXHScreen(),
-            // TaikhoanScreen()
+            HomeScreen(),
+            Container(),
+            Container(),
+            TaikhoanScreen()
           ],
         ),
         bottomNavigationBar: Column(
@@ -103,21 +103,6 @@ class _MainScreenState extends State<MainScreen>
                     ),
                     Tab(
                       icon: ImageIcon(
-                        AssetImage(AssetsPathConst.tabBook),
-                        size: DoubleX.kSizeLarge - 5,
-                      ),
-                      iconMargin:
-                          EdgeInsets.only(bottom: DoubleX.kPaddingSizeZero),
-                      child: Visibility(
-                        visible: true,
-                        child: Text(
-                          'Tủ truyện',
-                          style: TextStyle(fontSize: DoubleX.kFontSizeTiny_1X),
-                        ),
-                      ),
-                    ),
-                    Tab(
-                      icon: ImageIcon(
                         AssetImage(AssetsPathConst.tabTop),
                         size: DoubleX.kSizeLarge - 5,
                       ),
@@ -139,7 +124,7 @@ class _MainScreenState extends State<MainScreen>
                       child: Visibility(
                         visible: true,
                         child: Text(
-                          'BXH',
+                          'Gia phả',
                           style: TextStyle(fontSize: DoubleX.kFontSizeTiny_1X),
                         ),
                       ),

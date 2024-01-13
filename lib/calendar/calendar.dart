@@ -1,8 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:giapha/calendar/SwipeDetector.dart';
+import 'package:giapha/calendar/constanst.dart';
 import 'package:giapha/calendar/day.dart';
 import 'package:giapha/calendar/day_of_weed.dart';
 import 'package:giapha/calendar/header.dart';
+import 'package:giapha/calendar/utils.dart';
 
 // ignore: must_be_immutable
 class Calendar extends StatefulWidget {
@@ -49,7 +51,7 @@ class _CalendarState extends State<Calendar> with TickerProviderStateMixin {
     List<Widget> listDay = [];
     for (int i = 0; i < days.length; i++) {
       listDay.add(DayOfWeek(
-        title: days[i].tr(),
+        title: days[i],
         width: 30,
       ));
     }

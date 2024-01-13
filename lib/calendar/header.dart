@@ -1,5 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:giapha/calendar/constanst.dart';
 
 class Header extends StatelessWidget {
   const Header(
@@ -31,8 +31,8 @@ class Header extends StatelessWidget {
         ),
         Row(
           children: [
-            Text(title, style: titleStyle).tr(),
-            Text('Year', style: titleStyle).tr(),
+            Text(title, style: titleStyle),
+            Text('Year', style: titleStyle),
             Text('${year}', style: titleStyle),
           ],
         ),

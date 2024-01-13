@@ -2,7 +2,21 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:giapha/calendar/SelectDateButton.dart';
+import 'package:giapha/calendar/StrokeText.dart';
+import 'package:giapha/calendar/SwipeDetector.dart';
+import 'package:giapha/model/DataService.dart';
+import 'package:giapha/model/QuoteVO.dart';
+import 'package:giapha/screens/calendar_month/calendar_month_screen.dart';
+import 'package:giapha/screens/services_screen/giaimong/giaimong_screen.dart';
+import 'package:giapha/screens/services_screen/trondoi/tuvitrondoi_screen.dart';
+import 'package:giapha/screens/services_screen/tuvihangngay_screen.dart';
+import 'package:giapha/screens/services_screen/vankhan/vankhan_screen.dart';
+import 'package:giapha/screens/services_screen/xemngaytot/xemngaytot_screen.dart';
+import 'package:giapha/screens/services_screen/xinxam/xinxam_screen.dart';
 import 'package:giapha/utils/date_utils.dart';
+import 'package:giapha/utils/lunar_solar_utils.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -131,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     options: const DatePickerOptions(
                                         backgroundColor: Color(0xffFBBA95)),
                                     selectedDate: _selectedDate,
-                                    locale: Locale('en'.tr()),
+                                    locale: Locale('vi'),
                                     onDateTimeChanged: (DateTime value) {
                                       setState(() {
                                         _selectedDate = value;
@@ -169,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             fontWeight: FontWeight.w400,
                                             //fontFamily: 'CCGabrielBautistaLito'
                                           ),
-                                        ).tr(),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -196,9 +210,9 @@ class _HomeScreenState extends State<HomeScreen>
                       },
                       child: Center(
                         child: Text(
-                          "Today",
+                          "Hôm nay",
                           style: todayStyle,
-                        ).tr(),
+                        ),
                       ),
                     ))),
         ],
@@ -342,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen>
                       alignment: Alignment.bottomCenter,
                       child: paddingText(
                           10,
-                          quote.content.tr(),
+                          quote.content,
                           const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -376,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen>
                             alignment: Alignment.centerRight,
                             child: paddingText(
                                 10,
-                                quote.author.tr(),
+                                quote.author,
                                 const TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,
@@ -409,7 +423,7 @@ class _HomeScreenState extends State<HomeScreen>
                             alignment: Alignment.centerRight,
                             child: paddingText(
                                 3,
-                                quote.author.tr(),
+                                quote.author,
                                 const TextStyle(
                                   fontSize: 15,
                                   color: Colors.black,
@@ -529,7 +543,7 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("Day", style: headerStyle).tr(),
+                    Text("Ngày", style: headerStyle),
                     Text(lunarDay.toString(), style: dayStyle),
                     Text(dayName, style: bottomStyle),
                   ],
@@ -540,7 +554,7 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("Month", style: headerStyle).tr(),
+                    Text("Tháng", style: headerStyle),
                     Text(lunarMonth.toString(), style: dayStyle),
                     Text(lunarMonthName, style: bottomStyle),
                   ],
@@ -551,7 +565,7 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("Initial_hour", style: headerStyle).tr(),
+                    Text("Giờ hoàng đạo", style: headerStyle),
                     Text(hourMinute, style: bodyStyle),
                     Text(beginHourName, style: bottomStyle),
                   ],
@@ -612,7 +626,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/icontuvi.png',
-                          'daily_horoscope'.tr(),
+                          'Tử vi mỗi ngày',
                           () {
                             Navigator.push(
                                 context,
@@ -626,7 +640,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/iconngaytot.png',
-                          'see_good_day'.tr(),
+                          'Xem ngày tốt',
                           () {
                             Navigator.push(
                                 context,
@@ -640,7 +654,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/icontrondoi.png',
-                          'lifetime'.tr(),
+                          'Tử vi trọn đời',
                           () {
                             Navigator.push(
                                 context,
@@ -654,7 +668,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/iconvankhan.png',
-                          'liturgy'.tr(),
+                          'Văn khấn',
                           () {
                             Navigator.push(
                                 context,
@@ -667,7 +681,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/icongiaimong.png',
-                          'dream_interpretation'.tr(),
+                          'Giải mộng',
                           () {
                             Navigator.push(
                                 context,
@@ -680,7 +694,7 @@ class _HomeScreenState extends State<HomeScreen>
                       InkWell(
                         child: boxButton(
                           'assets/icons/iconxinxam.png',
-                          'tattoo_request'.tr(),
+                          'Xin xăm',
                           () {
                             Navigator.push(
                                 context,

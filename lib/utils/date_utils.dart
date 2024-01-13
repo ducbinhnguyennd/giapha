@@ -1,25 +1,23 @@
-import 'package:easy_localization/easy_localization.dart';
-
 String getNameDayOfWeek(DateTime date) {
   if (date.weekday == DateTime.monday) {
-    return "MONDAY".tr();
+    return "THỨ HAI";
   }
   if (date.weekday == DateTime.tuesday) {
-    return "TUESDAY".tr();
+    return "THỨ BA";
   }
   if (date.weekday == DateTime.wednesday) {
-    return "WEDNESDAY".tr();
+    return "THỨ TƯ";
   }
   if (date.weekday == DateTime.thursday) {
-    return "THURSDAY".tr();
+    return "THỨ NĂM";
   }
   if (date.weekday == DateTime.friday) {
-    return "FRIDAY".tr();
+    return "THỨ SÁU";
   }
   if (date.weekday == DateTime.saturday) {
-    return "SATURDAY".tr();
+    return "THỨ BẢY";
   }
-  return "SUNDAY".tr();
+  return "CHỦ NHẬT";
 }
 
 DateTime increaseDay(DateTime date) {
