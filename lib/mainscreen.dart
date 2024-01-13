@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
+import 'package:giapha/screens/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -41,6 +41,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         print('poped');
@@ -68,7 +69,11 @@ class _MainScreenState extends State<MainScreen>
 
             // BangTinScreen(),
             // BXHScreen(),
-            // TaikhoanScreen()
+            Container(),
+            Container(),
+            Container(),
+            Container(),
+            TaikhoanScreen()
           ],
         ),
         bottomNavigationBar: Column(
