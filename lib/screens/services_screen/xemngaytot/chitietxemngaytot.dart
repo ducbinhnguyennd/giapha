@@ -27,19 +27,19 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
   int selectedMonth = 0;
   bool isShowList = false;
   List<String> ls = [
-    'please_select',
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    'Vui lòng chọn',
+    'Tháng Một',
+    'Tháng Hai',
+    'Tháng Ba',
+    'Tháng Tư',
+    'Tháng Năm',
+    'Tháng Sáu',
+    'Tháng Bảy',
+    'Tháng Tám',
+    'Tháng Chín',
+    'Tháng Mười',
+    'Tháng 11',
+    'Tháng 12'
   ];
   @override
   void initState() {
@@ -273,7 +273,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                                         Text(
                                           selectedMonth != 0
                                               ? '${ls[selectedMonth]}'
-                                              : "choose_month",
+                                              : "Chọn tháng",
                                           style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w400),
@@ -294,7 +294,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                                         Text(
                                           selectedMonth != 0
                                               ? '${ls[selectedMonth]}'
-                                              : "choose_month",
+                                              : "Chọn tháng",
                                           style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.w400),
@@ -471,7 +471,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                                       Expanded(
                                         child: Center(
                                           child: Text(
-                                            'choose_month_year',
+                                            'Chọn năm',
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500),

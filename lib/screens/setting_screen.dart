@@ -78,12 +78,12 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                   } else if (snapshot.hasError) {
                     return Text(
                       'Error: ${snapshot.error}',
-                      style: TextStyle(fontSize: 30),
+                      style: const TextStyle(fontSize: 30),
                     );
                   } else {
                     final userData = snapshot.data!;
                     return ListView(
-                      padding: EdgeInsets.all(0),
+                      padding: const EdgeInsets.all(0),
                       children: [
                         Stack(
                           alignment: Alignment.center,
@@ -92,7 +92,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                               height: MediaQuery.of(context).size.height / 4,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(35),
                                   bottomRight: Radius.circular(35),
                                 ),
@@ -101,14 +101,14 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 5,
                                     blurRadius: 7,
-                                    offset: Offset(
+                                    offset: const Offset(
                                         0, 3), // changes position of shadow
                                   ),
                                 ],
                                 color: Colors.grey[300],
                               ),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(35),
                                   bottomRight: Radius.circular(35),
                                 ),
@@ -122,7 +122,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                                 height: MediaQuery.of(context).size.height / 4,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(35),
                                     bottomRight: Radius.circular(35),
                                   ),
@@ -171,13 +171,13 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                                           ),
                                   ),
                                 ),
-                                SizedBox(height: 5),
+                                const SizedBox(height: 5),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       userData.username,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                           color: Colors.black),
@@ -207,14 +207,14 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(20),
                             ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 blurRadius: 10,
-                                offset: Offset(0, 0),
+                                offset: const Offset(0, 0),
                                 spreadRadius: 0,
                               ),
                             ],
@@ -235,14 +235,14 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(20),
                             ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 blurRadius: 10,
-                                offset: Offset(0, 0),
+                                offset: const Offset(0, 0),
                                 spreadRadius: 0,
                               ),
                             ],
@@ -263,21 +263,21 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                           margin: const EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(20),
                             ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),
                                 blurRadius: 10,
-                                offset: Offset(0, 0),
+                                offset: const Offset(0, 0),
                                 spreadRadius: 0,
                               ),
                             ],
                           ),
                           child: _buildSetting2(),
                         ),
-                        SizedBox(height: 50),
+                        const SizedBox(height: 50),
                       ],
                     );
                   }
@@ -301,7 +301,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
               : ColorConst.colorWhite,
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           InkWell(
             onTap: () {
               Navigator.push(
@@ -320,10 +320,10 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             },
             child: ListTile(
               title: Transform.translate(
-                offset: Offset(-20, 0),
-                child: Text('Thay đổi ảnh đại diện/ ảnh bìa'),
+                offset: const Offset(-20, 0),
+                child: const Text('Thay đổi ảnh đại diện/ ảnh bìa'),
               ),
-              leading: ImageIcon(AssetImage(AssetsPathConst.ico_face),
+              leading: const ImageIcon(AssetImage(AssetsPathConst.ico_face),
                   size: 22, color: ColorConst.colorPrimary30),
             ),
           ),
@@ -361,17 +361,17 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                 : ColorConst.colorWhite,
           ),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             InkWell(
               onTap: () {
                 _showDeleteConfirmationDialog();
               },
               child: ListTile(
                 title: Transform.translate(
-                  offset: Offset(-20, 0),
-                  child: Text('Xóa tài khoản'),
+                  offset: const Offset(-20, 0),
+                  child: const Text('Xóa tài khoản'),
                 ),
-                leading: ImageIcon(
+                leading: const ImageIcon(
                   AssetImage(AssetsPathConst.ico_face),
                   size: 22,
                   color: ColorConst.colorPrimary30,
@@ -387,14 +387,14 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Xác nhận xóa tài khoản"),
-          content: Text("Bạn có chắc chắn muốn xóa tài khoản không?"),
+          title: const Text("Xác nhận xóa tài khoản"),
+          content: const Text("Bạn có chắc chắn muốn xóa tài khoản không?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text(
+              child: const Text(
                 "Hủy",
                 style: TextStyle(color: Colors.black),
               ),
@@ -412,6 +412,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                 } catch (err) {
                   print(err);
                 }
+                // ignore: use_build_context_synchronously
                 Navigator.pushReplacement<void, void>(
                   context,
                   MaterialPageRoute<void>(
@@ -420,9 +421,9 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                 );
               },
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 color: ColorConst.colorPrimary50,
-                child: Text('Xóa', style: TextStyle(color: Colors.white)),
+                child: const Text('Xóa', style: TextStyle(color: Colors.white)),
               ),
             )
           ],
@@ -442,17 +443,17 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
               : ColorConst.colorWhite,
         ),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           InkWell(
             onTap: () {
               Navigator.of(context).pushNamed(LienHe.routeName);
             },
             child: ListTile(
               title: Transform.translate(
-                offset: Offset(-20, 0),
-                child: Text('Đăng ký nhóm dịch'),
+                offset: const Offset(-20, 0),
+                child: const Text('Đăng ký nhóm dịch'),
               ),
-              leading: ImageIcon(
+              leading: const ImageIcon(
                 AssetImage(AssetsPathConst.ico_face),
                 color: ColorConst.colorPrimary30,
                 size: 22,
@@ -467,13 +468,13 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                       AssetsPathConst.ico_face,
                       height: 23,
                     ),
-                    SizedBox(width: 15),
-                    Icon(
+                    const SizedBox(width: 15),
+                    const Icon(
                       Icons.mail,
                       size: 22,
                       color: ColorConst.colorPrimary30,
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                   ],
                 ),
               ),
@@ -501,14 +502,14 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Xác nhận đăng xuất'),
-                      content: Text('Bạn có chắc chắn muốn đăng xuất?'),
+                      title: const Text('Xác nhận đăng xuất'),
+                      content: const Text('Bạn có chắc chắn muốn đăng xuất?'),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             'Không',
                             style: TextStyle(color: Colors.black),
                           ),
@@ -537,7 +538,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 ColorConst.colorPrimary50),
                           ),
-                          child: Text(
+                          child: const Text(
                             'Có',
                             style: TextStyle(),
                           ),
@@ -549,8 +550,8 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
               },
               child: ListTile(
                   title: Transform.translate(
-                    offset: Offset(-20, 0),
-                    child: Text('Đăng xuất'),
+                    offset: const Offset(-20, 0),
+                    child: const Text('Đăng xuất'),
                   ),
                   leading: Image.asset(AssetsPathConst.ico_face, height: 22)))
         ]),

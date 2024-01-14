@@ -15,27 +15,27 @@ class _VanKhanState extends State<VanKhan> {
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
         ten: 'VĂN KHẤN',
-        loai: 'lunar_new_year',
+        loai: 'Tết nguyên đán',
         check: 'tetnguyendan'),
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
         ten: 'VĂN KHẤN',
-        loai: 'festivals_of_year',
+        loai: 'Tết trong năm',
         check: 'tettrongnam'),
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
         ten: 'VĂN KHẤN',
-        loai: 'tangle_giochap',
+        loai: 'Tang lễ, giỗ chạp',
         check: 'tangle'),
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
         ten: 'VĂN KHẤN',
-        loai: 'dinh_mieu_phu',
+        loai: 'Đình, miếu, phủ',
         check: 'dinhdenmieuphu'),
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
         ten: 'VĂN KHẤN',
-        loai: 'nha_congty_shop',
+        loai: 'Nhà, công ty, cửa hàng',
         check: 'nhao'),
     ItemLoai(
         icon: 'assets/icons/danhgia.png',
@@ -93,9 +93,6 @@ class _VanKhanState extends State<VanKhan> {
                   width: 200,
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Text(
                         ten,
                         style: const TextStyle(fontWeight: FontWeight.bold),

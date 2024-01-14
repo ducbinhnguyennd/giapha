@@ -11,14 +11,14 @@ class XemNgayTotScreen extends StatefulWidget {
 
 class _XemNgayTotScreenState extends State<XemNgayTotScreen> {
   List<ItemModelXemNgayTot> itemListXemNgayTot = [
-    ItemModelXemNgayTot(id: 0, ten: 'xem_ngay_tot_0', check: 'venhamoi'),
-    ItemModelXemNgayTot(id: 1, ten: 'xem_ngay_tot_1', check: 'khaitruong'),
-    ItemModelXemNgayTot(id: 2, ten: 'xem_ngay_tot_2', check: 'xuathanh'),
-    ItemModelXemNgayTot(id: 3, ten: 'xem_ngay_tot_3', check: 'giaodich'),
-    ItemModelXemNgayTot(id: 4, ten: 'xem_ngay_tot_4', check: 'mua'),
-    ItemModelXemNgayTot(id: 5, ten: 'xem_ngay_tot_5', check: 'ban'),
-    ItemModelXemNgayTot(id: 6, ten: 'xem_ngay_tot_6', check: 'chovay'),
-    ItemModelXemNgayTot(id: 7, ten: 'xem_ngay_tot_7', check: 'thuno'),
+    ItemModelXemNgayTot(id: 0, ten: 'Về nhà mới', check: 'venhamoi'),
+    ItemModelXemNgayTot(id: 1, ten: 'Khai trương', check: 'khaitruong'),
+    ItemModelXemNgayTot(id: 2, ten: 'Xuất hành', check: 'xuathanh'),
+    ItemModelXemNgayTot(id: 3, ten: 'Giao dịch', check: 'giaodich'),
+    ItemModelXemNgayTot(id: 4, ten: 'Mua (Xe, nhà, đất)', check: 'mua'),
+    ItemModelXemNgayTot(id: 5, ten: 'Bán (Xe, nhà, đất)', check: 'ban'),
+    ItemModelXemNgayTot(id: 6, ten: 'Cho vay, cho mượn', check: 'chovay'),
+    ItemModelXemNgayTot(id: 7, ten: 'Thu nợ', check: 'thuno'),
   ];
   Widget listChiTiet(String ten, String check) {
     return GestureDetector(
