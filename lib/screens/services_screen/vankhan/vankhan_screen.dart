@@ -1,70 +1,50 @@
+// file vankhan.dart
 import 'package:flutter/material.dart';
+import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
-import 'package:giapha/screens/services_screen/vankhan/chitiet_vankhan_screen.dart';
-import 'package:giapha/screens/services_screen/vankhan/seach_vankhan.dart';
+import 'chitiet_vankhan_screen.dart';
+import 'seach_vankhan.dart';
 
 class VanKhan extends StatefulWidget {
-  const VanKhan({super.key});
+  const VanKhan({Key? key}) : super(key: key);
 
   @override
   State<VanKhan> createState() => _VanKhanState();
 }
 
 class _VanKhanState extends State<VanKhan> {
-  List<ItemLoai> itemlist = [
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'Tết nguyên đán',
-        check: 'tetnguyendan'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'Tết trong năm',
-        check: 'tettrongnam'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'Tang lễ, giỗ chạp',
-        check: 'tangle'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'Đình, miếu, phủ',
-        check: 'dinhdenmieuphu'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'Nhà, công ty, cửa hàng',
-        check: 'nhao'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'dangsao_giaihan',
-        check: 'dangsao'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'VĂN KHẤN',
-        loai: 'mung1ngayram',
-        check: 'mongmotngayram'),
-    ItemLoai(
-        icon: 'assets/icons/danhgia.png',
-        ten: 'nghi_le_khac',
-        loai: '',
-        check: 'khac')
-  ];
+  List<ItemLoai> itemlist = [];
 
-  Widget listVanKhan(Widget Image, String ten, String loai, String check) {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final List<ItemLoai> apiData = await ApiService().fetchEvents();
+      setState(() {
+        itemlist = apiData;
+      });
+    } catch (e) {
+      // Xử lý lỗi nếu cần
+      print('Error fetching data: $e');
+    }
+  }
+
+  Widget listVanKhan(String ten) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChiTietVanKhanScreen(
-                loai: loai,
-                check: check,
-              ),
-            ));
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => ChiTietVanKhanScreen(
+        //       loai: loai,
+        //       check: check,
+        //     ),
+        //   ),
+        // );
       },
       child: Column(
         children: [
@@ -81,7 +61,6 @@ class _VanKhanState extends State<VanKhan> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image,
                 const VerticalDivider(
                   width: 20,
                   thickness: 2,
@@ -97,7 +76,6 @@ class _VanKhanState extends State<VanKhan> {
                         ten,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(loai),
                     ],
                   ),
                 ),
@@ -165,16 +143,7 @@ class _VanKhanState extends State<VanKhan> {
           child: ListView.builder(
             itemCount: itemlist.length,
             itemBuilder: (context, index) {
-              return listVanKhan(
-                Image(
-                  height: 45,
-                  width: 45,
-                  image: AssetImage(itemlist[index].icon),
-                ),
-                itemlist[index].ten,
-                itemlist[index].loai,
-                itemlist[index].check,
-              );
+              return listVanKhan(itemlist[index].name);
             },
           ),
         ),

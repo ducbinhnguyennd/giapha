@@ -36,7 +36,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
         setState(() {
           currentUser = Data.fromJson(jsonDecode(value));
           futureUserData =
-              apiService.fetchUserData(currentUser?.data.user[0].id ?? '');
+              apiService.fetchUserData(currentUser?.user[0].id ?? '');
           print('binh in ${currentUser}');
         });
       } else {
@@ -308,7 +308,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                 context,
                 MaterialPageRoute(
                     builder: (context) => SuaThongTin(
-                          userID: currentUser?.data.user[0].id ?? '',
+                          userID: currentUser?.user[0].id ?? '',
                         )),
               ).then((result) {
                 if (result.dataToPass == true) {
@@ -401,7 +401,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             ),
             InkWell(
               onTap: () async {
-                await XoaUser.xoaUser(currentUser?.data.user[0].id ?? '');
+                await XoaUser.xoaUser(currentUser?.user[0].id ?? '');
                 try {
                   UserServices us = UserServices();
                   await us.deleteinfo();

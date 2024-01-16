@@ -1,33 +1,33 @@
-class Data {
+class UserResponse {
   bool success;
-  UserData data;
+  Data data;
   String token;
 
-  Data({
+  UserResponse({
     required this.success,
     required this.data,
     required this.token,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
+  factory UserResponse.fromJson(Map<String, dynamic> json) {
+    return UserResponse(
       success: json['success'],
-      data: UserData.fromJson(json['data']),
+      data: Data.fromJson(json['data']),
       token: json['token'],
     );
   }
 }
 
-class UserData {
+class Data {
   List<User> user;
 
-  UserData({required this.user});
+  Data({required this.user});
 
-  factory UserData.fromJson(Map<String, dynamic> json) {
+  factory Data.fromJson(Map<String, dynamic> json) {
     var userList = json['user'] as List<dynamic>;
     List<User> users = userList.map((user) => User.fromJson(user)).toList();
 
-    return UserData(
+    return Data(
       user: users,
     );
   }

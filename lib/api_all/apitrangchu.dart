@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/model/user_model2.dart';
 
 Dio dio = Dio();
@@ -44,6 +45,23 @@ class XoaUser {
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+}
+
+// văn khấn tổng
+class ApiService {
+  Future<List<ItemLoai>> fetchEvents() async {
+    try {
+      final response = await dio.get('$urlapi/getloaivankhan');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((eventJson) => ItemLoai.fromJson(eventJson)).toList();
+      } else {
+        throw Exception('Failed to load events');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 }

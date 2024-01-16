@@ -16,14 +16,12 @@ class ItemModel {
 }
 
 class ItemLoai {
-  final String icon;
-  final String ten;
-  final String loai;
-  final String check;
-  ItemLoai({
-    required this.icon,
-    required this.ten,
-    required this.loai,
-    required this.check,
-  });
+  final String id;
+  final String name;
+
+  ItemLoai({required this.id, required this.name});
+
+  factory ItemLoai.fromJson(Map<String, dynamic> json) {
+    return ItemLoai(id: json['id'], name: json['name']);
+  }
 }

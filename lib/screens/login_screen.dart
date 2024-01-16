@@ -90,10 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (response?.data['success'] == true) {
                           UserServices us = UserServices();
                           await us.saveinfologin(
-                              jsonEncode(response?.data['data']['user']));
+                              jsonEncode(response?.data['data']));
                           CommonService.showToast(
                               'Đăng nhập thành công', context);
-                          print('binh save ${response?.data['data']['user']}');
+                          print('binh save ${response?.data['data']}');
                           Navigator.pushReplacement<void, void>(
                             context,
                             MaterialPageRoute<void>(
