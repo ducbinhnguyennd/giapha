@@ -49,6 +49,50 @@ class XoaUser {
   }
 }
 
+// thay đổi pass, username
+class PasswordChangeService {
+  // Future<void> changePassword(
+  //     String userId, String oldPassword, String newPassword) async {
+  //   try {
+  //     final response = await dio.post(
+  //       '$urlapi/repass/$userId',
+  //       data: {
+  //         'passOld': oldPassword,
+  //         'passNew': newPassword,
+  //       },
+  //     );
+
+  //     if (response.statusCode != 200) {
+  //       throw Exception('Đổi mật khẩu thất bại');
+  //     }
+  //   } catch (error) {
+  //     throw Exception('Đã xảy ra lỗi: $error');
+  //   }
+  // }
+
+  Future<void> changeUsername(String userId, String username, String hovaten,
+      String phone, String address, String job) async {
+    try {
+      final response = await dio.put(
+        '$urlapi/updateUser/$userId',
+        data: {
+          'username': username,
+          'hovaten': hovaten,
+          'phone': phone,
+          'address': address,
+          'job': job
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Đổi thành công');
+      }
+    } catch (error) {
+      throw Exception('Đã xảy ra lỗi: $error');
+    }
+  }
+}
+
 // văn khấn tổng
 class ApiService {
   Future<List<ItemLoai>> fetchEvents() async {
@@ -62,6 +106,35 @@ class ApiService {
       }
     } catch (e) {
       throw Exception('Error: $e');
+    }
+  }
+}
+
+// văn khấn item
+class ApiVanKhanItem {
+  Future<List<ItemLoai>> fetchVankhanitem(String idvankhanitem) async {
+    try {
+      final response = await dio.get('$urlapi/getvankhan/$idvankhanitem');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((eventJson) => ItemLoai.fromJson(eventJson)).toList();
+      } else {
+        throw Exception('Failed to load events');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+}
+
+// chi tiết văn khấn
+class ApiChiTietVanKhan {
+  Future<VanKhanModel> fetchVanKhan(String id) async {
+    final response = await dio.get('$urlapi/getchitietvankhan/$id');
+    if (response.statusCode == 200) {
+      return VanKhanModel.fromJson(response.data);
+    } else {
+      throw Exception('Failed to load VanKhan');
     }
   }
 }

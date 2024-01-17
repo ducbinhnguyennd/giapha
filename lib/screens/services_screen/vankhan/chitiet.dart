@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class ChiTiet extends StatefulWidget {
-  const ChiTiet(
-      {super.key,
-      required this.ten,
-      required this.gioithieu,
-      required this.samle,
-      required this.vankhan});
+import 'package:giapha/api_all/apitrangchu.dart';
+import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 
-  final String ten;
-  final String gioithieu;
-  final String samle;
-  final String vankhan;
+class ChiTiet extends StatefulWidget {
+  ChiTiet({super.key, required this.ten, required this.id});
+
+  String? ten;
+  final String id;
 
   @override
   State<ChiTiet> createState() => _ChiTietState();
@@ -26,7 +22,7 @@ class _ChiTietState extends State<ChiTiet> {
   double _currentSliderValue = 50;
   final double _defaultSliderValue = 50;
   final ValueNotifier<double> fontSizeNotifier = ValueNotifier<double>(16);
-
+  bool isLoading = true;
   void increaseFontSize() {
     if (fontSizeNotifier.value < 24.0) {
       fontSizeNotifier.value += 1.0;
@@ -36,6 +32,24 @@ class _ChiTietState extends State<ChiTiet> {
   void decreaseFontSize() {
     if (fontSizeNotifier.value > 12.0) {
       fontSizeNotifier.value -= 1.0;
+    }
+  }
+
+  final ApiChiTietVanKhan _apiService = ApiChiTietVanKhan();
+  late VanKhanModel vanKhanModel;
+
+  Future<void> _loadVanKhan() async {
+    try {
+      final vanKhan1 = await _apiService.fetchVanKhan(widget.id);
+      setState(() {
+        vanKhanModel = vanKhan1;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading VanKhan: $e');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -99,6 +113,7 @@ class _ChiTietState extends State<ChiTiet> {
   @override
   void initState() {
     _startScrolling();
+    _loadVanKhan();
     _scrollController = ScrollController();
     super.initState();
   }
@@ -138,7 +153,7 @@ class _ChiTietState extends State<ChiTiet> {
         backgroundColor: const Color(0xffFBBA95),
         automaticallyImplyLeading: false,
         title: Text(
-          widget.ten,
+          widget.ten ?? '',
           style: const TextStyle(color: Colors.black, fontSize: 20),
         ),
         centerTitle: true,
@@ -168,26 +183,31 @@ class _ChiTietState extends State<ChiTiet> {
                   tileMode: TileMode.mirror,
                 ),
               ),
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return Column(children: [
-                    box(
-                      'gioi_thieu',
-                      widget.gioithieu,
-                    ),
-                    box(
-                      'sam_le',
-                      widget.samle,
-                    ),
-                    box(
-                      'VĂN KHẤN',
-                      widget.vankhan,
-                    ),
-                  ]);
-                },
-              )),
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      controller: _scrollController,
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          height: MediaQuery.of(context).size.height,
+                          child: Column(children: [
+                            box(
+                              'Giới thiệu',
+                              vanKhanModel.gioiThieu,
+                            ),
+                            box(
+                              'Sắm lễ',
+                              vanKhanModel.samle,
+                            ),
+                            box(
+                              'VĂN KHẤN',
+                              vanKhanModel.vanKhan,
+                            ),
+                          ]),
+                        );
+                      },
+                    )),
           Positioned(
             right: 10,
             bottom: 10,

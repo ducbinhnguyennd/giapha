@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:giapha/api_all/api_diachi.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
-import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/common_service.dart';
 import 'package:giapha/mainscreen.dart';

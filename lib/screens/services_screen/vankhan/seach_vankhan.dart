@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/Data/DataVanKhan.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/screens/services_screen/vankhan/chitiet.dart';
+import 'package:giapha/screens/services_screen/vankhan/vankhan_screen.dart';
+import 'package:giapha/screens/widgets/item_vankhan.dart';
 
 class SeachVanKhan extends StatefulWidget {
-  const SeachVanKhan({super.key});
-
+  const SeachVanKhan({super.key, required this.id});
+  final String id;
   @override
   State<SeachVanKhan> createState() => _SeachVanKhanState();
 }
 
 class _SeachVanKhanState extends State<SeachVanKhan> {
-  final List<ItemModel> _items = itemList;
-  List<ItemModel> _foundUsers = [];
+  List<ItemLoai> _items = [];
+  List<ItemLoai> _foundUsers = [];
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      List<ItemLoai> apiData = await ApiService().fetchEvents();
+      setState(() {
+        _items = apiData;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   String removeAccents(String input) {
     var str = input.toLowerCase();
@@ -29,79 +51,18 @@ class _SeachVanKhanState extends State<SeachVanKhan> {
   }
 
   void _runFilter(String query) {
-    List<ItemModel> results = [];
+    List<ItemLoai> results = [];
     if (query.isEmpty) {
     } else {
       results = _items.where((storyName) {
-        return removeAccents(storyName.ten.toLowerCase())
+        return removeAccents(storyName.name!.toLowerCase())
             .contains(removeAccents(query.toLowerCase()));
       }).toList();
     }
 
     setState(() {
-      _foundUsers = results.cast<ItemModel>();
+      _foundUsers = results.cast<ItemLoai>();
     });
-  }
-
-  Widget listChiTiet(
-      String ten, String gioithieu, String samle, String vankhan) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChiTiet(
-                      ten: ten,
-                      gioithieu: gioithieu,
-                      samle: samle,
-                      vankhan: vankhan,
-                    )));
-      },
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xffFBBA95),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        Text(ten),
-                        Text(
-                          gioithieu,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
-      ),
-    );
   }
 
   @override
@@ -156,11 +117,9 @@ class _SeachVanKhanState extends State<SeachVanKhan> {
                         padding: const EdgeInsets.only(left: 10, right: 10),
                         itemCount: _foundUsers.length,
                         itemBuilder: (context, index) {
-                          return listChiTiet(
-                            _foundUsers[index].ten,
-                            _foundUsers[index].gioithieu,
-                            _foundUsers[index].samle,
-                            _foundUsers[index].vankhan,
+                          return VanKhanItem(
+                            ten: _foundUsers[index].name ?? '',
+                            id: widget.id,
                           );
                         },
                       )

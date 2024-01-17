@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:giapha/routes.dart';
-import 'package:giapha/screens/login_screen.dart';
-import 'package:giapha/screens/register_screen.dart';
 import 'package:giapha/screens/splash_screen.dart';
 
 void main() async {

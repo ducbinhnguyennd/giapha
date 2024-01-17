@@ -5,7 +5,7 @@ import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
 import 'package:giapha/screens/home_screen.dart';
-import 'package:giapha/screens/setting_screen.dart';
+import 'package:giapha/screens/screen_setting/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen>
   void initState() {
     super.initState();
     _tabController =
-        TabController(length: 5, vsync: this); // Change the length as needed
+        TabController(length: 4, vsync: this); // Change the length as needed
 
     _storage.read(key: 'user').catchError((value) {
       print("Error Is: $value");

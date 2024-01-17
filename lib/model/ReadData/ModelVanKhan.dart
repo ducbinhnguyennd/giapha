@@ -1,25 +1,34 @@
-class ItemModel {
-  final int id;
-  final String ten;
-  final String gioithieu;
+class VanKhanModel {
+  final String id;
+  final String name;
+  final String gioiThieu;
   final String samle;
-  final String vankhan;
-  final String loai;
+  final String vanKhan;
 
-  ItemModel(
-      {required this.id,
-      required this.ten,
-      required this.gioithieu,
-      required this.samle,
-      required this.vankhan,
-      required this.loai});
+  VanKhanModel({
+    required this.id,
+    required this.name,
+    required this.gioiThieu,
+    required this.samle,
+    required this.vanKhan,
+  });
+
+  factory VanKhanModel.fromJson(Map<String, dynamic> json) {
+    return VanKhanModel(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      gioiThieu: json['gioithieu'] ?? '',
+      samle: json['samle'] ?? '',
+      vanKhan: json['vankhan'] ?? '',
+    );
+  }
 }
 
 class ItemLoai {
-  final String id;
-  final String name;
+  final String? id;
+  final String? name;
 
-  ItemLoai({required this.id, required this.name});
+  ItemLoai({this.id, this.name});
 
   factory ItemLoai.fromJson(Map<String, dynamic> json) {
     return ItemLoai(id: json['id'], name: json['name']);

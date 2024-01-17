@@ -7,9 +7,10 @@ import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/mainscreen.dart';
 import 'package:giapha/model/user_model.dart';
 import 'package:giapha/model/user_model2.dart';
-import 'package:giapha/screens/lienhe.dart';
-import 'package:giapha/screens/login_screen.dart';
-import 'package:giapha/screens/thayavatar.dart';
+import 'package:giapha/screens/screen_setting/doimatkhau.dart';
+import 'package:giapha/screens/screen_setting/lienhe.dart';
+import 'package:giapha/screens/screen_setting/login_screen.dart';
+import 'package:giapha/screens/screen_setting/thayavatar.dart';
 import 'package:giapha/user_Service.dart';
 
 class TaikhoanScreen extends StatefulWidget {
@@ -323,28 +324,27 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                 offset: const Offset(-20, 0),
                 child: const Text('Thay đổi ảnh đại diện/ ảnh bìa'),
               ),
-              leading: const ImageIcon(AssetImage(AssetsPathConst.ico_face),
+              leading: const ImageIcon(AssetImage(AssetsPathConst.tabHome),
                   size: 22, color: ColorConst.colorPrimary30),
             ),
           ),
-          // InkWell(
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => ChangePasswordScreen(
-          //                 userId: currentUser?.data.user[0].id ?? '',
-          //                 username: currentUser?.data.user[0].username ?? '',
-          //               )),
-          //     );
-          //   },
-          //   child: ListTile(
-          //       title: Transform.translate(
-          //         offset: Offset(-20, 0),
-          //         child: Text('Thay đổi thông tin'),
-          //       ),
-          //       leading: Image.asset(AssetsPathConst.ico_face, height: 22)),
-          // ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChangePasswordScreen(
+                          userId: currentUser?.user[0].id ?? '',
+                        )),
+              );
+            },
+            child: ListTile(
+                title: Transform.translate(
+                  offset: Offset(-20, 0),
+                  child: Text('Thay đổi thông tin'),
+                ),
+                leading: Image.asset(AssetsPathConst.tabHome, height: 22)),
+          ),
         ]),
       ),
     );
@@ -372,7 +372,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                   child: const Text('Xóa tài khoản'),
                 ),
                 leading: const ImageIcon(
-                  AssetImage(AssetsPathConst.ico_face),
+                  AssetImage(AssetsPathConst.tabHome),
                   size: 22,
                   color: ColorConst.colorPrimary30,
                 ),
@@ -451,10 +451,10 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             child: ListTile(
               title: Transform.translate(
                 offset: const Offset(-20, 0),
-                child: const Text('Đăng ký nhóm dịch'),
+                child: const Text('Liên hệ hỗ trợ'),
               ),
               leading: const ImageIcon(
-                AssetImage(AssetsPathConst.ico_face),
+                AssetImage(AssetsPathConst.tabHome),
                 color: ColorConst.colorPrimary30,
                 size: 22,
               ),
@@ -465,7 +465,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Image.asset(
-                      AssetsPathConst.ico_face,
+                      AssetsPathConst.tabHome,
                       height: 23,
                     ),
                     const SizedBox(width: 15),
@@ -553,7 +553,7 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                     offset: const Offset(-20, 0),
                     child: const Text('Đăng xuất'),
                   ),
-                  leading: Image.asset(AssetsPathConst.ico_face, height: 22)))
+                  leading: Image.asset(AssetsPathConst.tabHome, height: 22)))
         ]),
       ),
     );

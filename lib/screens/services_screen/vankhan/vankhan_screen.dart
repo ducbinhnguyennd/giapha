@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
+import 'package:giapha/screens/widgets/item_vankhan.dart';
 import 'chitiet_vankhan_screen.dart';
 import 'seach_vankhan.dart';
 
@@ -14,7 +15,7 @@ class VanKhan extends StatefulWidget {
 
 class _VanKhanState extends State<VanKhan> {
   List<ItemLoai> itemlist = [];
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -26,76 +27,14 @@ class _VanKhanState extends State<VanKhan> {
       final List<ItemLoai> apiData = await ApiService().fetchEvents();
       setState(() {
         itemlist = apiData;
+        isLoading = false;
       });
     } catch (e) {
-      // Xử lý lỗi nếu cần
       print('Error fetching data: $e');
+      setState(() {
+        isLoading = false;
+      });
     }
-  }
-
-  Widget listVanKhan(String ten) {
-    return GestureDetector(
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => ChiTietVanKhanScreen(
-        //       loai: loai,
-        //       check: check,
-        //     ),
-        //   ),
-        // );
-      },
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            height: 50,
-            width: 339,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const VerticalDivider(
-                  width: 20,
-                  thickness: 2,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  width: 200,
-                  child: Column(
-                    children: [
-                      Text(
-                        ten,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                const VerticalDivider(
-                  width: 20,
-                  thickness: 2,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.black,
-                ),
-                const Icon(Icons.arrow_forward_ios),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          )
-        ],
-      ),
-    );
   }
 
   @override
@@ -119,7 +58,9 @@ class _VanKhanState extends State<VanKhan> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SeachVanKhan()));
+                      builder: (context) => SeachVanKhan(
+                            id: itemlist[0].id ?? '',
+                          )));
             },
           ),
         ],
@@ -140,12 +81,17 @@ class _VanKhanState extends State<VanKhan> {
               fit: BoxFit.cover),
         ),
         child: Center(
-          child: ListView.builder(
-            itemCount: itemlist.length,
-            itemBuilder: (context, index) {
-              return listVanKhan(itemlist[index].name);
-            },
-          ),
+          child: isLoading
+              ? CircularProgressIndicator()
+              : ListView.builder(
+                  itemCount: itemlist.length,
+                  itemBuilder: (context, index) {
+                    return VanKhanItem(
+                      ten: itemlist[index].name ?? '',
+                      id: itemlist[index].id ?? '',
+                    );
+                  },
+                ),
         ),
       ),
     );

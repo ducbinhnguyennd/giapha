@@ -6,7 +6,7 @@ import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/common_service.dart';
 import 'package:giapha/mainscreen.dart';
-import 'package:giapha/screens/register_screen.dart';
+import 'package:giapha/screens/screen_setting/register_screen.dart';
 import 'package:giapha/user_Service.dart';
 
 class LoginScreen extends StatefulWidget {

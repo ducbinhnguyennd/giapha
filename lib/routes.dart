@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:giapha/mainscreen.dart';
 import 'package:giapha/screens/intro_screen.dart';
-import 'package:giapha/screens/login_screen.dart';
-import 'package:giapha/screens/register_screen.dart';
+import 'package:giapha/screens/screen_setting/lienhe.dart';
+
+import 'package:giapha/screens/screen_setting/login_screen.dart';
+import 'package:giapha/screens/screen_setting/register_screen.dart';
+
 import 'package:giapha/screens/splash_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -12,7 +15,7 @@ final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
   RegisterScreen.routeName: (context) => const RegisterScreen(),
   // HuongDanScreen.routeName: (context) => const HuongDanScreen(),
-  // LienHe.routeName: (context) => const LienHe(),
+  LienHe.routeName: (context) => const LienHe(),
 };
 
 class CustomPageRouteBuilder<T> extends PageRoute<T> {

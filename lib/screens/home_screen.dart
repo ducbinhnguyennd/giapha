@@ -17,6 +17,7 @@ import 'package:giapha/screens/services_screen/xinxam/xinxam_screen.dart';
 import 'package:giapha/utils/date_utils.dart';
 import 'package:giapha/utils/lunar_solar_utils.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,9 +98,9 @@ class _HomeScreenState extends State<HomeScreen>
   //   }
   // }
 
-  Widget paddingText(double top, String text, TextStyle style) {
+  Widget paddingText(String text, TextStyle style) {
     return Padding(
-      padding: EdgeInsets.only(top: top, left: 10, right: 10),
+      padding: EdgeInsets.only(left: 10, right: 10),
       child: Text(text, style: style),
     );
   }
@@ -176,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'choose_adate',
+                                          'Chọn ngày',
                                           style: TextStyle(
                                             color: Color(0xffFF5C00),
                                             fontSize: 16,
@@ -267,95 +268,49 @@ class _HomeScreenState extends State<HomeScreen>
               children: [
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: StrokeText(
-                        strokeWidth: 0,
-                        fontSize: (screenHeight * 14 / 100),
-                        color: Colors.white,
-                        strokeColor: Colors.white,
-                        fontWeight: FontWeight.w100,
-                        text: '',
-                        _selectedDate.day.toString(),
+                    StrokeText(
+                      strokeWidth: 0,
+                      fontSize: (screenHeight * 14 / 150),
+                      color: Colors.white,
+                      strokeColor: Colors.white,
+                      fontWeight: FontWeight.w100,
+                      text: '',
+                      _selectedDate.day.toString(),
+                    ),
+                    paddingText(dayOfWeek, dayOfWeekStyle),
+                    Text(
+                      _selectedDate.day.toString(),
+                      style: TextStyle(
+                        fontSize: Platform.isIOS ? 100 : 100,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 2.0,
+                            color: Colors.white,
+                          ),
+                          Shadow(
+                            offset: Offset(-1.0, -1.0),
+                            blurRadius: 2.0,
+                            color: Colors.white,
+                          ),
+                          Shadow(
+                            offset: Offset(1.0, -1.0),
+                            blurRadius: 2.0,
+                            color: Colors.white,
+                          ),
+                          Shadow(
+                            offset: Offset(-1.0, 1.0),
+                            blurRadius: 2.0,
+                            color: Colors.white,
+                          ),
+                        ],
                       ),
                     ),
-                    paddingText(5, dayOfWeek, dayOfWeekStyle),
-                    SizedBox(
-                      height: (screenHeight * 2 / 100),
-                    ),
-                    Platform.isIOS
-                        ? Text(
-                            _selectedDate.day.toString(),
-                            style: const TextStyle(
-                              fontSize: 140,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(1.0, -1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(-1.0, 1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          )
-                        : Text(
-                            _selectedDate.day.toString(),
-                            style: const TextStyle(
-                              fontSize: 120,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(1.0, 1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(-1.0, -1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(1.0, -1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                                Shadow(
-                                  offset: Offset(-1.0, 1.0),
-                                  blurRadius: 2.0,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                    // Text(
-                    //   _selectedDate.day.toString(),
-                    //   style: const TextStyle(
-                    //       fontSize: 140,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.red),
-                    // ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: paddingText(
-                          10,
                           quote.content,
                           const TextStyle(
                             fontSize: 16,
@@ -385,84 +340,142 @@ class _HomeScreenState extends State<HomeScreen>
                             ],
                           )),
                     ),
-                    Platform.isIOS
-                        ? Align(
-                            alignment: Alignment.centerRight,
-                            child: paddingText(
-                                10,
-                                quote.author,
-                                const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(1.0, 1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(-1.0, -1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(1.0, -1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(-1.0, 1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                )),
-                          )
-                        : Align(
-                            alignment: Alignment.centerRight,
-                            child: paddingText(
-                                3,
-                                quote.author,
-                                const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(1.0, 1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(-1.0, -1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(1.0, -1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                    Shadow(
-                                      offset: Offset(-1.0, 1.0),
-                                      blurRadius: 1.0,
-                                      color: Colors.white,
-                                    ),
-                                  ],
-                                )),
-                          ),
-                    Platform.isIOS
-                        ? SizedBox(
-                            height: (screenHeight * 2 / 100),
-                          )
-                        : SizedBox(
-                            height: (screenHeight * 2 / 160),
-                          ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: paddingText(
+                          quote.author,
+                          const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 1.0,
+                                color: Colors.white,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.0, -1.0),
+                                blurRadius: 1.0,
+                                color: Colors.white,
+                              ),
+                              Shadow(
+                                offset: Offset(1.0, -1.0),
+                                blurRadius: 1.0,
+                                color: Colors.white,
+                              ),
+                              Shadow(
+                                offset: Offset(-1.0, 1.0),
+                                blurRadius: 1.0,
+                                color: Colors.white,
+                              ),
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                        height: Platform.isIOS
+                            ? (screenHeight * 2 / 100)
+                            : (screenHeight * 2 / 160)),
                     getDateInfo(screenHeight)
                   ],
                 ),
                 getHeader(context, screenHeight, screenWidth),
+                Positioned(
+                    bottom: 10,
+                    right: 10,
+                    left: 10,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height / 8,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/icontuvi.png',
+                              'Tử vi mỗi ngày',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TuViHangNgayScreen(),
+                                    ));
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/iconngaytot.png',
+                              'Xem ngày tốt',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const XemNgayTotScreen(),
+                                    ));
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/icontrondoi.png',
+                              'Tử vi trọn đời',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TuViTronDoiScreen(),
+                                    ));
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/iconvankhan.png',
+                              'Văn khấn',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const VanKhan(),
+                                    ));
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/icongiaimong.png',
+                              'Giải mộng',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const GiaiMongScreen(),
+                                    ));
+                              },
+                            ),
+                          ),
+                          InkWell(
+                            child: boxButton(
+                              'assets/icons/iconxinxam.png',
+                              'Xin xăm',
+                              () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const XinXamScreen(),
+                                    ));
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
               ],
             ),
           ),
@@ -472,32 +485,28 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Widget boxButton(String image, String text, Function() onTap) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), color: Colors.white),
-            width: 120,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(height: 57, width: 57, image: AssetImage(image)),
-                Text(
-                  text,
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: ZoomTapAnimation(
+        onTap: onTap,
+        child: Container(
+          width: MediaQuery.of(context).size.width / 3,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Colors.white),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(height: 50, width: 50, image: AssetImage(image)),
+              Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 12,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(
-          width: 5,
-        ),
-      ],
+      ),
     );
   }
 
@@ -515,8 +524,6 @@ class _HomeScreenState extends State<HomeScreen>
   Widget getDateInfo(double height) {
     var headerStyle =
         const TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
-    var bodyStyle = const TextStyle(
-        color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16);
     var bottomStyle = const TextStyle(color: Colors.white);
     var dayStyle = const TextStyle(
         color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold);
@@ -532,7 +539,6 @@ class _HomeScreenState extends State<HomeScreen>
     var dayName = getCanDay(jd);
     var beginHourName = getBeginHour(jd);
     return Container(
-      height: (height * 10 / 100),
       color: Colors.black.withOpacity(0.3),
       child: (IntrinsicHeight(
         child: Row(
@@ -565,8 +571,8 @@ class _HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Text("Giờ hoàng đạo", style: headerStyle),
-                    Text(hourMinute, style: bodyStyle),
+                    Text("Cung giờ", style: headerStyle),
+                    Text(hourMinute, style: dayStyle),
                     Text(beginHourName, style: bottomStyle),
                   ],
                 ),
@@ -584,165 +590,7 @@ class _HomeScreenState extends State<HomeScreen>
     final double screenHeight = screenSize.height;
 
     super.build(context);
-    return Stack(
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-                image: DecorationImage(
-                    image: AssetImage('assets/images/backgroud.jpg'),
-                    fit: BoxFit.cover),
-                // gradient: LinearGradient(
-                //   begin: Alignment.topLeft,
-                //   end: Alignment(0.8, 1),
-                //   colors: <Color>[
-                //     Color(0xffF7E3D7),
-                //     Color(0xffFFA877),
-                //     Color(0xffFBBA95),
-                //     Color(0xffEF6518),
-                //   ],
-                //   tileMode: TileMode.mirror,
-                // ),
-              ),
-            ),
-            Positioned(
-                bottom: 20,
-                right: 10,
-                left: 10,
-                child: SizedBox(
-                  width: (screenWidth * 10 / 100),
-                  height: Platform.isIOS
-                      ? (screenHeight * 10 / 100)
-                      : (screenHeight * 10 / 85),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/icontuvi.png',
-                          'Tử vi mỗi ngày',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const TuViHangNgayScreen(),
-                                ));
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/iconngaytot.png',
-                          'Xem ngày tốt',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const XemNgayTotScreen(),
-                                ));
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/icontrondoi.png',
-                          'Tử vi trọn đời',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const TuViTronDoiScreen(),
-                                ));
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/iconvankhan.png',
-                          'Văn khấn',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const VanKhan(),
-                                ));
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/icongiaimong.png',
-                          'Giải mộng',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const GiaiMongScreen(),
-                                ));
-                          },
-                        ),
-                      ),
-                      InkWell(
-                        child: boxButton(
-                          'assets/icons/iconxinxam.png',
-                          'Xin xăm',
-                          () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const XinXamScreen(),
-                                ));
-                          },
-                        ),
-                      ),
-                      // InkWell(
-                      //   child: boxButton(
-                      //     'assets/icons/iconngaytot.png',
-                      //     'Xem Ngày tốt',
-                      //     () {
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //             builder: (context) =>
-                      //                 const XemNgayTotScreen(),
-                      //           ));
-                      //     },
-                      //   ),
-                      // ),
-                      // InkWell(
-                      //   child: boxButton(
-                      //     'assets/icons/iconngaytot.png',
-                      //     'Bói Bài',
-                      //     () {
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //             builder: (context) => const VanKhan(),
-                      //           ));
-                      //     },
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                )),
-          ],
-        ),
-        Stack(
-          children: [
-            getMainDate(screenWidth, screenHeight),
-          ],
-        ),
-      ],
-    );
+    return getMainDate(screenWidth, screenHeight);
   }
 
   @override

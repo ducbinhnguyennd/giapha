@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow the app to record using your phone's microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>To change the your profile picture. Your photos and videos will not be shared without your permission</string>
 </dict>
 </plist>

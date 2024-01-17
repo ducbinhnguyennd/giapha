@@ -135,21 +135,6 @@ class _SuaThongTinState extends State<SuaThongTin> {
       ),
     );
   }
-  //  void _showToast(String ms) {
-  //   if (ms.contains(StringConst.textyeucaudangnhap)) {
-  //     // update count show user need login: only first show toast need login, after will show snack bar to go to login screen,
-  //     // show snack bar login here,
-  //     CommonService.showSnackBar(StringConst.textyeucaudangnhap, context, () {
-  //       // go to login screen
-  //       RouteUtil.redirectToLoginScreen(context);
-  //     });
-  //     return;
-  //   }
-
-  //   // SHOW TOAST
-  //   if (!mounted) return;
-  //   CommonService.showToast(ms, context);
-  // }
 
   Future<void> _uploadAndNavigate(BuildContext context) async {
     if (_imageFile == null) {
@@ -182,7 +167,7 @@ class _SuaThongTinState extends State<SuaThongTin> {
             context,
           ).then((data) {
             if (data != null) {
-              print("Thienlogin : uploadImageAvatar : $data");
+              print("Binhlogin : uploadImageAvatar : $data");
             } else {
               CommonService.showToast("Vui lòng thử lại sau", context);
             }
@@ -214,7 +199,7 @@ class _SuaThongTinState extends State<SuaThongTin> {
       'avatar': await MultipartFile.fromFile(path, filename: filename),
     });
     Dio dio = Dio();
-    String urlTrangChu = 'https://du-an-2023.vercel.app/doiavatar/$userId';
+    String urlTrangChu = 'https://appgiapha.vercel.app/doiavatar/$userId';
 
     Map<String, String> header = {};
     dio.options.headers = header;
