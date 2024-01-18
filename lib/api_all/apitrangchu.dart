@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
+import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/user_model2.dart';
 
 Dio dio = Dio();
@@ -135,6 +136,27 @@ class ApiChiTietVanKhan {
       return VanKhanModel.fromJson(response.data);
     } else {
       throw Exception('Failed to load VanKhan');
+    }
+  }
+}
+
+// danh sách họ
+class DanhSachHoService {
+  Future<List<danhsachHoModel>> fetchdsHo() async {
+    try {
+      final response = await dio.get('$urlapi/getdongho');
+
+      if (response.statusCode == 200) {
+        List<danhsachHoModel> users = [];
+        for (var userJson in response.data) {
+          users.add(danhsachHoModel.fromJson(userJson));
+        }
+        return users;
+      } else {
+        throw Exception('Failed to load users');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 }

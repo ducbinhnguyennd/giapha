@@ -133,21 +133,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
               color: Colors.white,
               height: 2,
             ))
-            // Column(
-            //   children: [
-            //     Container(
-            //       height: 10,
-            //     ),
-            //     const Divider(
-            //       height: 5,
-            //       thickness: 2,
-            //       indent: 190,
-            //       endIndent: 0,
-            //       color: Colors.white,
-            //     ),
-            //     Container(),
-            //   ],
-            // ),
           ],
         ),
         const SizedBox(
@@ -169,31 +154,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
       _selectedDate = selectedDate;
     });
   }
-
-  // void returnToday(){
-  //   setState(() {
-
-  //   });
-  // }
-
-  // ignore: non_constant_identifier_names
-  // Check11(dynamic nguhanh) {
-  //   if (nguhanh > 5) {
-  //     nguhanh = nguhanh - 5;
-  //   }
-
-  //   if (nguhanh == 2) {
-  //     return const Text('Thủy');
-  //   } else if (nguhanh == 3) {
-  //     return const Text('Hỏa');
-  //   } else if (nguhanh == 4) {
-  //     return const Text('Thổ');
-  //   } else if (nguhanh == 5) {
-  //     return const Text('Mộc');
-  //   } else {
-  //     return const Text('Kim');
-  //   }
-  // }
 
   Widget text(String text, String text1) {
     return RichText(
@@ -298,8 +258,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
     print('tan vlog: $lucdieu');
     var xuathanh = getThongBao(lunarMonth, lunarDay);
 
-    // print(xuathanh.toString());
-    //print('${check.runtimeType}');
     List<ItemModelThapNhi> listThapNhi = itemListThapNhi
         .where((element) =>
             // ignore: unrelated_type_equality_checks
@@ -577,7 +535,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                         ],
                       ),
                       'Nhị thập bát tú'),
-                  boxBox(CheckLucNham(lucnhamngay: lucdieu), 'Giờ lục nhâm'),
+                  // boxBox(CheckLucNham(lucnhamngay: lucdieu), 'Giờ lục nhâm'),
 
                   boxBox(
                       Column(
@@ -627,12 +585,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
               bottom: 40,
               child: Column(
                 children: [
-                  //        InkWell(
-
-                  //   onTap: (){
-                  //      LocalizationChecker.changeLanguge(context);
-                  //   }
-                  // ),
                   if (!isToday)
                     GestureDetector(
                       onTap: () {
@@ -658,28 +610,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                         )),
                       ),
                     )
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //
-                  //     },
-                  //     child: const Text(
-                  //       'Hôm nay',
-                  //       style: TextStyle(fontSize: 16, color: Colors.red),
-                  //     )),
-                  // TextButton(
-                  //   onPressed: increaseFontSize,
-                  //   child: const Icon(
-                  //     Icons.add_circle,
-                  //     color: Colors.yellow,
-                  //   ),
-                  // ),
-                  // TextButton(
-                  //   onPressed: decreaseFontSize,
-                  //   child: const Icon(
-                  //     Icons.remove_circle,
-                  //     color: Colors.yellow,
-                  //   ),
-                  // ),
                 ],
               ),
             )

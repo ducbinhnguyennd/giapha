@@ -7,16 +7,16 @@ class CheckLucNham extends StatelessWidget {
   final String lucnhamngay;
   @override
   Widget build(BuildContext context) {
-    if (lucnhamngay == 'daian') {
+    if (lucnhamngay == 'Đại An') {
       return GioLucNham(
-        text: 'text_daian',
+        text: 'Đại An 11h-13h(Ngọ) & 23h-1h(Tý)',
         text1: 'text1_daian',
         text2: 'text2_daian',
         text3: 'text3_daian',
         text4: 'text4_daian',
         text5: 'text5_daian',
       );
-    } else if (lucnhamngay == 'luulien') {
+    } else if (lucnhamngay == 'Lưu Liên') {
       return GioLucNham(
         text: 'text_luulien',
         text1: 'text1_luulien',
@@ -25,7 +25,7 @@ class CheckLucNham extends StatelessWidget {
         text4: 'text4_luulien',
         text5: 'text5_luulien',
       );
-    } else if (lucnhamngay == 'tochuy') {
+    } else if (lucnhamngay == 'Tốc Hỷ') {
       return GioLucNham(
         text: 'text_tochy',
         text1: 'text1_tochy',
@@ -34,7 +34,7 @@ class CheckLucNham extends StatelessWidget {
         text4: 'text4_tochy',
         text5: 'text5_tochy',
       );
-    } else if (lucnhamngay == 'xichkhau') {
+    } else if (lucnhamngay == 'Xích Khẩu') {
       return GioLucNham(
         text: 'text_xichkhau',
         text1: 'text1_xichkhau',
@@ -43,7 +43,7 @@ class CheckLucNham extends StatelessWidget {
         text4: 'text4_xichkhau',
         text5: 'text5_xichkhau',
       );
-    } else if (lucnhamngay == 'tieucat') {
+    } else if (lucnhamngay == 'Tiểu Cát') {
       return GioLucNham(
         text: 'text_tieucat',
         text1: 'text1_tieucat',
