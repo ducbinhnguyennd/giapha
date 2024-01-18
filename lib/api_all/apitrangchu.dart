@@ -164,25 +164,18 @@ class DanhSachHoService {
 
 // thêm, lấy ds sự kiện
 class ApiSukien {
-  Future<List<EventVO>> loadEventData() async {
+  Future<List<EventVO>> fetchEvents() async {
     try {
-      final response = await dio.get('https://appgiapha.vercel.app/getevents');
+      final response = await dio.get('$urlapi/getevents');
 
       if (response.statusCode == 200) {
-        List<EventVO> results = [];
-        List<dynamic> jsonData = response.data;
-
-        for (var element in jsonData) {
-          String dateString = element['date'];
-          String name = element['name'];
-          var dateArr = dateString.split("/");
-          var date =
-              DateTime(1993, int.parse(dateArr[1]), int.parse(dateArr[0]));
-          EventVO event = EventVO(date: date, event: name);
-          results.add(event);
+        List<EventVO> events = [];
+        for (var eventJson in response.data) {
+          events.add(EventVO.fromJson(eventJson));
+          print('binh su kien $eventJson');
         }
 
-        return results;
+        return events;
       } else {
         throw Exception('Failed to load events');
       }
