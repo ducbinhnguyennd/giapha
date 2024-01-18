@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/Data/DataVanKhan.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
-import 'package:giapha/screens/services_screen/vankhan/chitiet.dart';
-import 'package:giapha/screens/services_screen/vankhan/vankhan_screen.dart';
 import 'package:giapha/screens/widgets/item_vankhan.dart';
 
 class SeachVanKhan extends StatefulWidget {
@@ -15,6 +13,7 @@ class SeachVanKhan extends StatefulWidget {
 
 class _SeachVanKhanState extends State<SeachVanKhan> {
   List<ItemLoai> _items = [];
+
   List<ItemLoai> _foundUsers = [];
   bool isLoading = true;
   @override

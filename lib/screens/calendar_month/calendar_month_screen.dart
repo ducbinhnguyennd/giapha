@@ -87,14 +87,14 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
   generate_markedDates() {
     _markedDates.clear();
     for (var event in _eventData) {
-      _markedDates.add(event.date);
+      _markedDates.add(event.date as DateTime);
     }
   }
 
   generateEventByMonth(int month) {
     _eventByMonths.clear();
     for (var event in _eventData) {
-      if (event.date.month == month) {
+      if (event.date?.month == month) {
         _eventByMonths.add(event);
       }
     }

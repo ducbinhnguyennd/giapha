@@ -10,7 +10,7 @@ class EventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var title = '${event.date.day}';
+    var title = '${event.date?.day ?? ''}';
     return Column(
       children: [
         const SizedBox(
@@ -59,7 +59,7 @@ class EventItem extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  event.event,
+                  event.event ?? '',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(

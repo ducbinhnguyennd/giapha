@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:giapha/model/EventVO.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/user_model2.dart';
@@ -159,4 +160,53 @@ class DanhSachHoService {
       throw Exception('Error: $e');
     }
   }
+}
+
+// thêm, lấy ds sự kiện
+class ApiSukien {
+  Future<List<EventVO>> loadEventData() async {
+    try {
+      final response = await dio.get('https://appgiapha.vercel.app/getevents');
+
+      if (response.statusCode == 200) {
+        List<EventVO> results = [];
+        List<dynamic> jsonData = response.data;
+
+        for (var element in jsonData) {
+          String dateString = element['date'];
+          String name = element['name'];
+          var dateArr = dateString.split("/");
+          var date =
+              DateTime(1993, int.parse(dateArr[1]), int.parse(dateArr[0]));
+          EventVO event = EventVO(date: date, event: name);
+          results.add(event);
+        }
+
+        return results;
+      } else {
+        throw Exception('Failed to load events');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  Future<EventVO> postEvent(String name, String date) async {
+    try {
+      final response = await dio.post(
+        '$urlapi/postevent',
+        data: {'name': name, 'date': date},
+      );
+
+      if (response.statusCode == 200) {
+        return EventVO.fromJson(response.data);
+      } else {
+        throw Exception('Failed to post event');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  // Thêm các hàm cập nhật và xóa sự kiện tại đây (putEvent, deleteEvent)
 }
