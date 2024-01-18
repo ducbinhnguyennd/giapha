@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/calendar/calendar.dart';
 import 'package:giapha/event/EventList.dart';
 import 'package:giapha/mainscreen.dart';
@@ -74,8 +75,9 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
         _selectedDate.day, now.hour, now.minute, now.second);
   }
 
+  ApiSukien apiSukien = ApiSukien();
   _getData() async {
-    var data = await loadEventData();
+    var data = await apiSukien.loadEventData();
     setState(() {
       _eventData = data;
     });

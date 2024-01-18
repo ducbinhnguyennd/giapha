@@ -12,36 +12,6 @@ Future<String> loadAssets(name) async {
 }
 
 Dio dio = Dio();
-Future<List<EventVO>> loadEventData() async {
-  try {
-    final response = await dio.get('https://appgiapha.vercel.app/getevents');
-
-    if (response.statusCode == 200) {
-      List<EventVO> results = [];
-      List<dynamic> jsonData = response.data;
-      if (kDebugMode) {
-        print(jsonData);
-      }
-      for (var element in jsonData) {
-        String dateString = element['date'];
-        String name = element['name'];
-        var dateArr = dateString.split("/");
-        var date = DateTime(1993, int.parse(dateArr[1]), int.parse(dateArr[0]));
-
-        // Sử dụng { } thay vì ( ) khi khởi tạo đối tượng EventVO
-        EventVO event = EventVO(date: date, event: name);
-
-        results.add(event);
-      }
-
-      return results;
-    } else {
-      throw Exception('Failed to load events');
-    }
-  } catch (e) {
-    throw Exception('Error: $e');
-  }
-}
 
 Future<List<QuoteVO>> loadQuoteData() async {
   var jsonString = await loadAssets('assets/quotes.json');
