@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/colors_const.dart';
 
 import 'package:giapha/model/danhsachHoModel.dart';
+import 'package:giapha/model/user_model.dart';
+import 'package:giapha/model/user_model2.dart';
 import 'package:giapha/screens/widgets/item_ho.dart';
+import 'package:giapha/user_Service.dart';
+import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class DanhsachhoScreen extends StatefulWidget {
   const DanhsachhoScreen({super.key});
@@ -17,12 +23,33 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
   List<danhsachHoModel> _items = [];
 
   List<danhsachHoModel> _foundUsers = [];
-
+  Data? currentUser;
+  late Future<UserModel> futureUserData;
   bool isLoading = true;
   @override
   void initState() {
     super.initState();
     fetchData();
+    _loadUser();
+  }
+
+  final ApiUser apiService = ApiUser();
+  _loadUser() {
+    UserServices us = UserServices();
+    us.getInfoLogin().then((value) {
+      if (value != "") {
+        setState(() {
+          currentUser = Data.fromJson(jsonDecode(value));
+          futureUserData =
+              apiService.fetchUserData(currentUser?.user[0].id ?? '');
+          print('binh in ${currentUser}');
+        });
+      } else {
+        setState(() {
+          currentUser = null;
+        });
+      }
+    }, onError: (error) {});
   }
 
   Future<void> fetchData() async {
@@ -107,7 +134,7 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                 ? ListView.builder(
                     itemCount: _foundUsers.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
+                      return ZoomTapAnimation(
                           onTap: () {},
                           child: ItemHo(
                             tenho: _foundUsers[index].name,
@@ -133,13 +160,16 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                                   childAspectRatio: 2 / 2.5),
                           itemCount: _items.length,
                           itemBuilder: (context, index) {
-                            return ItemHo(
-                              tenho: _items[index].name,
-                              diachi: _items[index].address,
-                              members: _items[index].members.toString(),
-                              generation: _items[index].generation.toString(),
-                              creater: _items[index].creater,
-                              phone: _items[index].phone,
+                            return ZoomTapAnimation(
+                              onTap: () {},
+                              child: ItemHo(
+                                tenho: _items[index].name,
+                                diachi: _items[index].address,
+                                members: _items[index].members.toString(),
+                                generation: _items[index].generation.toString(),
+                                creater: _items[index].creater,
+                                phone: _items[index].phone,
+                              ),
                             );
                           },
                         ),

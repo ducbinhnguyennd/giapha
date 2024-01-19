@@ -19,22 +19,19 @@ class ItemHo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ZoomTapAnimation(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15), color: Colors.red),
-        child: Column(
-          children: [
-            Text('Tên họ: $tenho'),
-            Text('Địa chỉ: $diachi'),
-            Text('Số thành viên: $members'),
-            Text('$generation đời'),
-            Text('Người tạo $creater'),
-            Text('Số điện thoại: $phone'),
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15), color: Colors.red),
+      child: Column(
+        children: [
+          Text('Tên họ: $tenho'),
+          Text('Địa chỉ: $diachi'),
+          Text('Số thành viên: $members'),
+          Text('$generation đời'),
+          Text('Người tạo $creater'),
+          Text('Số điện thoại: $phone'),
+        ],
       ),
     );
   }
