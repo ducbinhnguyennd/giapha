@@ -9,14 +9,11 @@ import 'package:giapha/model/Data/DataBatTu.dart';
 import 'package:giapha/model/Data/DataDongCong.dart';
 import 'package:giapha/model/Data/DataThapNhi.dart';
 import 'package:giapha/model/Data/DataTrangTrinh.dart';
-import 'package:giapha/model/DataService.dart';
 import 'package:giapha/model/EventVO.dart';
-
 import 'package:giapha/model/ReadData/ModelBatTu.dart';
 import 'package:giapha/model/ReadData/ModelDongCong.dart';
 import 'package:giapha/model/ReadData/ModelThapNhiKienTru.dart';
 import 'package:giapha/model/ReadData/ModelTrangTrinh.dart';
-import 'package:giapha/screens/calendar_month/CheckGioLucNham.dart';
 import 'package:giapha/screens/calendar_month/CheckXung.dart';
 import 'package:giapha/screens/calendar_month/checkgiohoangdao.dart';
 import 'package:giapha/screens/calendar_month/tinhtuvi/CheckQuanNiem.dart';
@@ -28,8 +25,6 @@ import 'package:giapha/screens/calendar_month/tinhtuvi/checktruc.dart';
 import 'package:giapha/screens/calendar_month/tinhtuvi/ngayxuathanh.dart';
 import 'package:giapha/screens/calendar_month/tinhtuvi/tinhlucdieu.dart';
 import 'package:giapha/screens/calendar_month/widget/HomNay.dart';
-
-//import 'package:giapha/screen/calendar_month/chonngay.dart';
 import 'package:giapha/utils/lunar_solar_utils.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 
@@ -110,9 +105,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
       children: [
         Row(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
             Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -120,8 +112,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                     bottomRight: Radius.circular(20)),
                 color: Colors.yellow,
               ),
-              height: 30,
-              //width: 100,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(text),
@@ -184,8 +174,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
 
   Widget checkXung(String a, String a1) {
     return Container(
-      height: 131,
-      width: 337,
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -257,7 +245,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
     var quanniem = getQuanNIem(lunarDay);
     var lunarMansion = getLunarMansion(_selectedDate);
     var lucdieu = getNgayLucDieu(lunarMonth, lunarDay);
-    print('tan vlog: $lucdieu');
     var xuathanh = getThongBao(lunarMonth, lunarDay);
 
     List<ItemModelThapNhi> listThapNhi = itemListThapNhi
@@ -338,7 +325,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                                   Navigator.pop(context);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
@@ -351,7 +337,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                                     color: const Color(0xffFCCDB3),
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: Text(
                                       'Chọn ngày',
                                       style: TextStyle(
@@ -474,25 +460,25 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          text('Tiết khí', tietkhi),
-                          text('Đại tiểu nguyệt', 'Tháng đủ'),
-                          text('Nạp âm ngày', napam),
-                          text('Kiết hung nhật', checkNgayHD),
-                          text('Ngày lục nhâm', lucdieu),
-                          text('Ngày xuất hành', xuathanh),
-                          text('Quan niệm dân gian', quanniem),
-                          text('Chi ngày', '$chiNgay ($nguhanhChi)'),
-                          text('Can ngày', '$canNgay ($nguhanhCan)'),
+                          text('Tiết khí: ', tietkhi),
+                          text('Đại tiểu nguyệt: ', 'Tháng đủ'),
+                          text('Nạp âm ngày: ', napam),
+                          text('Kiết hung nhật: ', checkNgayHD),
+                          text('Ngày lục nhâm: ', lucdieu),
+                          text('Ngày xuất hành: ', xuathanh),
+                          text('Quan niệm dân gian: ', quanniem),
+                          text('Chi ngày: ', '$chiNgay ($nguhanhChi)'),
+                          text('Can ngày: ', '$canNgay ($nguhanhCan)'),
                         ],
                       ),
-                      'tongquan'),
+                      'Tổng quan'),
                   //boxBox(Container(), 'Sao tốt - Sao xấu'),
                   boxBox(
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text(
-                            'truc',
+                            'Trực: ',
                             check,
                           ),
                           Padding(
@@ -511,13 +497,13 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                           )
                         ],
                       ),
-                      'thap_nhi'),
+                      'Thập nhị kiến trừ'),
                   boxBox(
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text(
-                            'sao',
+                            'Sao: ',
                             lunarMansion,
                           ),
                           Padding(
@@ -544,7 +530,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text(
-                            'Ngày',
+                            'Ngày: ',
                             dongCong,
                           ),
                           Padding(

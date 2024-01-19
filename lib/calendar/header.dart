@@ -32,7 +32,7 @@ class Header extends StatelessWidget {
         Row(
           children: [
             Text(title, style: titleStyle),
-            Text('Year', style: titleStyle),
+            Text(' Năm ', style: titleStyle),
             Text('${year}', style: titleStyle),
           ],
         ),

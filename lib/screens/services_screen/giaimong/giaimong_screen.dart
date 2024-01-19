@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:giapha/model/Data/DataGiaiMong.dart';
+import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
 import 'package:giapha/screens/services_screen/giaimong/chititetgiaimong.dart';
 
@@ -12,9 +11,30 @@ class GiaiMongScreen extends StatefulWidget {
 }
 
 class _GiaiMongScreenState extends State<GiaiMongScreen> {
-  final List<ItemModelGiaiMong> _items = itemListGiaiMong;
+  List<ItemModelGiaiMong> _items = [];
   List<ItemModelGiaiMong> _foundUsers = [];
-  //List<GiaiMongVO> _quoteData = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      final List<ItemModelGiaiMong> apiData = await ApiGiaiMong().fetchDreams();
+      setState(() {
+        _items = apiData;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   String removeAccents(String input) {
     var str = input.toLowerCase();
     str = str.replaceAll(RegExp(r'[àáạảãâầấậẩẫăằắặẳẵ]'), 'a');
@@ -41,13 +61,6 @@ class _GiaiMongScreenState extends State<GiaiMongScreen> {
       _foundUsers = results.cast<ItemModelGiaiMong>();
     });
   }
-
-  // _getData() async {
-  //   var data = await loadGiaiMongData();
-  //   setState(() {
-  //     _quoteData = data;
-  //   });
-  // }
 
   Widget listChiTiet(
     String ten,
@@ -92,24 +105,15 @@ class _GiaiMongScreenState extends State<GiaiMongScreen> {
       ),
     );
   }
-  // @override
-  // void initState() {
-  //   _getData();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
-    //var quote = GiaiMongVO("", "");
-    // if (_quoteData.isNotEmpty) {
-    //   quote = _quoteData[_selectedDate.day % _quoteData.length];
-    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFBBA95),
         automaticallyImplyLeading: false,
         title: const Text(
-          'dream_interpretation',
+          'Giải mộng',
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
         centerTitle: true,
@@ -138,7 +142,7 @@ class _GiaiMongScreenState extends State<GiaiMongScreen> {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 15),
-                  hintText: "ditim_giacmo",
+                  hintText: "Tìm kiếm giấc mộng",
                   suffixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -159,16 +163,20 @@ class _GiaiMongScreenState extends State<GiaiMongScreen> {
                         );
                       },
                     )
-                  : ListView.builder(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return listChiTiet(
-                          _items[index].ten,
-                          _items[index].gioithieu,
-                        );
-                      },
-                    ),
+                  : isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          itemCount: _items.length < 5 ? _items.length : 5,
+                          itemBuilder: (context, index) {
+                            return listChiTiet(
+                              _items[index].ten,
+                              _items[index].gioithieu,
+                            );
+                          },
+                        ),
             ),
           ],
         ),

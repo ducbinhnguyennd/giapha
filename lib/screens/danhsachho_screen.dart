@@ -80,6 +80,7 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Tìm kiếm họ'),
         centerTitle: true,
         backgroundColor: ColorConst.colorPrimary50,
@@ -111,6 +112,11 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                           child: ItemHo(
                             tenho: _foundUsers[index].name,
                             diachi: _foundUsers[index].address,
+                            members: _foundUsers[index].members.toString(),
+                            generation:
+                                _foundUsers[index].generation.toString(),
+                            creater: _foundUsers[index].creater,
+                            phone: _foundUsers[index].phone,
                           ));
                     },
                   )
@@ -121,23 +127,23 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                         child: GridView.builder(
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Số cột trong GridView
-                            crossAxisSpacing: 8.0, // Khoảng cách giữa các cột
-                            mainAxisSpacing: 8.0, // Khoảng cách giữa các dòng
-                          ),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 8.0,
+                                  mainAxisSpacing: 8.0,
+                                  childAspectRatio: 2 / 2.5),
                           itemCount: _items.length,
                           itemBuilder: (context, index) {
                             return ItemHo(
                               tenho: _items[index].name,
                               diachi: _items[index].address,
+                              members: _items[index].members.toString(),
+                              generation: _items[index].generation.toString(),
+                              creater: _items[index].creater,
+                              phone: _items[index].phone,
                             );
                           },
                         ),
-                      )
-
-            //: const Placeholder()
-
-            ),
+                      )),
       ]),
     );
   }

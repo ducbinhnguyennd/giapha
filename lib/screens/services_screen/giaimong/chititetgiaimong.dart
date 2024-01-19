@@ -29,58 +29,6 @@ class _ChiTietGiaiMongState extends State<ChiTietGiaiMong> {
     }
   }
 
-  // Widget box(String text, String text1) {
-  //   return Stack(
-  //     alignment: Alignment.center,
-  //     children: [
-  //       Column(
-  //         children: [
-  //           const SizedBox(
-  //             height: 30,
-  //           ),
-  //           Center(
-  //             child: Container(
-  //               width: 340,
-  //               decoration: BoxDecoration(
-  //                   borderRadius: BorderRadius.circular(10),
-  //                   border: Border.all(color: Colors.black)),
-  //               child: Padding(
-  //                 padding: const EdgeInsets.only(
-  //                     top: 25, right: 10, left: 10, bottom: 5),
-  //                 child: ValueListenableBuilder(
-  //                     valueListenable: fontSizeNotifier,
-  //                     builder: (context, fontSize, _) {
-  //                       return Text(
-  //                         text1,
-  //                         style: TextStyle(
-  //                             fontSize: fontSize, fontWeight: FontWeight.w400),
-  //                       );
-  //                     }),
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       Positioned(
-  //         top: 10,
-  //         child: Container(
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(10),
-  //             color: Colors.yellow,
-  //           ),
-  //           height: 40,
-  //           width: 130,
-  //           child: Center(
-  //               child: Text(
-  //             text,
-  //             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-  //           )),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -137,29 +85,16 @@ class _ChiTietGiaiMongState extends State<ChiTietGiaiMong> {
                           valueListenable: fontSizeNotifier,
                           builder: (context, fontSize, _) {
                             return Text(
-                              widget.gioithieu,
+                              widget.gioithieu.replaceAll("\\n\\n", "\n\n"),
                               style: TextStyle(
                                   fontSize: fontSize,
                                   fontWeight: FontWeight.w400),
                             );
                           }),
                     ),
-                    // Text(
-                    //   widget.gioithieu,
-                    //   style: const TextStyle(
-                    //       fontSize: 16, fontWeight: FontWeight.w400),
-                    // ),
                   ),
                 ),
-              )
-              // Column(
-              //   children: [
-              //   box(
-              //     'Giải mộng',
-              //     widget.gioithieu,
-              //   ),
-              // ]),
-              ),
+              )),
           Positioned(
             right: 10,
             bottom: 40,

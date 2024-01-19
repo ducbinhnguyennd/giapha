@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:giapha/constant/common_service.dart';
 import 'package:giapha/screens/calendar_month/tinhtuvi/checkngayhoangdao.dart';
 import 'package:giapha/utils/lunar_solar_utils.dart';
 
@@ -56,11 +57,11 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
 
   String getTotXau(String check) {
     if (check == 'Hoàng Đạo') {
-      return 'Good';
+      return 'Tốt';
     } else if (check == 'Hắc Đạo') {
-      return 'Bad';
+      return 'Xấu';
     } else {
-      return 'Normal';
+      return 'Bình thường';
     }
   }
 
@@ -100,7 +101,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Month',
+                      'Tháng',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -108,7 +109,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Year',
+                      'Năm',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -122,7 +123,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                 ),
                 Row(children: [
                   Text('$lunarDay '),
-                  Text('Month'),
+                  Text('Tháng'),
                   Text(' $lunarMonth $lunarYearName'),
                 ])
               ],
@@ -130,9 +131,8 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
             Text(
               getTotXau(checkNgayHD),
               style: TextStyle(
-                color: getTotXau(checkNgayHD) == 'Good'
-                    ? Colors.red
-                    : Colors.black,
+                color:
+                    getTotXau(checkNgayHD) == 'Tốt' ? Colors.red : Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             )
@@ -196,7 +196,7 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                         //getHeader(context),
                         Container(
                           height: 40,
-                          width: MediaQuery.of(context).size.width / 2.3,
+                          // width: MediaQuery.of(context).size.width / 2.3,
                           padding: const EdgeInsets.only(
                               top: 5, bottom: 5, left: 10, right: 10),
                           decoration: BoxDecoration(
@@ -212,102 +212,76 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Dialog(
-                                    backgroundColor: const Color(0xffFBBA95),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      height: (screenHeight * 30 / 100),
-                                      width: (screenWidth * 30 / 100),
-                                      child: ListView.builder(
-                                        itemCount: ls.length,
-                                        itemBuilder: (context, index) {
-                                          return Column(
-                                            children: [
-                                              ListTile(
-                                                title: Center(
-                                                  child: Text(
-                                                    '${ls[index].toString()}',
-                                                    style: const TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      backgroundColor: const Color(0xffFBBA95),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        height: (screenHeight * 30 / 100),
+                                        width: (screenWidth * 30 / 100),
+                                        child: ListView.builder(
+                                          itemCount: ls.length,
+                                          itemBuilder: (context, index) {
+                                            return Column(
+                                              children: [
+                                                ListTile(
+                                                  title: Center(
+                                                    child: Text(
+                                                      '${ls[index].toString()}',
+                                                      style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
                                                   ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedMonth = index;
+                                                      Navigator.pop(
+                                                          context, ls[index]);
+                                                    });
+                                                  },
                                                 ),
-                                                onTap: () {
-                                                  setState(() {
-                                                    selectedMonth = index;
-                                                    Navigator.pop(
-                                                        context, ls[index]);
-                                                  });
-                                                },
-                                              ),
-                                              const Divider(
-                                                // Thêm Divider sau mỗi ListTile
-                                                color: Colors
-                                                    .grey, // Màu sắc của đường kẻ
-                                                thickness:
-                                                    1.0, // Độ dày của đường kẻ
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                                const Divider(
+                                                  color: Colors.grey,
+                                                  thickness: 1.0,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        ),
                                       ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      selectedMonth != 0
+                                          ? '${ls[selectedMonth]}'
+                                          : "Chọn tháng",
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
                                     ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Platform.isIOS
-                                ? Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          selectedMonth != 0
-                                              ? '${ls[selectedMonth]}'
-                                              : "Chọn tháng",
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        const Image(
-                                            image: AssetImage(
-                                                'assets/icons/namtrondoi.png'),
-                                            height: 20,
-                                            width: 20)
-                                      ],
-                                    ),
-                                  )
-                                : Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          selectedMonth != 0
-                                              ? '${ls[selectedMonth]}'
-                                              : "Chọn tháng",
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        const Image(
-                                            image: AssetImage(
-                                                'assets/icons/namtrondoi.png'),
-                                            height: 18,
-                                            width: 18)
-                                      ],
-                                    ),
-                                  ),
-                          ),
+                                    const Image(
+                                        image: AssetImage(
+                                            'assets/icons/namtrondoi.png'),
+                                        height: 20,
+                                        width: 20)
+                                  ],
+                                ),
+                              )),
                         ),
                         Container(
                           height: 40,
@@ -327,121 +301,100 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Dialog(
-                                    backgroundColor: const Color(0xffFBBA95),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10),
-                                      height: (screenHeight * 30 / 100),
-                                      width: (screenWidth * 30 / 100),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            flex: 9,
-                                            child: ListView.builder(
-                                              itemCount: yearList.length,
-                                              itemBuilder: (context, index) {
-                                                return Column(
-                                                  children: [
-                                                    ListTile(
-                                                      title: Center(
-                                                        child: Text(
-                                                          yearList[index]
-                                                              .toString(),
-                                                          style: const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      backgroundColor: const Color(0xffFBBA95),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        height: (screenHeight * 30 / 100),
+                                        width: (screenWidth * 30 / 100),
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              flex: 9,
+                                              child: ListView.builder(
+                                                itemCount: yearList.length,
+                                                itemBuilder: (context, index) {
+                                                  return Column(
+                                                    children: [
+                                                      ListTile(
+                                                        title: Center(
+                                                          child: Text(
+                                                            yearList[index]
+                                                                .toString(),
+                                                            style: const TextStyle(
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
                                                         ),
+                                                        onTap: () {
+                                                          setState(() {
+                                                            selectedYear =
+                                                                yearList[index];
+                                                            Navigator.pop(
+                                                                context,
+                                                                yearList[
+                                                                    index]);
+                                                          });
+                                                        },
                                                       ),
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selectedYear =
-                                                              yearList[index];
-                                                          Navigator.pop(context,
-                                                              yearList[index]);
-                                                        });
-                                                      },
-                                                    ),
-                                                    const Divider(
-                                                      // Thêm Divider sau mỗi ListTile
-                                                      color: Colors
-                                                          .grey, // Màu sắc của đường kẻ
-                                                      thickness:
-                                                          1.0, // Độ dày của đường kẻ
-                                                    ),
-                                                  ],
-                                                );
-                                              },
+                                                      const Divider(
+                                                        // Thêm Divider sau mỗi ListTile
+                                                        color: Colors
+                                                            .grey, // Màu sắc của đường kẻ
+                                                        thickness:
+                                                            1.0, // Độ dày của đường kẻ
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                          Expanded(
-                                              flex: 1,
-                                              child: Center(
-                                                child: Text(
-                                                  'choose_year',
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ))
-                                        ],
+                                            Expanded(
+                                                flex: 1,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Chọn năm',
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ))
+                                          ],
+                                        ),
                                       ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      selectedYear != 0
+                                          ? selectedYear.toString()
+                                          : "Chưa được chọn",
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
                                     ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Platform.isIOS
-                                ? Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          selectedYear != 0
-                                              ? selectedYear.toString()
-                                              : "Not selected yet",
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        const Image(
-                                            image: AssetImage(
-                                                'assets/icons/namtrondoi.png'))
-                                      ],
-                                    ),
-                                  )
-                                : Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          selectedYear != 0
-                                              ? selectedYear.toString()
-                                              : "Not selected yet",
-                                          style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        const Image(
-                                            image: AssetImage(
-                                                'assets/icons/namtrondoi.png'),
-                                            height: 18,
-                                            width: 18)
-                                      ],
-                                    ),
-                                  ),
-                          ),
+                                    const Image(
+                                        image: AssetImage(
+                                            'assets/icons/namtrondoi.png'))
+                                  ],
+                                ),
+                              )),
                         ),
                       ],
                     ),
@@ -455,35 +408,8 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                             isShowList = true;
                           });
                         } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                backgroundColor: const Color(0xffFBBA95),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  height: (screenHeight * 15 / 100),
-                                  width: (screenWidth * 30 / 100),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        child: Center(
-                                          child: Text(
-                                            'Chọn năm',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
+                          CommonService.showToast(
+                              'Vui lòng chọn tháng để xem', context);
                         }
                       },
                       child: Container(
@@ -517,16 +443,14 @@ class _ChiTietXemNgayTotState extends State<ChiTietXemNgayTot> {
                       visible: isShowList,
                       child: Container(
                         padding: const EdgeInsets.all(10),
-                        height: (screenHeight * 70 / 100),
+                        height: MediaQuery.of(context).size.height / 1.5,
                         child: ListView.builder(
+                          shrinkWrap: true,
                           itemCount: daysList.length,
                           itemBuilder: (context, index) {
                             return Container(
                                 padding: const EdgeInsets.all(8),
                                 child: daysList[index]);
-                            // onTap: () {
-                            //   Navigator.pop(context, daysList[index]);
-                            // },
                           },
                         ),
                       ),

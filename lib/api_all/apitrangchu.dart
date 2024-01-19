@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:giapha/model/EventVO.dart';
+import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/user_model2.dart';
@@ -178,8 +179,6 @@ class ApiSukien {
           var dateArr = dateString.split("/");
           var date =
               DateTime(1993, int.parse(dateArr[1]), int.parse(dateArr[0]));
-
-          // Sử dụng { } thay vì ( ) khi khởi tạo đối tượng EventVO
           EventVO event = EventVO(date: date, event: name);
 
           results.add(event);
@@ -212,4 +211,27 @@ class ApiSukien {
   }
 
   // Thêm các hàm cập nhật và xóa sự kiện tại đây (putEvent, deleteEvent)
+}
+
+// giải mộng
+class ApiGiaiMong {
+  Future<List<ItemModelGiaiMong>> fetchDreams() async {
+    try {
+      final response = await dio.get('$urlapi/dreams');
+
+      if (response.statusCode == 200) {
+        List<ItemModelGiaiMong> dreams = [];
+
+        for (var dreamJson in response.data) {
+          dreams.add(ItemModelGiaiMong.fromJson(dreamJson));
+        }
+
+        return dreams;
+      } else {
+        throw Exception('Failed to load dreams');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
 }

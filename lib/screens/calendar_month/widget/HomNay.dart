@@ -22,8 +22,6 @@ class HomNay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 131,
-      width: 337,
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -54,7 +52,7 @@ class HomNay extends StatelessWidget {
             Column(
               children: [
                 const Text(
-                  'Day',
+                  'Ngày',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -85,7 +83,7 @@ class HomNay extends StatelessWidget {
             Column(
               children: [
                 const Text(
-                  'Month',
+                  'Tháng',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -116,7 +114,7 @@ class HomNay extends StatelessWidget {
             Column(
               children: [
                 const Text(
-                  'Year',
+                  'Năm',
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
