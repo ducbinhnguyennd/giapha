@@ -82,7 +82,6 @@ flutter:
     - assets/backgroud.png
     - assets/icons/
     - assets/images/
-    - assets/events.json
     - assets/quotes.json
 
   #   - images/a_dot_ham.jpeg

@@ -46,21 +46,22 @@ class User {
   String? avatar;
   String job;
   String role;
+  String? lineage;
 
-  User({
-    required this.id,
-    required this.username,
-    required this.password,
-    required this.hovaten,
-    required this.namsinh,
-    required this.tuoi,
-    required this.phone,
-    required this.address,
-    this.hometown,
-    this.avatar,
-    required this.job,
-    required this.role,
-  });
+  User(
+      {required this.id,
+      required this.username,
+      required this.password,
+      required this.hovaten,
+      required this.namsinh,
+      required this.tuoi,
+      required this.phone,
+      required this.address,
+      this.hometown,
+      this.avatar,
+      required this.job,
+      required this.role,
+      required this.lineage});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -75,6 +76,7 @@ class User {
         hometown: json['hometown'],
         job: json['job'],
         role: json['role'],
-        avatar: json['avatar']);
+        avatar: json['avatar'],
+        lineage: json['lineage']);
   }
 }

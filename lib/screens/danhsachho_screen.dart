@@ -104,78 +104,139 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text('Tìm kiếm họ'),
-        centerTitle: true,
-        backgroundColor: ColorConst.colorPrimary50,
-      ),
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            onChanged: (value) => _runFilter(value),
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-              hintText: "Tìm theo tên hoặc địa chỉ",
-              suffixIcon: const Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                borderSide: const BorderSide(),
+    if (currentUser != null && currentUser?.user[0].lineage == '') {
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text('Tìm kiếm họ'),
+          centerTitle: true,
+          backgroundColor: ColorConst.colorPrimary50,
+        ),
+        body: Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) => _runFilter(value),
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                hintText: "Tìm theo tên hoặc địa chỉ",
+                suffixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: const BorderSide(),
+                ),
               ),
             ),
           ),
+          Expanded(
+              child: _foundUsers.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: _foundUsers.length,
+                      itemBuilder: (context, index) {
+                        return ZoomTapAnimation(
+                            onTap: () {},
+                            child: ItemHo(
+                              tenho: _foundUsers[index].name,
+                              diachi: _foundUsers[index].address,
+                              members: _foundUsers[index].members.toString(),
+                              generation:
+                                  _foundUsers[index].generation.toString(),
+                              creater: _foundUsers[index].creater,
+                              phone: _foundUsers[index].phone,
+                            ));
+                      },
+                    )
+                  : isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 8.0,
+                                    mainAxisSpacing: 8.0,
+                                    childAspectRatio: 2 / 2.5),
+                            itemCount: _items.length,
+                            itemBuilder: (context, index) {
+                              return ZoomTapAnimation(
+                                onTap: () {},
+                                child: ItemHo(
+                                  tenho: _items[index].name,
+                                  diachi: _items[index].address,
+                                  members: _items[index].members.toString(),
+                                  generation:
+                                      _items[index].generation.toString(),
+                                  creater: _items[index].creater,
+                                  phone: _items[index].phone,
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+        ]),
+      );
+    } else {
+      return Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text('Bảng tin họ'),
+          centerTitle: true,
+          backgroundColor: ColorConst.colorPrimary50,
         ),
-        Expanded(
-            child: _foundUsers.isNotEmpty
-                ? ListView.builder(
-                    itemCount: _foundUsers.length,
-                    itemBuilder: (context, index) {
-                      return ZoomTapAnimation(
-                          onTap: () {},
-                          child: ItemHo(
-                            tenho: _foundUsers[index].name,
-                            diachi: _foundUsers[index].address,
-                            members: _foundUsers[index].members.toString(),
-                            generation:
-                                _foundUsers[index].generation.toString(),
-                            creater: _foundUsers[index].creater,
-                            phone: _foundUsers[index].phone,
-                          ));
-                    },
-                  )
-                : isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 8.0,
-                                  mainAxisSpacing: 8.0,
-                                  childAspectRatio: 2 / 2.5),
-                          itemCount: _items.length,
-                          itemBuilder: (context, index) {
-                            return ZoomTapAnimation(
-                              onTap: () {},
-                              child: ItemHo(
-                                tenho: _items[index].name,
-                                diachi: _items[index].address,
-                                members: _items[index].members.toString(),
-                                generation: _items[index].generation.toString(),
-                                creater: _items[index].creater,
-                                phone: _items[index].phone,
-                              ),
-                            );
-                          },
-                        ),
-                      )),
-      ]),
-    );
+        body: Column(children: [
+          Expanded(
+              child: _foundUsers.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: _foundUsers.length,
+                      itemBuilder: (context, index) {
+                        return ZoomTapAnimation(
+                            onTap: () {},
+                            child: ItemHo(
+                              tenho: _foundUsers[index].name,
+                              diachi: _foundUsers[index].address,
+                              members: _foundUsers[index].members.toString(),
+                              generation:
+                                  _foundUsers[index].generation.toString(),
+                              creater: _foundUsers[index].creater,
+                              phone: _foundUsers[index].phone,
+                            ));
+                      },
+                    )
+                  : isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 8.0,
+                                    mainAxisSpacing: 8.0,
+                                    childAspectRatio: 2 / 2.5),
+                            itemCount: _items.length,
+                            itemBuilder: (context, index) {
+                              return ZoomTapAnimation(
+                                onTap: () {},
+                                child: ItemHo(
+                                  tenho: _items[index].name,
+                                  diachi: _items[index].address,
+                                  members: _items[index].members.toString(),
+                                  generation:
+                                      _items[index].generation.toString(),
+                                  creater: _items[index].creater,
+                                  phone: _items[index].phone,
+                                ),
+                              );
+                            },
+                          ),
+                        )),
+        ]),
+      );
+    }
   }
 
   @override
