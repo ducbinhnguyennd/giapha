@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:giapha/model/EventVO.dart';
 import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
+import 'package:giapha/model/bangtin_model.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
+import 'package:giapha/model/thongbao_model.dart';
 import 'package:giapha/model/user_model2.dart';
 
 Dio dio = Dio();
@@ -232,6 +234,142 @@ class ApiGiaiMong {
       }
     } catch (e) {
       throw Exception('Error: $e');
+    }
+  }
+}
+
+// đã log
+class ApiBangTinDaLog {
+  Future<List<Bangtin>> getPosts(String userId) async {
+    try {
+      Response response = await dio.get("$urlapi/getbaiviet/$userId");
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        List<Bangtin> posts =
+            data.map((json) => Bangtin.fromJson(json)).toList();
+        return posts;
+      } else {
+        throw Exception("Failed to load posts");
+      }
+    } catch (e) {
+      throw Exception("Error: $e");
+    }
+  }
+}
+
+//post bài đăng
+class ApiPostBaiDang {
+  Future<Response> postBaiViet(String userId, String content) async {
+    try {
+      return await dio.post(
+        '$urlapi/postbaiviet/$userId',
+        data: {'content': content},
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+// thông báo
+class NotificationApi {
+  Future<List<NotificationModel>> getNotifications(String userId) async {
+    try {
+      final response = await dio.get('$urlapi/notifybaiviet/$userId');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => NotificationModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to load notifications');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+}
+
+// xoa bài viết
+class XoaBaiDang {
+  static Future<void> xoaBaiDang(String baivietId, String userId) async {
+    try {
+      final response = await dio.post(
+        '$urlapi/deletebaiviet/$baivietId/$userId',
+      );
+      if (response.statusCode == 200) {
+        print('binh xóa ${response.data}');
+      } else {
+        print('Loi cmnr');
+      }
+    } catch (e) {
+      // Handle Dio exception
+      print('Error: $e');
+    }
+  }
+}
+
+// like bài viết
+class LikeApiService {
+  Future<void> likeBaiViet(String userId, String baiVietId) async {
+    try {
+      await dio.post(
+        '$urlapi/addfavoritebaiviet/$userId/$baiVietId',
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+// post cmt bài đăng
+class ApiSCommentBaiDang {
+  Future<void> postComment(
+      String baivietId, String userId, String comment) async {
+    try {
+      final response = await dio.post(
+        '$urlapi/postcmtbaiviet/$baivietId/$userId',
+        data: {'comment': comment},
+      );
+      print('Response from postComment API: $response');
+    } catch (error) {
+      print('Error in postComment API: $error');
+    }
+  }
+}
+
+class ApiCmtBaiViet {
+  Future<List<Comment>> getComments(String baivietId) async {
+    try {
+      Response response = await dio.get("$urlapi/getcmtbaiviet/$baivietId");
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        List<Comment> posts =
+            data.map((json) => Comment.fromJson(json)).toList();
+        return posts;
+      } else {
+        throw Exception("Failed to load posts");
+      }
+    } catch (e) {
+      throw Exception("Error: $e");
+    }
+  }
+}
+
+// xoa cmt bài viết
+class XoaCommentBaiDang {
+  static Future<void> xoaComment(
+      String commentId, String baivietId, String userId) async {
+    try {
+      final response = await dio.post(
+        '$urlapi/deletecmtbaiviet/$commentId/$baivietId/$userId',
+      );
+      if (response.statusCode == 200) {
+        print('binh xoa ${response.data}');
+      } else {
+        print('Loi cmnr');
+      }
+    } catch (e) {
+      // Handle Dio exception
+      print('Error: $e');
     }
   }
 }
