@@ -191,7 +191,7 @@ class _PostBaiVietScreenState extends State<PostBaiVietScreen> {
       MapEntry('content', content),
     ]);
     Dio dio = Dio();
-    String urlTrangChu = 'https://du-an-2023.vercel.app/postbaiviet/$userId';
+    String urlTrangChu = 'https://appgiapha.vercel.app/postbaiviet/$userId';
 
     Map<String, String> header = {};
     dio.options.headers = header;

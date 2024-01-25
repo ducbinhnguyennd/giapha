@@ -18,7 +18,7 @@ class _IntroSiginState extends State<IntroSigin> {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset(AssetsPathConst.backgroundStoryDetail),
+          Image.asset(AssetsPathConst.intro),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -48,8 +48,7 @@ class _IntroSiginState extends State<IntroSigin> {
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(
-                    color: ColorConst.colorPrimary50, // Màu hồng
-
+                    color: ColorConst.colorPrimary50,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: const [
                       BoxShadow(

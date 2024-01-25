@@ -77,8 +77,6 @@ flutter:
   assets:
     - assets/
     - assets/translations/
-    - assets/splash.png
-    - assets/icons.png
     - assets/backgroud.png
     - assets/icons/
     - assets/images/

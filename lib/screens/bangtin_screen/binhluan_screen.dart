@@ -67,8 +67,8 @@ class _CommentScreenState extends State<CommentScreen> {
                                   icon: Icon(Icons.delete),
                                   onPressed: () {
                                     XoaCommentBaiDang.xoaComment(
-                                      comments[index].id ?? '',
                                       widget.baivietID,
+                                      comments[index].id ?? '',
                                       widget.userID,
                                     ).then((_) {
                                       setState(() {

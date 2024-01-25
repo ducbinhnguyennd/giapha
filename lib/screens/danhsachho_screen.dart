@@ -1,20 +1,16 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
-import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/common_service.dart';
-import 'package:giapha/constant/strings_const.dart';
+import 'package:giapha/mainscreen.dart';
 import 'package:giapha/model/bangtin_model.dart';
 
 import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/user_model.dart';
-import 'package:giapha/model/user_model2.dart';
-import 'package:giapha/screens/bangtin_screen/binhluan_screen.dart';
-import 'package:giapha/screens/bangtin_screen/postbai.dart';
-import 'package:giapha/screens/bangtin_screen/thongbao_screen.dart';
-import 'package:giapha/screens/widgets/item_bangtin.dart';
+import 'package:giapha/screens/bangtin_screen/bangtin.dart';
+
 import 'package:giapha/screens/widgets/item_ho.dart';
 import 'package:giapha/user_Service.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -29,7 +25,7 @@ class DanhsachhoScreen extends StatefulWidget {
 class _DanhsachhoScreenState extends State<DanhsachhoScreen>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   List<danhsachHoModel> _items = [];
-
+  String _key = '';
   List<danhsachHoModel> _foundUsers = [];
   Data? currentUser;
   int selectedTabIndex = 0;
@@ -37,7 +33,7 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
   Bangtin? bangtin;
   ApiBangTinDaLog apiBangTinDaLog = ApiBangTinDaLog();
   List<Bangtin> posts = [];
-
+  Joindongho joindongho = Joindongho();
   bool isLoading = true;
   @override
   void initState() {
@@ -50,22 +46,81 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
     await _loadUser();
   }
 
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Hàm để hiển thị modal và xử lý logic khi nhấn nút
+  void _showPasswordModal(BuildContext context, String id, String iduser) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Nhập mật khẩu"),
+          content: TextField(
+            controller: _passwordController,
+            onChanged: (val) {
+              setState(() {
+                _key = val;
+              });
+            },
+            obscureText: true,
+            decoration: InputDecoration(
+              hintText: "Nhập mật khẩu",
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Hủy"),
+            ),
+            TextButton(
+              onPressed: () async {
+                var response = await joindongho.joinDongho(id, iduser, _key);
+
+                CommonService.showToast('Đang đăng nhập...', context);
+                if (_key.isNotEmpty) {
+                  if (response?.statusCode == 200) {
+                    CommonService.showToast('Đăng nhập thành công', context);
+                    // setState(() {});
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const BangTinScreen()),
+                    );
+                  } else {
+                    CommonService.showToast('Sai mã', context);
+                  }
+                } else {
+                  CommonService.showToast('Nhập mã', context);
+                }
+                Navigator.of(context).pop();
+              },
+              child: Text("Xác nhận"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   final ApiUser apiService = ApiUser();
-  Future<void> _loadUser() async {
+  _loadUser() {
     UserServices us = UserServices();
     us.getInfoLogin().then((value) {
       if (value != "") {
         setState(() {
           currentUser = Data.fromJson(jsonDecode(value));
+
+          print('binh in ${currentUser}');
+          print('binh in 2 ${currentUser?.user[0].id}');
         });
       } else {
         setState(() {
           currentUser = null;
         });
       }
-    }, onError: (error) {}).then((value) async {
-      print('userid: ${currentUser?.user[0].id}');
-    });
+    }, onError: (error) {});
   }
 
   Future<void> fetchData() async {
@@ -120,7 +175,8 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (currentUser == null || currentUser?.user[0].lineage == "") {
+    super.build(context);
+    if (currentUser != null || currentUser?.user[0].lineage != "") {
       return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
@@ -152,7 +208,13 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                       itemCount: _foundUsers.length,
                       itemBuilder: (context, index) {
                         return ZoomTapAnimation(
-                            onTap: () {},
+                            onTap: () {
+                              _showPasswordModal(
+                                context,
+                                _foundUsers[index].id,
+                                currentUser?.user[0].id ?? '',
+                              );
+                            },
                             child: ItemHo(
                               tenho: _foundUsers[index].name,
                               diachi: _foundUsers[index].address,
@@ -178,7 +240,10 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
                             itemCount: _items.length,
                             itemBuilder: (context, index) {
                               return ZoomTapAnimation(
-                                onTap: () {},
+                                onTap: () {
+                                  _showPasswordModal(context, _items[index].id,
+                                      currentUser?.user[0].id ?? '');
+                                },
                                 child: ItemHo(
                                   tenho: _items[index].name,
                                   diachi: _items[index].address,
@@ -195,226 +260,8 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
         ]),
       );
     } else {
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          backgroundColor: ColorConst.colorPrimary50,
-          elevation: 0,
-          title: Text(
-            'Bảng tin',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: RefreshIndicator(
-          color: ColorConst.colorPrimary120,
-          onRefresh: _refresh,
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 13,
-                color: Colors.grey[200],
-                child: Row(
-                  children: [
-                    Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Xin chào',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            Text(
-                              currentUser?.user[0].username ?? 'bạn',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 19),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        )),
-                    Expanded(
-                      flex: 8,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(8.0, 13.0, 8.0, 13.0),
-                        child: InkWell(
-                          onTap: () {
-                            if (currentUser != null &&
-                                currentUser!.user != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PostBaiVietScreen(
-                                        userId: currentUser?.user[0].id ?? '')),
-                              ).then((result) {
-                                if (result.dataToPass == true) {
-                                  setState(() {
-                                    _loadUser();
-                                  });
-                                }
-                              });
-                            } else {
-                              CommonService.showToast(
-                                  StringConst.textyeucaudangnhap, context);
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                border:
-                                    Border.all(color: Colors.black, width: 1)),
-                            child:
-                                const Center(child: Text('Bạn đang nghĩ gì ?')),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: InkWell(
-                          onTap: (() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotificationScreen(
-                                        userID: currentUser?.user[0].id ?? '',
-                                      )),
-                            );
-                          }),
-                          child: Image.asset(
-                            AssetsPathConst.categoryBell,
-                            height: 25,
-                            color: ColorConst.colorPrimary120,
-                          ),
-                        ))
-                  ],
-                ),
-              ),
-              Expanded(
-                child: FutureBuilder<List<Bangtin>>(
-                  future:
-                      apiBangTinDaLog.getPosts(currentUser?.user[0].id ?? ''),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: CircularProgressIndicator(
-                        color: ColorConst.colorPrimary120,
-                      ));
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else {
-                      posts = snapshot.data!;
-                      return ListView.builder(
-                        itemCount: posts.length,
-                        itemBuilder: (context, index) {
-                          return ItemBangTin(
-                            widgetDelete:
-                                (posts[index].userId == currentUser?.user[0].id)
-                                    ? _item3DauCham(posts, index)
-                                    : Container(),
-                            username: posts[index].username,
-                            like: posts[index].like,
-                            content: posts[index].content,
-                            date: posts[index].date,
-                            cmt: posts[index].cmt.toString(),
-                            useridbaiviet: posts[index].userId,
-                            userid: currentUser?.user[0].id,
-                            idbaiviet: posts[index].id,
-                            isLike: posts[index].isLiked,
-                            comments: posts[index].comments ?? [],
-                            widgetPostCM: binhluon(
-                              posts[index].comments ?? [],
-                              posts[index].id,
-                              currentUser?.user[0].id ?? '',
-                            ),
-                            images: posts[index].images ?? [],
-                            avatar: posts[index].avatar,
-                            role: posts[index].role,
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      return const BangTinScreen();
     }
-  }
-
-  InkWell _item3DauCham(List<Bangtin> posts, int index) {
-    return InkWell(
-      onTap: () {
-        if (posts[index].userId == currentUser?.user[0].id) {
-          _showDeleteDialog(posts[index].id, currentUser?.user[0].id ?? '');
-        }
-      },
-      child: Icon(
-        Icons.more_vert,
-        size: 22,
-      ),
-    );
-  }
-
-  void _showDeleteDialog(String idPost, String userId) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Xóa bài viết'),
-          content: Text('Bạn có chắc muốn xóa bài viết này?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Hủy'),
-            ),
-            TextButton(
-              onPressed: () async {
-                await XoaBaiDang.xoaBaiDang(idPost, userId);
-                Navigator.of(context).pop();
-                setState(() {
-                  _loadUser();
-                });
-              },
-              child: Text('Xóa'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget binhluon(List<Comment> comments, String baivietID, String userID) {
-    return InkWell(
-      onTap: (() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CommentScreen(
-              baivietID: baivietID,
-              userID: userID,
-            ),
-          ),
-        ).then((value) {
-          if (value == true) {
-            _loadUser();
-          }
-        });
-      }),
-      child: Row(
-        children: [
-          Icon(Icons.chat, size: 25, color: Colors.grey[350]),
-          Text(' Bình luận')
-        ],
-      ),
-    );
   }
 
   @override

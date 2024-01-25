@@ -28,6 +28,27 @@ class Login {
   }
 }
 
+class Joindongho {
+  Future<Response?> joinDongho(
+      String iddongho, String iduser, String key) async {
+    print('tan response: $key');
+    print('tan response: $iddongho');
+
+    print('tan response: $iduser');
+
+    try {
+      var response = await dio.post(
+        '$urlapi/joindongho/$iddongho/$iduser',
+        data: {"key": key},
+      );
+      return response;
+    } catch (e) {
+      print('lỗi nặng ${e.toString()}');
+    }
+    return null;
+  }
+}
+
 // lay info user
 class ApiUser {
   Future<UserModel> fetchUserData(String userId) async {
@@ -243,10 +264,12 @@ class ApiBangTinDaLog {
   Future<List<Bangtin>> getPosts(String userId) async {
     try {
       Response response = await dio.get("$urlapi/getbaiviet/$userId");
+
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;
         List<Bangtin> posts =
             data.map((json) => Bangtin.fromJson(json)).toList();
+
         return posts;
       } else {
         throw Exception("Failed to load posts");
@@ -290,10 +313,10 @@ class NotificationApi {
 
 // xoa bài viết
 class XoaBaiDang {
-  static Future<void> xoaBaiDang(String baivietId, String userId) async {
+  static Future<void> xoaBaiDang(String userId, String baivietId) async {
     try {
-      final response = await dio.post(
-        '$urlapi/deletebaiviet/$baivietId/$userId',
+      final response = await dio.delete(
+        '$urlapi/deletebaiviet/$userId/$baivietId',
       );
       if (response.statusCode == 200) {
         print('binh xóa ${response.data}');
@@ -357,10 +380,10 @@ class ApiCmtBaiViet {
 // xoa cmt bài viết
 class XoaCommentBaiDang {
   static Future<void> xoaComment(
-      String commentId, String baivietId, String userId) async {
+      String baivietId, String commentId, String userId) async {
     try {
-      final response = await dio.post(
-        '$urlapi/deletecmtbaiviet/$commentId/$baivietId/$userId',
+      final response = await dio.delete(
+        '$urlapi/deletecmtbaiviet/$baivietId/$commentId/$userId',
       );
       if (response.statusCode == 200) {
         print('binh xoa ${response.data}');

@@ -1,6 +1,7 @@
 class AssetsPathConst {
   static const String splashBackgroundNgonTinh = 'assets/images/icons.png';
-  static const String backgroundStoryDetail = 'assets/images/ico_free.png';
+  static const String backgroundStoryDetail = 'assets/images/ico_free.jpg';
+  static const String intro = 'assets/images/ico_free1.jpeg';
 
   static const String gifloading = 'assets/images/gifloading.gif';
   static const String ico_back = 'assets/images/ico_back.png';

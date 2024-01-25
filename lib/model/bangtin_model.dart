@@ -6,7 +6,7 @@ class Bangtin {
   int like;
   String? date;
   bool isLiked;
-  int cmt;
+  int? cmt;
   String? avatar;
   String? role;
   List<Comment>? comments;
@@ -22,7 +22,7 @@ class Bangtin {
     required this.isLiked,
     this.date,
     this.comments,
-    required this.cmt,
+    this.cmt,
     required this.role,
     this.images,
   });
