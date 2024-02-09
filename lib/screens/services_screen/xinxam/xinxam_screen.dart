@@ -80,7 +80,7 @@ class _XinXamScreenState extends State<XinXamScreen> {
         backgroundColor: const Color(0xffFBBA95),
         automaticallyImplyLeading: false,
         title: const Text(
-          'tattoo_request',
+          'Xin Xăm',
           style: TextStyle(color: Colors.black, fontSize: 20),
         ),
         centerTitle: true,

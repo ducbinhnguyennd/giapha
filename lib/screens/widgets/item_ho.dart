@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giapha/constant/asset_path_const.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ItemHo extends StatelessWidget {
@@ -20,19 +21,31 @@ class ItemHo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.red),
-      child: Column(
-        children: [
-          Text('Tên họ: $tenho'),
-          Text('Địa chỉ: $diachi'),
-          Text('Số thành viên: $members'),
-          Text('$generation đời'),
-          Text('Người tạo $creater'),
-          Text('Số điện thoại: $phone'),
-        ],
-      ),
+      child: Stack(children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.asset(
+            AssetsPathConst.background,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+          color: Colors.white.withOpacity(0.5),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text('Tên họ: $tenho'),
+              Text('Địa chỉ: $diachi'),
+              Text('Số thành viên: $members'),
+              Text('$generation đời'),
+              Text('Người tạo $creater'),
+              Text('Số điện thoại: $phone'),
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }
