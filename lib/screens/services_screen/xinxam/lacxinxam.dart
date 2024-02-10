@@ -178,7 +178,7 @@ class _LacXinXamState extends State<LacXinXam> {
                           backgroundColor: const Color(0xffFCCDB3),
                           title: Center(child: Text('VĂN KHẤN')),
                           content: const Text(
-                            '''lac_xin_xam1''',
+                            ''' Trời Phật che chở, thánh thần thiêng liêng. Có ngờ thì hỏi, có bói thì thông. Chữ rằng :- “Có lòng thành tức có thân chứng, có lời cầu xin tức có sự ứng nghiệm”. \n Hôm nay là ngày… tháng ….năm ..., lúc ... giờ... Con tên là ......tuổi, ở tại ...Muốn biết về việc Gặp sự quan tâm, lòng đương thắc mắc, dám xin cung thỉnh Đức Phật Quan Âm lai lâm chứng giám, ban cho một quẻ linh xâm, đặng tỏ sự tình hay dỡ, kết quả xấu tốt ra sao. Hay khen hèn chê, để chúng con biết đường mà lội, biết lối mà qua, hầu có thể tránh dữ tìm lành, đổi tai làm phúc. Nay kính khẩn.''',
                           ),
                           actions: [
                             Center(
@@ -235,7 +235,7 @@ class _LacXinXamState extends State<LacXinXam> {
                     ),
                     child: Center(
                       child: Text(
-                        'doc_khan',
+                        'ĐỌC KHẤN',
                         style: TextStyle(
                           color: Color(0xffFF6209),
                           fontSize: 15,

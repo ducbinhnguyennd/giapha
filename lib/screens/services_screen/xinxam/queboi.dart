@@ -75,7 +75,7 @@ class QueBoi extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'xem_chi_tiet',
+                      'XEM CHI TIẾT',
                       style: TextStyle(
                         color: Color(0xffFF6209),
                         fontSize: 18,

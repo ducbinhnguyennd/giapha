@@ -3,13 +3,14 @@ import 'package:giapha/model/ReadData/ModelXinXam.dart';
 List<ItemModelXinXam> itemListXinXam = [
   ItemModelXinXam(
       id: 0,
-      ten: 'que_so21',
+      ten: 'QUẺ SỐ 21',
       ten1: 'Xâm Thượng',
-      noidung: '''xinxam_xamthuong_21''',
+      noidung:
+          '''\n 陰陽道合總由天 \n 女嫁男婚喜自然 \n 但見龍蛇相會合 \n 熊熊入夢喜圑圓 Âm:- \n\n Âm dương đạo hợp tổng do thiên \n Nữ giá nam hôn hỷ tự nhiên \n Đản kiến long xà tương hội họp \n Hùng hùng nhập mộng hỷ đoàn viên \n\n Dịch:- \n trời cao tạo dựng mối duyên nồng \n Trai thời cưới vợ gái theo chồng \n Như thể rồng mây tương hội ngộ \n Hừng hực động phòng thỏa ước mong \n\n Lời Bàn: \n\n Mưu vọng tùy tâm , Hôn nhân hòa hợp . Tài lộc tiến tới, Càng lợi điền viên \n\n Điềm quẻ   ứng \n\n Âm dương đạo hợp , Mọi việc đại cát \n\n Tích Cổ : Lý Đán long phụng phối hợp \n Giải:- \n  Gia đạo an , Tự thân lợi , Cầu tài có , Giao dịch thành , Hôn nhân hợp , Người đi tới , \n Điền vụ lục súc hưng vượng , Tìm người thấy , Kiện tụng có lý , Di dời xương thịn. \n Vật mất tìm về hướng có , Bệnh thuốc tốt , Phong thủy cát''',
       loai: "quanamlinhxam"),
   ItemModelXinXam(
       id: 1,
-      ten: 'que_so51',
+      ten: 'QUẺ SỐ 51',
       ten1: 'Xâm Thượng',
       noidung: '''xinxam_xamthuong_51''',
       loai: "quanamlinhxam"),

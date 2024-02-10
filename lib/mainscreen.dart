@@ -47,7 +47,7 @@ class _MainScreenState extends State<MainScreen>
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
-        print('poped');
+        // print('poped');
         _backButtonCount++;
 
         if (_backButtonCount == 2) {
