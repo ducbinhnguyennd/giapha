@@ -113,7 +113,7 @@ class _MainScreenState extends State<MainScreen>
                       child: Visibility(
                         visible: true,
                         child: Text(
-                          'Thế giới',
+                          'Bảng tin',
                           style: TextStyle(fontSize: DoubleX.kFontSizeTiny_1X),
                         ),
                       ),
