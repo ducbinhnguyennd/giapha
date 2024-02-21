@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/model/Data/DataTuViHangNgay.dart';
 import 'package:giapha/model/ReadData/ModelTuViHangNgay.dart';
 import 'package:giapha/utils/date_utils.dart';
@@ -73,7 +74,7 @@ class _TuViHangNgayScreenState extends State<TuViHangNgayScreen> {
                     height: (screenHeight * 13 / 100),
                     width: 340,
                     decoration: BoxDecoration(
-                      color: const Color(0xffF27E3C),
+                      color: ColorConst.colorPrimary,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
@@ -206,7 +207,7 @@ class _TuViHangNgayScreenState extends State<TuViHangNgayScreen> {
     final double screenHeight = screenSize.height;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFBBA95),
+        backgroundColor: ColorConst.colorPrimary,
         automaticallyImplyLeading: false,
         title: const Text(
           'Tử vi mỗi ngày',
@@ -218,7 +219,7 @@ class _TuViHangNgayScreenState extends State<TuViHangNgayScreen> {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.arrow_back_outlined,
+            Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
         ),
@@ -231,10 +232,10 @@ class _TuViHangNgayScreenState extends State<TuViHangNgayScreen> {
                 begin: Alignment.topLeft,
                 end: Alignment(0.8, 1),
                 colors: <Color>[
-                  Color(0xffF7E3D7),
-                  Color(0xffFFA877),
-                  Color(0xffFBBA95),
-                  Color(0xffEF6518),
+                  Color.fromRGBO(251, 255, 244, 1),
+                  Color.fromARGB(255, 165, 247, 149),
+                  Color.fromARGB(255, 120, 230, 76),
+                  Color.fromARGB(255, 103, 250, 97),
                 ],
                 tileMode: TileMode.mirror,
               ),

@@ -19,8 +19,6 @@ class ListTongQuan extends StatelessWidget {
                     bottomRight: Radius.circular(20)),
                 color: Colors.yellow,
               ),
-              height: 30,
-              //width: 100,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(text),

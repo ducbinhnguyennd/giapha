@@ -194,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           Positioned(
-            top: 50,
+            top: 60,
             left: 10,
             right: 10,
             child: Column(
@@ -215,13 +215,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 15,
+                ),
                 Container(
-                  margin: const EdgeInsets.all(16),
-                  height: 550,
+                  // margin: const EdgeInsets.all(16),
+                  height: 650,
                   child: Form(
                       key: _formKey,
-                      child: ListView(children: [
-                        Padding(padding: EdgeInsets.all(0)),
+                      child: ListView(padding: EdgeInsets.all(0), children: [
                         TextFormField(
                           controller: userEditingController,
                           key: _usernameKey,
