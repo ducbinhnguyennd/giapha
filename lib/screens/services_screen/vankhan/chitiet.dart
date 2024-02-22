@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:giapha/api_all/apitrangchu.dart';
+import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 
 class ChiTiet extends StatefulWidget {
@@ -16,11 +17,10 @@ class ChiTiet extends StatefulWidget {
 
 class _ChiTietState extends State<ChiTiet> {
   late ScrollController _scrollController;
-  late Timer _timer;
+  Timer? _scrollTimer;
+
   bool _isScrolling = false;
-  int _milliseconds = 60000;
-  double _currentSliderValue = 50;
-  final double _defaultSliderValue = 50;
+  double _scrollSpeed = 5.0;
   final ValueNotifier<double> fontSizeNotifier = ValueNotifier<double>(16);
   bool isLoading = true;
   void increaseFontSize() {
@@ -77,7 +77,10 @@ class _ChiTietState extends State<ChiTiet> {
                           valueListenable: fontSizeNotifier,
                           builder: (context, fontSize, _) {
                             return Text(
-                              text1,
+                              text1
+                                  .replaceAll("\\n\\n", "\n\n")
+                                  .replaceAll("\\n", "\n"),
+                              softWrap: true,
                               style: TextStyle(
                                   fontSize: fontSize,
                                   fontWeight: FontWeight.w400),
@@ -112,7 +115,6 @@ class _ChiTietState extends State<ChiTiet> {
 
   @override
   void initState() {
-    _startScrolling();
     _loadVanKhan();
     _scrollController = ScrollController();
     super.initState();
@@ -121,27 +123,51 @@ class _ChiTietState extends State<ChiTiet> {
   @override
   void dispose() {
     _scrollController.dispose();
-    _timer.cancel();
+    _scrollTimer?.cancel();
     super.dispose();
   }
 
-  void _startScrolling() {
-    _timer = Timer.periodic(const Duration(milliseconds: 100), (_) {
+  void _toggleAutoScroll() {
+    setState(() {
+      _isScrolling = !_isScrolling;
       if (_isScrolling) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: _milliseconds),
-          curve: Curves.easeOut,
-        );
+        _startAutoScroll();
       } else {
-        _timer.cancel();
+        _scrollTimer?.cancel();
       }
     });
   }
 
-  void _stopScrolling() {
+  void _changeScrollSpeed(double value) {
+    // print('xem chya bn ma cham the $value');
     setState(() {
-      _isScrolling = false;
+      _scrollSpeed = value;
+      if (_isScrolling) {
+        _scrollTimer?.cancel();
+        _startAutoScroll();
+      }
+    });
+  }
+
+  void _startAutoScroll() {
+    if (_scrollController.hasClients == false) return;
+
+    _scrollTimer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
+      if (_scrollController.hasClients == true) {
+        _scrollController.animateTo(
+          _scrollController.position.pixels + _scrollSpeed,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.linear,
+        );
+
+        if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 20) {
+          setState(() {
+            _isScrolling = false;
+            timer.cancel();
+          });
+        }
+      }
     });
   }
 
@@ -162,7 +188,7 @@ class _ChiTietState extends State<ChiTiet> {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.arrow_back_outlined,
+            Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
         ),
@@ -170,44 +196,41 @@ class _ChiTietState extends State<ChiTiet> {
       body: Stack(
         children: [
           Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment(0.8, 1),
-                  colors: <Color>[
-                    Color(0xffF7E3D7),
-                    Color(0xffFFA877),
-                    Color(0xffFBBA95),
-                    Color(0xffEF6518),
-                  ],
-                  tileMode: TileMode.mirror,
-                ),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment(0.8, 1),
+                colors: <Color>[
+                  Color(0xffF7E3D7),
+                  Color(0xffFFA877),
+                  Color(0xffFBBA95),
+                  Color(0xffEF6518),
+                ],
+                tileMode: TileMode.mirror,
               ),
-              child: isLoading
-                  ? Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      controller: _scrollController,
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(children: [
-                            box(
-                              'Giới thiệu',
-                              vanKhanModel.gioiThieu,
-                            ),
-                            box(
-                              'Sắm lễ',
-                              vanKhanModel.samle,
-                            ),
-                            box(
-                              'VĂN KHẤN',
-                              vanKhanModel.vanKhan,
-                            ),
-                          ]),
-                        );
-                      },
-                    )),
+            ),
+            child: isLoading
+                ? Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      children: [
+                        box(
+                          'Giới thiệu',
+                          vanKhanModel.gioiThieu,
+                        ),
+                        box(
+                          'Sắm lễ',
+                          vanKhanModel.samle,
+                        ),
+                        box(
+                          'VĂN KHẤN',
+                          vanKhanModel.vanKhan,
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
           Positioned(
             right: 10,
             bottom: 10,
@@ -240,17 +263,7 @@ class _ChiTietState extends State<ChiTiet> {
           children: [
             IconButton(
               onPressed: () {
-                setState(() {
-                  _isScrolling = !_isScrolling;
-                  if (_isScrolling) {
-                    _startScrolling();
-                    _currentSliderValue = _defaultSliderValue;
-                    _milliseconds =
-                        ((_currentSliderValue / 100) * 110000).toInt();
-                  } else {
-                    _stopScrolling();
-                  }
-                });
+                _toggleAutoScroll();
               },
               icon: Icon(
                 _isScrolling ? Icons.pause : Icons.play_arrow,
@@ -258,20 +271,16 @@ class _ChiTietState extends State<ChiTiet> {
               ),
             ),
             Slider(
-                activeColor: Colors.black,
-                value: _currentSliderValue,
-                max: 100,
-                label: _currentSliderValue.toString(),
-                onChanged: (double value) {
-                  setState(() {
-                    if (value >= 1) {
-                      _currentSliderValue = value;
-                      _milliseconds =
-                          ((_currentSliderValue / 100) * 110000).toInt();
-                    }
-                  });
-                }),
-            Text('${_currentSliderValue.toInt()}%')
+              activeColor: ColorConst.colorPrimary,
+              inactiveColor: Colors.grey,
+              thumbColor: ColorConst.colorSecondary,
+              min: 1.0,
+              max: 20.0,
+              value: _scrollSpeed,
+              onChanged: _changeScrollSpeed,
+              divisions: 19,
+            ),
+            Text('${_scrollSpeed.toInt()}%')
           ],
         ),
       ),
