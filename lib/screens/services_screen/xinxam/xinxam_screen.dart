@@ -28,7 +28,7 @@ class _XinXamScreenState extends State<XinXamScreen> {
       check: 'delinh',
     ),
   ];
-
+//alo
   Widget listXinXam(String ten, String check) {
     return GestureDetector(
       onTap: () {
