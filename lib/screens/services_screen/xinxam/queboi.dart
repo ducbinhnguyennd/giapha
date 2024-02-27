@@ -59,7 +59,7 @@ class QueBoi extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChiTietXinXam(
-                        ten1: ten2,
+                        ten1: ten1,
                         ten: ten,
                         noidung: noidung,
                       ),

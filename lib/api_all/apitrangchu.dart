@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:giapha/model/EventVO.dart';
 import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
+import 'package:giapha/model/ReadData/ModelXinXam.dart';
 import 'package:giapha/model/bangtin_model.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/thongbao_model.dart';
@@ -161,6 +162,46 @@ class ApiChiTietVanKhan {
       return VanKhanModel.fromJson(response.data);
     } else {
       throw Exception('Failed to load VanKhan');
+    }
+  }
+}
+
+// xin xăm tổng
+class ApiLoaiXinXam {
+  Future<List<ItemModelLoaiXam>> fetchLoaiXam() async {
+    try {
+      final response = await dio.get('$urlapi/getfullxam');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data
+            .map((xinxamJson) => ItemModelLoaiXam.fromJson(xinxamJson))
+            .toList();
+      } else {
+        throw Exception('Failed to load xin xam');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+}
+
+// chi tiết xin xăm
+class ApiChiTietXinXam {
+  Future<List<ItemModelXinXam>> fetchxinxamitem(String idxinxamitem) async {
+    try {
+      final response = await dio.get('$urlapi/getqueboi/$idxinxamitem');
+      List<ItemModelXinXam> tattoos = [];
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        for (var json in data) {
+          tattoos.add(ItemModelXinXam.fromJson(json));
+        }
+        print('API xin xăm status1: ${tattoos}');
+      }
+      return tattoos;
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 }

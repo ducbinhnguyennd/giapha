@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/model/ReadData/ModelXinXam.dart';
 import 'package:giapha/screens/services_screen/xinxam/lacxinxam.dart';
 
@@ -10,32 +11,38 @@ class XinXamScreen extends StatefulWidget {
 }
 
 class _XinXamScreenState extends State<XinXamScreen> {
-  List<ItemModelLoaiXam> itemlist = [
-    ItemModelLoaiXam(
-      ten: 'quanamlinhxam',
-      check: 'quanamlinhxam',
-    ),
-    ItemModelLoaiXam(
-      ten: 'xamthanhmau',
-      check: 'xamthanhmau',
-    ),
-    ItemModelLoaiXam(
-      ten: 'taquan',
-      check: 'taquan',
-    ),
-    ItemModelLoaiXam(
-      ten: 'delinh',
-      check: 'delinh',
-    ),
-  ];
-  Widget listXinXam(String ten, String check) {
+  List<ItemModelLoaiXam> itemlist = [];
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    fetchDataXinXam();
+  }
+
+  Future<void> fetchDataXinXam() async {
+    try {
+      final List<ItemModelLoaiXam> apiData =
+          await ApiLoaiXinXam().fetchLoaiXam();
+      setState(() {
+        itemlist = apiData;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Widget listXinXam(String ten, String id) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => LacXinXam(
-                check: check,
+                id: id,
                 ten: ten,
               ),
             ));
@@ -103,10 +110,7 @@ class _XinXamScreenState extends State<XinXamScreen> {
           child: ListView.builder(
             itemCount: itemlist.length,
             itemBuilder: (context, index) {
-              return listXinXam(
-                itemlist[index].ten,
-                itemlist[index].check,
-              );
+              return listXinXam(itemlist[index].ten, itemlist[index].id);
             },
           ),
         ),

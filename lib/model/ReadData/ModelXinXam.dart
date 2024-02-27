@@ -1,23 +1,32 @@
 class ItemModelXinXam {
-  final int id;
-  final String ten;
-  final String ten1;
+  final String id;
+  final String tenque;
+  final String tenxam;
   final String noidung;
-  final String? loai;
   ItemModelXinXam({
     required this.id,
-    required this.ten,
-    required this.ten1,
+    required this.tenque,
+    required this.tenxam,
     required this.noidung,
-    required this.loai,
   });
+  factory ItemModelXinXam.fromJson(Map<String, dynamic> json) {
+    return ItemModelXinXam(
+      id: json['id'] ?? '',
+      tenque: json['tenque'] ?? '',
+      tenxam: json['tenxam'] ?? '',
+      noidung: json['noidung'] ?? '',
+    );
+  }
 }
 
 class ItemModelLoaiXam {
   final String ten;
-  final String check;
+  final String id;
   ItemModelLoaiXam({
     required this.ten,
-    required this.check,
+    required this.id,
   });
+  factory ItemModelLoaiXam.fromJson(Map<String, dynamic> json) {
+    return ItemModelLoaiXam(id: json['id'], ten: json['name']);
+  }
 }
