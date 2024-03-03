@@ -36,7 +36,7 @@ class _ChiTietXinXamState extends State<ChiTietXinXam> {
         backgroundColor: const Color(0xffFBBA95),
         automaticallyImplyLeading: false,
         title: const Text(
-          'chi_tiet',
+          'Chi tiết quẻ',
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),
         ),
@@ -75,7 +75,7 @@ class _ChiTietXinXamState extends State<ChiTietXinXam> {
                     child: Column(
                       children: [
                         Text(
-                          widget.ten,
+                          widget.ten1,
                           style: const TextStyle(
                               color: Color(0xffFF5C00),
                               fontSize: 28,
@@ -83,7 +83,7 @@ class _ChiTietXinXamState extends State<ChiTietXinXam> {
                               fontFamily: 'CCGabrielBautistaLito'),
                         ),
                         Text(
-                          widget.ten1,
+                          widget.ten,
                           style: const TextStyle(
                             color: Color(0xffFF5C00),
                             fontSize: 16,
@@ -104,7 +104,7 @@ class _ChiTietXinXamState extends State<ChiTietXinXam> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              widget.noidung,
+                              widget.noidung.replaceAll("\\n", "\n"),
                               style: TextStyle(
                                   fontSize: fontSize,
                                   fontWeight: FontWeight.w400),

@@ -45,7 +45,7 @@ class QueBoi extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                ten,
+                ten2,
                 style: const TextStyle(
                     color: Color(0xffFF5C00),
                     fontSize: 28,
@@ -59,7 +59,7 @@ class QueBoi extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ChiTietXinXam(
-                        ten1: ten1,
+                        ten1: ten2,
                         ten: ten,
                         noidung: noidung,
                       ),

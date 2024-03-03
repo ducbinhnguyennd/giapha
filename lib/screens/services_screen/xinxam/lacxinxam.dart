@@ -131,7 +131,7 @@ class _LacXinXamState extends State<LacXinXam> {
                       ? const Image(image: AssetImage('assets/images/ong.gif'))
                       : const Image(
                           image: AssetImage('assets/images/xinxam.png'))),
-              if (showVanKhan) // Hiển thị 'Đọc văn khấn' chỉ khi biến cờ là true
+              if (showVanKhan)
                 GestureDetector(
                   onTap: () {
                     if (listXinXam.isNotEmpty) {
