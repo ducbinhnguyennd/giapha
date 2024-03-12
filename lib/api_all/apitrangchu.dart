@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:giapha/model/EventVO.dart';
 import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
@@ -5,6 +7,7 @@ import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/model/ReadData/ModelXinXam.dart';
 import 'package:giapha/model/bangtin_model.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
+import 'package:giapha/model/giaPha_model.dart';
 import 'package:giapha/model/thongbao_model.dart';
 import 'package:giapha/model/user_model2.dart';
 
@@ -434,6 +437,30 @@ class XoaCommentBaiDang {
     } catch (e) {
       // Handle Dio exception
       print('Error: $e');
+    }
+  }
+}
+
+//API cây gia phả
+class CayGiaPhaApi {
+  Future<Member> fetchFamilyTree() async {
+    try {
+      Response response = await dio.get(
+        '$urlapi/familyTree/65a7aad483a10320cc9af8d0',
+        data: {"key": 'traz0810'},
+      );
+      if (response.statusCode == 200) {
+        print('cây api $response');
+        // Truy cập trực tiếp vào response.data để lấy dữ liệu
+        final Map<String, dynamic> jsonData = response.data;
+        final List<dynamic> familyTreeJson = jsonData['familyTreeJSON'];
+        // Assuming the first element in familyTreeJSON is the root member of the family tree
+        return Member.fromJson(familyTreeJson[0]);
+      } else {
+        throw Exception("Failed to load family tree");
+      }
+    } catch (e) {
+      throw Exception("Failed to load family tree: $e");
     }
   }
 }

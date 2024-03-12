@@ -5,6 +5,7 @@ import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
 import 'package:giapha/screens/danhsachho_screen.dart';
+import 'package:giapha/screens/giapha_screen/caygiapha_screen.dart';
 import 'package:giapha/screens/home_screen.dart';
 import 'package:giapha/screens/screen_setting/setting_screen.dart';
 import 'package:giapha/screens/xemgiapha_Screen/giapha_screen.dart';
@@ -69,7 +70,7 @@ class _MainScreenState extends State<MainScreen>
           children: <Widget>[
             HomeScreen(),
             DanhsachhoScreen(),
-            GiaPhaScreen(),
+            FamilyTreeScreen(),
             TaikhoanScreen()
           ],
         ),
