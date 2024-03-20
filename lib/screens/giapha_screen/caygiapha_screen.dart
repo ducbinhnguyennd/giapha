@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
+import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/model/giaPha_model.dart';
 
 class FamilyTreeScreen extends StatefulWidget {
@@ -8,96 +9,200 @@ class FamilyTreeScreen extends StatefulWidget {
 }
 
 class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
-  final CayGiaPhaApi _apiService = CayGiaPhaApi();
-  Member? _familyTree;
+  late CayGiaPhaApi _api;
+  late Member _familyTreeRoot;
+  late Creator _creator;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _api = CayGiaPhaApi();
     _fetchFamilyTree();
   }
 
-  void _fetchFamilyTree() async {
+  Future<void> _fetchFamilyTree() async {
     try {
-      final Member familyTree = await _apiService.fetchFamilyTree();
+      Map<String, dynamic>? jsonData = await _api.fetchFamilyTree();
       setState(() {
-        _familyTree = familyTree;
+        _familyTreeRoot = Member.fromJson(jsonData['familyTreeJSON'][0]);
+        _creator = Creator.fromJson(jsonData['creator']);
+        _isLoading = false;
       });
     } catch (e) {
-      print("Error fetching family tree: $e");
+      print('Failed to load family tree: $e');
+      setState(() {
+        _isLoading = false;
+      });
+      // Xử lý lỗi
     }
   }
 
-  Widget _buildMember(Member member) {
-    return ListTile(
-      title: Text(member.name ?? ''),
-      subtitle: Text(member.date ?? ''),
-      onTap: () {
-        // Handle tap on member
-      },
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Image.asset(
+          AssetsPathConst.bggiapha,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
+        ),
+        if (_isLoading)
+          Center(
+            child: CircularProgressIndicator(),
+          )
+        else
+          Positioned(
+            top: 100,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Text('Người tạo họ - ${_creator.name ?? ''}'),
+                      Text('Số diện thoại - ${_creator.phone ?? ''}'),
+                    ],
+                  ),
+                  ListTile(
+                    title: Text('Gia phả: Họ Nguyễn'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        if (!_isLoading)
+          Column(
+            children: [
+              Expanded(
+                child: FamilyTreeGeneration(
+                  generation: _familyTreeRoot,
+                ),
+              ),
+              Expanded(
+                child: FamilyTreeGeneration(
+                  generation: _familyTreeRoot,
+                  showChildren: true,
+                ),
+              ),
+            ],
+          )
+      ],
     );
   }
+}
 
-  Widget _buildFamilyTree(Member? member) {
-    if (member == null) {
-      return Center(child: Text('No family tree data available'));
-    }
+class FamilyTreeGeneration extends StatelessWidget {
+  final Member generation;
+  final bool showChildren;
+
+  FamilyTreeGeneration({
+    required this.generation,
+    this.showChildren = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: _countMembers(member),
-      itemBuilder: (BuildContext context, int index) {
-        final Member currentMember = _getMemberAtIndex(member, index);
-        return _buildMember(currentMember);
+      itemCount: showChildren ? generation.children!.length : 1,
+      itemBuilder: (context, index) {
+        final List<Member> children =
+            showChildren ? generation.children![index] : [generation];
+        return Column(
+          children: children.map((child) {
+            return ListTile(
+              title: Text(child.name ?? ''),
+              onTap: () {
+                _showChildrenOfMember(context, child);
+              },
+            );
+          }).toList(),
+        );
       },
     );
   }
 
-  int _countMembers(Member member) {
-    int count = 1; // Count the member itself
-    if (member.children != null) {
-      for (List<Member> childrenList in member.children!) {
-        for (Member child in childrenList) {
-          count += _countMembers(child);
-        }
-      }
+  void _showChildrenOfMember(BuildContext context, Member member) {
+    if (member.children != null && member.children!.isNotEmpty) {
+      List<List<Member>> childrenOfMember =
+          member.children!.cast<List<Member>>();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DescendantsPage(descendants: childrenOfMember),
+        ),
+      );
     }
-    return count;
   }
+}
 
-  Member _getMemberAtIndex(Member member, int index) {
-    if (index == 0) {
-      return member;
-    }
-    int currentIndex = 1;
-    return _findMemberInChildren(member, index, currentIndex);
-  }
+class DescendantsPage extends StatelessWidget {
+  final List<List<Member>> descendants;
 
-  Member _findMemberInChildren(
-      Member member, int targetIndex, int currentIndex) {
-    if (member.children != null) {
-      for (List<Member> childrenList in member.children!) {
-        for (Member child in childrenList) {
-          if (currentIndex == targetIndex) {
-            return child;
-          }
-          currentIndex++;
-          Member foundMember =
-              _findMemberInChildren(child, targetIndex, currentIndex);
-          if (foundMember != member) {
-            return foundMember;
-          }
-        }
-      }
-    }
-    return member;
-  }
+  DescendantsPage({required this.descendants});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Family Tree'),
+        title: Text('Descendants'),
       ),
-      body: _buildFamilyTree(_familyTree),
+      body: ListView.builder(
+        itemCount: descendants.length,
+        itemBuilder: (context, index) {
+          final List<Member> firstGeneration = descendants[index];
+          return Column(
+            children: [
+              ListTile(
+                title: Text(firstGeneration.first.name ?? ''),
+                onTap: () {
+                  _showChildrenOfMember(context, firstGeneration.first);
+                },
+              ),
+              Text(firstGeneration.first.generation.toString()),
+              if (firstGeneration.first.children != null &&
+                  firstGeneration.first.children!.isNotEmpty)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: firstGeneration.first.children!.length,
+                  itemBuilder: (context, index) {
+                    final List<Member> secondGeneration =
+                        firstGeneration.first.children![index];
+                    return Column(
+                      children: secondGeneration
+                          .map(
+                            (member) => ListTile(
+                              title: Text(member.name ?? ''),
+                              onTap: () {
+                                _showChildrenOfMember(context, member);
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
+            ],
+          );
+        },
+      ),
     );
+  }
+
+  void _showChildrenOfMember(BuildContext context, Member member) {
+    if (member.children != null && member.children!.isNotEmpty) {
+      List<List<Member>> childrenOfMember =
+          member.children!.cast<List<Member>>();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DescendantsPage(descendants: childrenOfMember),
+        ),
+      );
+    }
   }
 }

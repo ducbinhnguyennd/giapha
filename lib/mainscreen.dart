@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
+import 'package:giapha/screens/bangtin_screen/bangtin.dart';
 import 'package:giapha/screens/danhsachho_screen.dart';
 import 'package:giapha/screens/giapha_screen/caygiapha_screen.dart';
 import 'package:giapha/screens/home_screen.dart';
@@ -71,6 +72,7 @@ class _MainScreenState extends State<MainScreen>
             HomeScreen(),
             DanhsachhoScreen(),
             FamilyTreeScreen(),
+            // BangTinScreen(),
             TaikhoanScreen()
           ],
         ),

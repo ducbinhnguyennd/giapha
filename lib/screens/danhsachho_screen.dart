@@ -47,8 +47,6 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
   }
 
   final TextEditingController _passwordController = TextEditingController();
-
-  // Hàm để hiển thị modal và xử lý logic khi nhấn nút
   void _showPasswordModal(BuildContext context, String id, String iduser) {
     showDialog(
       context: context,
@@ -77,8 +75,6 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
             TextButton(
               onPressed: () async {
                 var response = await joindongho.joinDongho(id, iduser, _key);
-
-                CommonService.showToast('Đang đăng nhập...', context);
                 if (_key.isNotEmpty) {
                   if (response?.statusCode == 200) {
                     CommonService.showToast('Đăng nhập thành công', context);
@@ -176,7 +172,7 @@ class _DanhsachhoScreenState extends State<DanhsachhoScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if (currentUser != null || currentUser?.user[0].lineage != "") {
+    if (currentUser == null || currentUser?.user[0].lineage == "") {
       return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(

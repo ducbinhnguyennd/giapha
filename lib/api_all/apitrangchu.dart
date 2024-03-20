@@ -45,6 +45,7 @@ class Joindongho {
         '$urlapi/joindongho/$iddongho/$iduser',
         data: {"key": key},
       );
+      print('dongho ${response}');
       return response;
     } catch (e) {
       print('lỗi nặng ${e.toString()}');
@@ -443,7 +444,7 @@ class XoaCommentBaiDang {
 
 //API cây gia phả
 class CayGiaPhaApi {
-  Future<Member> fetchFamilyTree() async {
+  Future<Map<String, dynamic>> fetchFamilyTree() async {
     try {
       Response response = await dio.get(
         '$urlapi/familyTree/65a7aad483a10320cc9af8d0',
@@ -452,10 +453,7 @@ class CayGiaPhaApi {
       if (response.statusCode == 200) {
         print('cây api $response');
         // Truy cập trực tiếp vào response.data để lấy dữ liệu
-        final Map<String, dynamic> jsonData = response.data;
-        final List<dynamic> familyTreeJson = jsonData['familyTreeJSON'];
-        // Assuming the first element in familyTreeJSON is the root member of the family tree
-        return Member.fromJson(familyTreeJson[0]);
+        return response.data;
       } else {
         throw Exception("Failed to load family tree");
       }
