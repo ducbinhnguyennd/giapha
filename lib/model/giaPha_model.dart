@@ -22,7 +22,7 @@ class Member {
   String? name;
   String? date;
   bool? dead;
-  int? generation;
+  String? generation;
   List<List<Member>>? children;
 
   Member(
@@ -38,7 +38,7 @@ class Member {
     name = json['name'];
     date = json['date'];
     dead = json['dead'];
-    generation = json['generation'];
+    generation = json['relationship'];
     if (json['con'] != null) {
       children = [];
       json['con'].forEach((childList) {
@@ -57,7 +57,7 @@ class Member {
     data['name'] = this.name;
     data['date'] = this.date;
     data['dead'] = this.dead;
-    data['generation'] = this.generation;
+    data['relationship'] = this.generation;
     if (this.children != null) {
       data['con'] = this
           .children

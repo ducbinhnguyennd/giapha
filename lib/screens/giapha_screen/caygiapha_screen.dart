@@ -162,7 +162,7 @@ class DescendantsPage extends StatelessWidget {
                   _showChildrenOfMember(context, firstGeneration.first);
                 },
               ),
-              Text(firstGeneration.first.generation.toString()),
+              Text(firstGeneration.first.generation ?? ''),
               if (firstGeneration.first.children != null &&
                   firstGeneration.first.children!.isNotEmpty)
                 ListView.builder(

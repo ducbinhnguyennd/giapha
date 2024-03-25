@@ -448,7 +448,6 @@ class CayGiaPhaApi {
     try {
       Response response = await dio.get(
         '$urlapi/familyTree/65a7aad483a10320cc9af8d0',
-        data: {"key": 'traz0810'},
       );
       if (response.statusCode == 200) {
         print('cây api $response');
