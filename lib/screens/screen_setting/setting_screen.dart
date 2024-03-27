@@ -321,10 +321,10 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             },
             child: ListTile(
               title: Transform.translate(
-                offset: const Offset(-20, 0),
+                offset: const Offset(-10, 0),
                 child: const Text('Thay đổi ảnh đại diện/ ảnh bìa'),
               ),
-              leading: const ImageIcon(AssetImage(AssetsPathConst.tabHome),
+              leading: const ImageIcon(AssetImage(AssetsPathConst.hoten),
                   size: 22, color: ColorConst.colorPrimary30),
             ),
           ),
@@ -340,10 +340,10 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             },
             child: ListTile(
                 title: Transform.translate(
-                  offset: Offset(-20, 0),
+                  offset: Offset(-10, 0),
                   child: Text('Thay đổi thông tin'),
                 ),
-                leading: Image.asset(AssetsPathConst.tabHome, height: 22)),
+                leading: Image.asset(AssetsPathConst.update, height: 22)),
           ),
         ]),
       ),
@@ -368,11 +368,11 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
               },
               child: ListTile(
                 title: Transform.translate(
-                  offset: const Offset(-20, 0),
+                  offset: const Offset(-10, 0),
                   child: const Text('Xóa tài khoản'),
                 ),
                 leading: const ImageIcon(
-                  AssetImage(AssetsPathConst.tabHome),
+                  AssetImage(AssetsPathConst.xoataikhoan),
                   size: 22,
                   color: ColorConst.colorPrimary30,
                 ),
@@ -450,11 +450,11 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
             },
             child: ListTile(
               title: Transform.translate(
-                offset: const Offset(-20, 0),
+                offset: const Offset(-10, 0),
                 child: const Text('Liên hệ hỗ trợ'),
               ),
               leading: const ImageIcon(
-                AssetImage(AssetsPathConst.tabHome),
+                AssetImage(AssetsPathConst.lienhe),
                 color: ColorConst.colorPrimary30,
                 size: 22,
               ),
@@ -550,10 +550,10 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
               },
               child: ListTile(
                   title: Transform.translate(
-                    offset: const Offset(-20, 0),
+                    offset: const Offset(-10, 0),
                     child: const Text('Đăng xuất'),
                   ),
-                  leading: Image.asset(AssetsPathConst.tabHome, height: 22)))
+                  leading: Image.asset(AssetsPathConst.dangxuat, height: 22)))
         ]),
       ),
     );

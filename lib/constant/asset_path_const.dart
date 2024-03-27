@@ -28,4 +28,10 @@ class AssetsPathConst {
   static const String tichxanh = 'assets/images/tichxanh.png';
 
   static const String ico_face = 'assets/images/icosetting/ico_face.png';
+  static const String dangxuat = 'assets/icons/dangxuat.png';
+  static const String lienhe = 'assets/icons/phone.png';
+  static const String update = 'assets/icons/update.png';
+  static const String hoten = 'assets/icons/hoten.png';
+
+  static const String xoataikhoan = 'assets/icons/quangcao.png';
 }
