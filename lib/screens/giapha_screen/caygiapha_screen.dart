@@ -40,57 +40,64 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          AssetsPathConst.bggiapha,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.fill,
-        ),
-        if (_isLoading)
-          Center(
-            child: CircularProgressIndicator(),
-          )
-        else
-          Positioned(
-            top: 120,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+    return SafeArea(
+      child: Stack(
+        children: [
+          Image.asset(
+            AssetsPathConst.bggiapha,
+            width: MediaQuery.of(context).size.width,
+            fit: BoxFit.fill,
+          ),
+          if (_isLoading)
+            Center(
+              child: CircularProgressIndicator(),
+            )
+          else
+            Positioned(
+              top: 90,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(bottom: kBottomNavigationBarHeight),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        Text('Gia phả: Họ Nguyễn'),
+                        Text('Người tạo họ - ${_creator.name ?? ''}'),
+                        Text('Số diện thoại - ${_creator.phone ?? ''}'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (!_isLoading)
+            Positioned(
+              top: 200,
+              left: 100,
+              right: 0,
               child: Column(
                 children: [
-                  Column(
-                    children: [
-                      Text('Người tạo họ - ${_creator.name ?? ''}'),
-                      Text('Số diện thoại - ${_creator.phone ?? ''}'),
-                    ],
+                  SizedBox(
+                    height: 100,
+                    child: FamilyTreeGeneration(
+                      generation: _familyTreeRoot,
+                    ),
                   ),
-                  ListTile(
-                    title: Text('Gia phả: Họ Nguyễn'),
+                  SizedBox(
+                    height: 200,
+                    child: FamilyTreeGeneration(
+                      generation: _familyTreeRoot,
+                      showChildren: true,
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-        if (!_isLoading)
-          Column(
-            children: [
-              Expanded(
-                child: FamilyTreeGeneration(
-                  generation: _familyTreeRoot,
-                ),
-              ),
-              Expanded(
-                child: FamilyTreeGeneration(
-                  generation: _familyTreeRoot,
-                  showChildren: true,
-                ),
-              ),
-            ],
-          )
-      ],
+        ],
+      ),
     );
   }
 }
@@ -127,81 +134,37 @@ class FamilyTreeGeneration extends StatelessWidget {
 
   void _showChildrenOfMember(BuildContext context, Member member) {
     if (member.children != null && member.children!.isNotEmpty) {
-      List<List<Member>> childrenOfMember =
-          member.children!.cast<List<Member>>();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DescendantsPage(descendants: childrenOfMember),
-        ),
-      );
-    }
-  }
-}
-
-class DescendantsPage extends StatelessWidget {
-  final List<List<Member>> descendants;
-
-  DescendantsPage({required this.descendants});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Descendants'),
-      ),
-      body: ListView.builder(
-        itemCount: descendants.length,
-        itemBuilder: (context, index) {
-          final List<Member> firstGeneration = descendants[index];
-          return Column(
-            children: [
-              ListTile(
-                title: Text(firstGeneration.first.name ?? ''),
-                onTap: () {
-                  _showChildrenOfMember(context, firstGeneration.first);
-                },
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(member.name ?? ''),
+            content: SingleChildScrollView(
+              child: Column(
+                children: member.children!.map((childList) {
+                  return Column(
+                    children: childList.map((child) {
+                      return ListTile(
+                        title: Text(child.name ?? ''),
+                        onTap: () {
+                          _showChildrenOfMember(context, child);
+                        },
+                      );
+                    }).toList(),
+                  );
+                }).toList(),
               ),
-              Text(firstGeneration.first.generation ?? ''),
-              if (firstGeneration.first.children != null &&
-                  firstGeneration.first.children!.isNotEmpty)
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: firstGeneration.first.children!.length,
-                  itemBuilder: (context, index) {
-                    final List<Member> secondGeneration =
-                        firstGeneration.first.children![index];
-                    return Column(
-                      children: secondGeneration
-                          .map(
-                            (member) => ListTile(
-                              title: Text(member.name ?? ''),
-                              onTap: () {
-                                _showChildrenOfMember(context, member);
-                              },
-                            ),
-                          )
-                          .toList(),
-                    );
-                  },
-                ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Đóng'),
+              ),
             ],
           );
         },
-      ),
-    );
-  }
-
-  void _showChildrenOfMember(BuildContext context, Member member) {
-    if (member.children != null && member.children!.isNotEmpty) {
-      List<List<Member>> childrenOfMember =
-          member.children!.cast<List<Member>>();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DescendantsPage(descendants: childrenOfMember),
-        ),
       );
     }
   }
