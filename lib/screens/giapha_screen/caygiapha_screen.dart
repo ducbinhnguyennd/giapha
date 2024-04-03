@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/asset_path_const.dart';
+import 'package:giapha/constant/common_service.dart';
 import 'package:giapha/model/giaPha_model.dart';
+import 'package:giapha/model/user_model.dart';
+import 'package:giapha/screens/giapha_screen/item_caygiapha.dart';
+import 'package:giapha/user_Service.dart';
 
 class FamilyTreeScreen extends StatefulWidget {
   @override
@@ -13,17 +18,35 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
   late Member _familyTreeRoot;
   late Creator _creator;
   bool _isLoading = true;
+  Data? currentUser;
 
   @override
   void initState() {
     super.initState();
-    _api = CayGiaPhaApi();
-    _fetchFamilyTree();
+    _api = CayGiaPhaApi(); // Khởi tạo _api
+    _loadUser();
   }
 
-  Future<void> _fetchFamilyTree() async {
+  _loadUser() {
+    UserServices us = UserServices();
+    us.getInfoLogin().then((value) {
+      if (value != "") {
+        setState(() {
+          currentUser = Data.fromJson(jsonDecode(value));
+          _fetchFamilyTree(currentUser?.user[0].lineage ?? '');
+          print('binh in ${currentUser}');
+        });
+      } else {
+        setState(() {
+          currentUser = null;
+        });
+      }
+    }, onError: (error) {});
+  }
+
+  Future<void> _fetchFamilyTree(String userId) async {
     try {
-      Map<String, dynamic>? jsonData = await _api.fetchFamilyTree();
+      Map<String, dynamic>? jsonData = await _api.fetchFamilyTree(userId);
       setState(() {
         _familyTreeRoot = Member.fromJson(jsonData['familyTreeJSON'][0]);
         _creator = Creator.fromJson(jsonData['creator']);
@@ -76,7 +99,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
           if (!_isLoading)
             Positioned(
               top: 200,
-              left: 100,
+              left: 0,
               right: 0,
               child: Column(
                 children: [
@@ -87,7 +110,10 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 200,
+                    height: 50,
+                  ),
+                  SizedBox(
+                    height: 300,
                     child: FamilyTreeGeneration(
                       generation: _familyTreeRoot,
                       showChildren: true,
@@ -118,20 +144,45 @@ class FamilyTreeGeneration extends StatelessWidget {
       itemBuilder: (context, index) {
         final List<Member> children =
             showChildren ? generation.children![index] : [generation];
+
+        // return Column(
+
+        //   children: children.map((child) {
+        //     // return ListTile(
+        //     //   title: Text(child.name ?? ''),
+        //     //   onTap: () {
+        //     //     _showChildrenOfMember(context, child);
+        //     //   },
+        //     // );
+        //     return ItemCayGiaPha(
+        //       name: child.name ?? '',
+        //       date: child.date ?? '',
+        //       relationship: '',
+        //     );
+        //   }).toList(),
+        // );
         return Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center, // Căn giữa theo chiều dọc
           children: children.map((child) {
-            return ListTile(
-              title: Text(child.name ?? ''),
-              onTap: () {
-                _showChildrenOfMember(context, child);
-              },
-            );
+            return ItemCayGiaPha(
+                name: child.name ?? '',
+                date: child.date ?? '',
+                avatar: child.avatar ?? '',
+                relationship: child.generation ?? '',
+                onTap: () {
+                  _showChildrenOfMember(context, child);
+                });
           }).toList(),
         );
       },
     );
   }
 
+//  onTap: () {
+//                           Navigator.of(context).pop();
+//                           _showChildrenOfMember(context, child);
+//                         },
   void _showChildrenOfMember(BuildContext context, Member member) {
     if (member.children != null && member.children!.isNotEmpty) {
       showDialog(
@@ -146,9 +197,6 @@ class FamilyTreeGeneration extends StatelessWidget {
                     children: childList.map((child) {
                       return ListTile(
                         title: Text(child.name ?? ''),
-                        onTap: () {
-                          _showChildrenOfMember(context, child);
-                        },
                       );
                     }).toList(),
                   );
@@ -166,6 +214,8 @@ class FamilyTreeGeneration extends StatelessWidget {
           );
         },
       );
+    } else {
+      CommonService.showToast('Đã hết đời tiếp theo', context);
     }
   }
 }

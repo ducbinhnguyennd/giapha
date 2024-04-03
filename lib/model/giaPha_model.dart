@@ -23,6 +23,8 @@ class Member {
   String? date;
   bool? dead;
   String? generation;
+  String? avatar;
+
   List<List<Member>>? children;
 
   Member(
@@ -31,12 +33,15 @@ class Member {
       this.date,
       this.dead,
       this.generation,
+      this.avatar,
       this.children});
 
   Member.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     name = json['name'];
     date = json['date'];
+    avatar = json['avatar'];
+
     dead = json['dead'];
     generation = json['relationship'];
     if (json['con'] != null) {
@@ -56,6 +61,8 @@ class Member {
     data['_id'] = this.id;
     data['name'] = this.name;
     data['date'] = this.date;
+    data['avatar'] = this.avatar;
+
     data['dead'] = this.dead;
     data['relationship'] = this.generation;
     if (this.children != null) {

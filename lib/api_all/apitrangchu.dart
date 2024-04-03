@@ -444,10 +444,11 @@ class XoaCommentBaiDang {
 
 //API cây gia phả
 class CayGiaPhaApi {
-  Future<Map<String, dynamic>> fetchFamilyTree() async {
+  Future<Map<String, dynamic>> fetchFamilyTree(String id) async {
     try {
+      print('looo $urlapi/familyTree/$id');
       Response response = await dio.get(
-        '$urlapi/familyTree/65a7aad483a10320cc9af8d0',
+        '$urlapi/familyTree/$id',
       );
       if (response.statusCode == 200) {
         print('cây api $response');
