@@ -13,7 +13,8 @@ class FamilyTreeScreen extends StatefulWidget {
   _FamilyTreeScreenState createState() => _FamilyTreeScreenState();
 }
 
-class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
+class _FamilyTreeScreenState extends State<FamilyTreeScreen>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late CayGiaPhaApi _api;
   late Member _familyTreeRoot;
   late Creator _creator;
@@ -126,6 +127,9 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class FamilyTreeGeneration extends StatelessWidget {
@@ -170,6 +174,7 @@ class FamilyTreeGeneration extends StatelessWidget {
                 date: child.date ?? '',
                 avatar: child.avatar ?? '',
                 relationship: child.generation ?? '',
+                id: child.id ?? '',
                 onTap: () {
                   _showChildrenOfMember(context, child);
                 });
@@ -195,9 +200,16 @@ class FamilyTreeGeneration extends StatelessWidget {
                 children: member.children!.map((childList) {
                   return Column(
                     children: childList.map((child) {
-                      return ListTile(
-                        title: Text(child.name ?? ''),
-                      );
+                      return ItemCayGiaPha(
+                          name: child.name ?? '',
+                          date: child.date ?? '',
+                          avatar: child.avatar ?? '',
+                          relationship: child.generation ?? '',
+                          id: child.id ?? '',
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            _showChildrenOfMember(context, child);
+                          });
                     }).toList(),
                   );
                 }).toList(),

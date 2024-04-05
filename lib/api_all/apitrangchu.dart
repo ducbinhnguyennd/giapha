@@ -6,6 +6,7 @@ import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
 import 'package:giapha/model/ReadData/ModelVanKhan.dart';
 import 'package:giapha/model/ReadData/ModelXinXam.dart';
 import 'package:giapha/model/bangtin_model.dart';
+import 'package:giapha/model/chitietUser_model.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
 import 'package:giapha/model/giaPha_model.dart';
 import 'package:giapha/model/thongbao_model.dart';
@@ -459,6 +460,22 @@ class CayGiaPhaApi {
       }
     } catch (e) {
       throw Exception("Failed to load family tree: $e");
+    }
+  }
+}
+
+// api chi tiết person
+class ApiChitietPerson {
+  Future<ChitietPerson> fetchPersonData(String id) async {
+    try {
+      final response = await dio.get('$urlapi/getmember/$id');
+      if (response.statusCode == 200) {
+        return ChitietPerson.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 }

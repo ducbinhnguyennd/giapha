@@ -1,9 +1,8 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
+import 'package:giapha/screens/giapha_screen/item_chitiet.dart';
 
 class ItemCayGiaPha extends StatefulWidget {
   const ItemCayGiaPha({
@@ -13,12 +12,14 @@ class ItemCayGiaPha extends StatefulWidget {
     required this.relationship,
     required this.onTap,
     required this.avatar,
+    required this.id,
     // required this.onTap1
   });
   final String name;
   final String date;
   final String relationship;
   final String avatar;
+  final String id;
 
   final VoidCallback onTap;
   // final VoidCallback onTap1;
@@ -49,7 +50,15 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ItemChiTiet(
+                                id: widget.id,
+                              )),
+                    );
+                  },
                   child: Text(
                     'Xem chi tiết',
                     style: TextStyle(
@@ -90,8 +99,7 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: MemoryImage(
-                                    base64Decode(widget.avatar ?? '')),
+                                image: MemoryImage(base64Decode(widget.avatar)),
                                 fit: BoxFit.cover,
                               ),
                             ),
