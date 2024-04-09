@@ -49,14 +49,42 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                // InkWell(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => ItemChiTiet(
+                //                 id: widget.id,
+                //                 avatar: widget.avatar,
+                //               )),
+                //     );
+                //   },
+                //   child: Text(
+                //     'Xem chi tiết',
+                //     style: TextStyle(
+                //       color: Colors.black,
+                //       fontSize: 12,
+                //     ),
+                //   ),
+                // ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ItemChiTiet(
-                                id: widget.id,
-                              )),
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Container(
+                            height: 200,
+                            padding: EdgeInsets.all(0),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(AssetsPathConst.bggiapha),
+                                  fit: BoxFit.fill),
+                            ),
+                          ),
+                        );
+                      },
                     );
                   },
                   child: Text(
@@ -67,6 +95,7 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
                     ),
                   ),
                 ),
+
                 Container(
                   height: 45,
                   width: 45,

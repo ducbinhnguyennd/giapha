@@ -8,13 +8,10 @@ import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/model/chitietUser_model.dart';
 
 class ItemChiTiet extends StatefulWidget {
-  const ItemChiTiet({
-    super.key,
-    required this.id,
-    // required this.onTap1
-  });
+  const ItemChiTiet({super.key, required this.id, required this.avatar});
 
   final String id;
+  final String avatar;
 
   @override
   State<ItemChiTiet> createState() => _ItemChiTietPhaState();
@@ -44,69 +41,62 @@ class _ItemChiTietPhaState extends State<ItemChiTiet> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      width: 230,
-      height: 100,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            AssetsPathConst.khungho,
-          ),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                // Container(
-                //   height: 45,
-                //   width: 45,
-                //   decoration: BoxDecoration(
-                //     color: Colors.red,
-                //     boxShadow: const <BoxShadow>[
-                //       BoxShadow(
-                //         color: Color.fromRGBO(0, 0, 0, 0.17),
-                //         blurRadius: 10,
-                //       ),
-                //     ],
-                //     borderRadius: BorderRadius.circular(50),
-                //   ),
-                //   child: ClipRRect(
-                //     borderRadius: BorderRadius.circular(50),
-                //     child: personData.avatar == ''
-                //         ? Center(
-                //             child: Text(
-                //               personData.name.substring(0, 1),
-                //               style: const TextStyle(
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 30,
-                //                 color: ColorConst.colorBackgroundStory,
-                //               ),
-                //             ),
-                //           )
-                //         : Container(
-                //             height: 45,
-                //             width: 45,
-                //             decoration: BoxDecoration(
-                //               shape: BoxShape.circle,
-                //               image: DecorationImage(
-                //                 image: MemoryImage(
-                //                     base64Decode(personData.avatar)),
-                //                 fit: BoxFit.cover,
-                //               ),
-                //             ),
-                //           ),
-                //   ),
-                // ),
-              ],
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              AssetsPathConst.bggiapha,
             ),
+            fit: BoxFit.fill,
           ),
-          Expanded(
-            child: Column(
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  boxShadow: const <BoxShadow>[
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.17),
+                      blurRadius: 10,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: widget.avatar == ''
+                      ? Center(
+                          child: Text(
+                            personData.name.substring(0, 1),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              color: ColorConst.colorBackgroundStory,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: MemoryImage(base64Decode(widget.avatar)),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                ),
+              ),
+            ),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -134,8 +124,8 @@ class _ItemChiTietPhaState extends State<ItemChiTiet> {
                 ),
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
