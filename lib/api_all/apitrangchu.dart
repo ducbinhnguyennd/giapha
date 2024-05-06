@@ -453,7 +453,6 @@ class CayGiaPhaApi {
       );
       if (response.statusCode == 200) {
         print('cây api $response');
-        // Truy cập trực tiếp vào response.data để lấy dữ liệu
         return response.data;
       } else {
         throw Exception("Failed to load family tree");

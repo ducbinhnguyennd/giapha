@@ -16,8 +16,8 @@ class _LienHeState extends State<LienHe> {
   final Uri facebookUrl = Uri.parse("https://www.facebook.com/binhbug2501");
   final Uri emailUrl = Uri(
     scheme: 'mailto',
-    path: 'totnghiepduan2023@gmail.com',
-    queryParameters: {'subject': 'Đăng ký nhóm dịch'},
+    path: 'ducbinhnguyennd@gmail.com',
+    queryParameters: {'subject': 'Liên hệ chúng tôi'},
   );
 
   @override
@@ -26,17 +26,13 @@ class _LienHeState extends State<LienHe> {
       appBar: AppBar(
         backgroundColor: ColorConst.colorPrimary50,
         centerTitle: true,
-        title: const Text('Đăng ký nhóm dịch'),
+        title: const Text('Liên hệ phần mềm'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
             children: [
-              Text(
-                'Liên hệ chúng tôi qua:',
-                style: TextStyle(fontSize: 20),
-              ),
               SizedBox(height: 15),
               InkWell(
                 child: Container(
@@ -58,9 +54,9 @@ class _LienHeState extends State<LienHe> {
                           ),
                         ),
                         SizedBox(width: 5),
-                        Image.asset(
-                          AssetsPathConst.ico_face,
-                          height: 23,
+                        Icon(
+                          Icons.facebook,
+                          size: 23,
                           color: Colors.white,
                         ),
                       ],

@@ -78,7 +78,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
             )
           else
             Positioned(
-              top: 90,
+              top: 110,
               left: 0,
               right: 0,
               child: Padding(
@@ -88,7 +88,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
                   children: [
                     Column(
                       children: [
-                        Text('Gia phả: Họ Nguyễn'),
+                        Text('Gia phả: ${_creator.namegiapha}'),
                         Text('Người tạo họ - ${_creator.name ?? ''}'),
                         Text('Số diện thoại - ${_creator.phone ?? ''}'),
                       ],
@@ -99,7 +99,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
             ),
           if (!_isLoading)
             Positioned(
-              top: 200,
+              top: 220,
               left: 0,
               right: 0,
               child: Column(
