@@ -116,97 +116,201 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
                               top: 30,
                               left: 10,
                               right: 5,
-                              child: Row(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    height: 95,
-                                    width: 75,
-                                    color: Colors.red,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: widget.avatar == ''
-                                          ? Center(
-                                              child: Text(
-                                                widget.name.substring(0, 1),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 30,
-                                                  color: ColorConst
-                                                      .colorBackgroundStory,
-                                                ),
-                                              ),
-                                            )
-                                          : Container(
-                                              height: 95,
-                                              width: 55,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                  image: MemoryImage(
-                                                      base64Decode(
-                                                          widget.avatar)),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            height: 95,
+                                            width: 75,
+                                            color: Colors.red,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              child: widget.avatar == ''
+                                                  ? Center(
+                                                      child: Text(
+                                                        widget.name
+                                                            .substring(0, 1),
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 30,
+                                                          color: ColorConst
+                                                              .colorBackgroundStory,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      height: 95,
+                                                      width: 55,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          image: MemoryImage(
+                                                              base64Decode(
+                                                                  widget
+                                                                      .avatar)),
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
                                             ),
-                                    ),
+                                          ),
+                                          Positioned(
+                                            left: 5,
+                                            bottom: 0,
+                                            right: 0,
+                                            child: personData.dead == true
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                        color: Colors.black),
+                                                    child: Text(
+                                                      'Thọ: ${personData.deadInfo.lived} tuổi',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                  )
+                                                : Container(),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(width: 10),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              widget.name,
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            Text(
+                                              'Giới tính: ${personData.sex}',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            Text(
+                                              'Năm sinh: ${widget.date}',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            personData.dead == true
+                                                ? Text(
+                                                    'Năm mất: ${personData.deadInfo.deadDate}',
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                  )
+                                                : Container(),
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  SizedBox(width: 10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          widget.name,
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Học vấn: ',
                                           style: TextStyle(color: Colors.black),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
                                         ),
-                                        Text(
-                                          'Năm sinh: ${widget.date}',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
+                                        TextSpan(
+                                          text: '${personData.academicLevel}',
+                                          style: TextStyle(color: Colors.red),
                                         ),
-                                        personData.dead == true
-                                            ? Text(
-                                                'Năm mất: ${personData.deadInfo.deadDate}',
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 12),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              )
-                                            : Container(),
-                                        Text(
-                                          'Giới tính: ${personData.sex}',
-                                          style: TextStyle(color: Colors.black),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                        Text(
-                                          'Học vấn: ${personData.academicLevel}',
-                                          style: TextStyle(color: Colors.black),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                        personData.dead == true
-                                            ? Text(
-                                                'Thọ: ${personData.deadInfo.lived} tuổi',
-                                                style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                        255, 12, 6, 6)),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              )
-                                            : Container(),
                                       ],
                                     ),
-                                  )
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Giới thiệu: ',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                          text: '${personData.bio}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Nghề nghiệp: ',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                          text: '${personData.job}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Thường trú: ',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                          text: '${personData.address}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  RichText(
+                                    text: TextSpan(
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'Quê quán: ',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        TextSpan(
+                                          text: '${personData.hometown}',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ],
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
                                 ],
                               ),
                             ),

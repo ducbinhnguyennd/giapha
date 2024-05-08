@@ -1,14 +1,22 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/common_service.dart';
+import 'package:giapha/constant/strings_const.dart';
 import 'package:giapha/model/giaPha_model.dart';
 import 'package:giapha/model/user_model.dart';
+import 'package:giapha/routes.dart';
 import 'package:giapha/screens/giapha_screen/item_caygiapha.dart';
 import 'package:giapha/user_Service.dart';
 
 class FamilyTreeScreen extends StatefulWidget {
+  final TabController tabController;
+
+  const FamilyTreeScreen({Key? key, required this.tabController})
+      : super(key: key);
   @override
   _FamilyTreeScreenState createState() => _FamilyTreeScreenState();
 }
@@ -20,11 +28,10 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
   late Creator _creator;
   bool _isLoading = true;
   Data? currentUser;
-
   @override
   void initState() {
     super.initState();
-    _api = CayGiaPhaApi(); // Khởi tạo _api
+    _api = CayGiaPhaApi();
     _loadUser();
   }
 
@@ -62,6 +69,11 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
     }
   }
 
+  void _switchToTab(int tabIndex) {
+    // Sử dụng tabController được truyền từ widget
+    widget.tabController.animateTo(tabIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,7 +84,48 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
             width: MediaQuery.of(context).size.width,
             fit: BoxFit.fill,
           ),
-          if (_isLoading)
+          if (currentUser == null)
+            Positioned(
+              bottom: 40,
+              left: 30,
+              right: 30,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                height: 80,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.black),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 7,
+                        child: Center(
+                          child: Text(
+                            'Vui lòng đăng nhập để thực hiện chức năng này',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )),
+                    Expanded(
+                      flex: 3,
+                      child: InkWell(
+                        onTap: () {
+                          _switchToTab(3);
+                        },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.amber),
+                          child: Center(child: Text('Đăng nhập')),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          else if (_isLoading)
             Center(
               child: CircularProgressIndicator(),
             )

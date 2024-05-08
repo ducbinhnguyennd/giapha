@@ -71,7 +71,9 @@ class _MainScreenState extends State<MainScreen>
           children: <Widget>[
             HomeScreen(),
             DanhsachhoScreen(),
-            FamilyTreeScreen(),
+            FamilyTreeScreen(
+              tabController: _tabController, // Truyền tabController xuống
+            ),
             // BangTinScreen(),
             TaikhoanScreen()
           ],
