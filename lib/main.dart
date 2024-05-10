@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:giapha/routes.dart';
 import 'package:giapha/screens/intro_screen.dart';
 import 'package:giapha/screens/splash_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
@@ -18,11 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int backButtonCount = 0;
+    final textTheme = Theme.of(context).textTheme;
 
     return MaterialApp(
       title: 'Truyền Thống Việt',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.pacificoTextTheme(textTheme).copyWith(
+          bodyMedium: GoogleFonts.pacifico(textStyle: textTheme.bodyMedium),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       routes: routes,

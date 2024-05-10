@@ -25,26 +25,34 @@ class ItemHo extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Image.asset(
-            AssetsPathConst.background,
+            AssetsPathConst.khungdongho,
             fit: BoxFit.cover,
           ),
         ),
-        Container(
-          color: Colors.white.withOpacity(0.5),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text('Tên họ: $tenho'),
-              Text('Địa chỉ: $diachi'),
-              Text('Số thành viên: $members'),
-              Text('$generation đời'),
-              Text('Người tạo $creater'),
-              Text('Số điện thoại: $phone'),
-            ],
-          ),
-        ),
+        // Container(
+        //   color: Colors.white.withOpacity(0.5),
+        // ),
+        Positioned(
+            top: 50,
+            right: 10,
+            child: Column(
+              children: [
+                Text(tenho),
+              ],
+            ))
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Column(
+        //     children: [
+
+        //       Text('Địa chỉ: $diachi'),
+        //       Text('Số thành viên: $members'),
+        //       Text('$generation đời'),
+        //       Text('Người tạo $creater'),
+        //       Text('Số điện thoại: $phone'),
+        //     ],
+        //   ),
+        // ),
       ]),
     );
   }
