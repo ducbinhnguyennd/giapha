@@ -49,6 +49,7 @@ dependencies:
   url_launcher: ^6.1.11
   scroll_snap_list: ^0.9.1
   shake: ^2.2.0
+  google_fonts: ^6.2.1
 
   
 dev_dependencies:

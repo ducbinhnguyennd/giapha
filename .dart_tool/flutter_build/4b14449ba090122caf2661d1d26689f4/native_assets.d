@@ -1,0 +1,1 @@
+ D:\\flutter\\giapha\\.dart_tool\\flutter_build\\4b14449ba090122caf2661d1d26689f4\\native_assets.yaml: 
