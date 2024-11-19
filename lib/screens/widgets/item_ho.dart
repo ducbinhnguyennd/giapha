@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giapha/constant/asset_path_const.dart';
-import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import 'package:giapha/constant/colors_const.dart';
 
 class ItemHo extends StatelessWidget {
   const ItemHo(
@@ -25,21 +25,44 @@ class ItemHo extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Image.asset(
-            AssetsPathConst.khungdongho,
+            AssetsPathConst.khungdonghonew,
             fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
         ),
         // Container(
         //   color: Colors.white.withOpacity(0.5),
         // ),
-        Positioned(
-            top: 50,
-            right: 10,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(tenho),
+                Text(
+                  tenho,
+                  style: TextStyle(color: ColorConst.colorTextVip),
+                  //textAlign: TextAlign.center,
+                  softWrap: true,
+                  //style: TextStyle(color: ColorConst.colorPrimaryText),
+                ),
+                SizedBox(height: 10),
+                Text('Địa chỉ: $diachi',
+                    style: TextStyle(color: ColorConst.colorPrimaryText)),
+                Text('Số thành viên: $members',
+                    style: TextStyle(color: ColorConst.colorPrimaryText)),
+                Text('$generation đời',
+                    style: TextStyle(color: ColorConst.colorPrimaryText)),
+                Text('Người tạo: $creater',
+                    style: TextStyle(color: ColorConst.colorPrimaryText)),
+                Text('Số điện thoại: $phone',
+                    style: TextStyle(color: ColorConst.colorPrimaryText)),
               ],
-            ))
+            ),
+          ),
+        ),
         // Padding(
         //   padding: const EdgeInsets.all(8.0),
         //   child: Column(

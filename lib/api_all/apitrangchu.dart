@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:giapha/model/EventVO.dart';
 import 'package:giapha/model/ReadData/ModelGiaiMong.dart';
@@ -8,7 +6,6 @@ import 'package:giapha/model/ReadData/ModelXinXam.dart';
 import 'package:giapha/model/bangtin_model.dart';
 import 'package:giapha/model/chitietUser_model.dart';
 import 'package:giapha/model/danhsachHoModel.dart';
-import 'package:giapha/model/giaPha_model.dart';
 import 'package:giapha/model/thongbao_model.dart';
 import 'package:giapha/model/user_model2.dart';
 
@@ -52,6 +49,68 @@ class Joindongho {
       print('lỗi nặng ${e.toString()}');
     }
     return null;
+  }
+}
+
+class PostDongHo {
+  Future<Response?> postNewFamily(
+      String userId, String name, String address, String key) async {
+    try {
+      var response = await dio.post('$urlapi/postdongho/$userId',
+          data: {'name': name, 'address': address, 'key': key});
+      return response;
+    } catch (e) {
+      print(
+          'Error in postNewFamily: ${e.toString()}'); // In lỗi ra console để gỡ lỗi
+      throw Exception('Failed to create family: ${e.toString()}');
+    }
+  }
+
+  Future<Response?> postFirstMember(
+      String idDongHo,
+      String name,
+      String nickName,
+      //String username,
+      String sex,
+      String date,
+      String avatar,
+      String maritalstatus,
+      String phone,
+      String academylevel,
+      String job,
+      String address,
+      String hometown,
+      String bio,
+      bool dead,
+      String deaddate,
+      String worshipaddress,
+      String worshipperson,
+      String burialaddress) async {
+    try {
+      var response = await dio.post('$urlapi/addmember/$idDongHo', data: {
+        'name': name,
+        'nickname': nickName,
+        //'username': username,
+        'sex': sex,
+        'date': date,
+        'avatar': avatar,
+        'maritalstatus': maritalstatus,
+        'phone': phone,
+        'acaddemylevel': academylevel,
+        'job': job,
+        'address': address,
+        'hometown': hometown,
+        'bio': bio,
+        'dead': dead,
+        'deaddate': deaddate,
+        'worshipaddress': worshipaddress,
+        'worshipperson': worshipperson,
+        'burialaddress': burialaddress
+      });
+      return response;
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
 

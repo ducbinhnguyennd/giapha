@@ -4,12 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/constant/double_x.dart';
-import 'package:giapha/screens/bangtin_screen/bangtin.dart';
 import 'package:giapha/screens/danhsachho_screen.dart';
 import 'package:giapha/screens/giapha_screen/caygiapha_screen.dart';
 import 'package:giapha/screens/home_screen.dart';
 import 'package:giapha/screens/screen_setting/setting_screen.dart';
-import 'package:giapha/screens/xemgiapha_Screen/giapha_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -165,3 +163,4 @@ class _MainScreenState extends State<MainScreen>
     super.dispose();
   }
 }
+

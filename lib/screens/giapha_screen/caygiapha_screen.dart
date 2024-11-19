@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/common_service.dart';
-import 'package:giapha/constant/strings_const.dart';
 import 'package:giapha/model/giaPha_model.dart';
 import 'package:giapha/model/user_model.dart';
-import 'package:giapha/routes.dart';
 import 'package:giapha/screens/giapha_screen/item_caygiapha.dart';
 import 'package:giapha/user_Service.dart';
 
@@ -24,8 +20,8 @@ class FamilyTreeScreen extends StatefulWidget {
 class _FamilyTreeScreenState extends State<FamilyTreeScreen>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late CayGiaPhaApi _api;
-  late Member _familyTreeRoot;
-  late Creator _creator;
+  Member? _familyTreeRoot;
+  Creator? _creator;
   bool _isLoading = true;
   Data? currentUser;
   @override
@@ -42,7 +38,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
         setState(() {
           currentUser = Data.fromJson(jsonDecode(value));
           _fetchFamilyTree(currentUser?.user[0].lineage ?? '');
-          print('binh in ${currentUser}');
+          // print('binh in ho ${currentUser?.user[0].lineage}');
         });
       } else {
         setState(() {
@@ -55,9 +51,11 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
   Future<void> _fetchFamilyTree(String userId) async {
     try {
       Map<String, dynamic>? jsonData = await _api.fetchFamilyTree(userId);
+
       setState(() {
-        _familyTreeRoot = Member.fromJson(jsonData['familyTreeJSON'][0]);
         _creator = Creator.fromJson(jsonData['creator']);
+
+        _familyTreeRoot = Member.fromJson(jsonData['familyTreeJSON'][0]);
         _isLoading = false;
       });
     } catch (e) {
@@ -65,7 +63,6 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
       setState(() {
         _isLoading = false;
       });
-      // Xử lý lỗi
     }
   }
 
@@ -76,6 +73,7 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Stack(
         children: [
@@ -125,6 +123,11 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
                 ),
               ),
             )
+          else if (currentUser?.user[0].lineage == '')
+            Center(
+              child: Text('Mời bạn tạo họ',
+                  style: TextStyle(color: Colors.black, fontSize: 30)),
+            )
           else if (_isLoading)
             Center(
               child: CircularProgressIndicator(),
@@ -141,41 +144,35 @@ class _FamilyTreeScreenState extends State<FamilyTreeScreen>
                   children: [
                     Column(
                       children: [
-                        Text('Gia phả: ${_creator.namegiapha}'),
-                        Text('Người tạo họ - ${_creator.name ?? ''}'),
-                        Text('Số diện thoại - ${_creator.phone ?? ''}'),
+                        Text('Gia phả: ${_creator?.namegiapha ?? ''}'),
+                        Text('Người tạo họ - ${_creator?.name ?? ''}'),
+                        Text('Số diện thoại - ${_creator?.phone ?? ''}'),
+                        SizedBox(
+                          height: 70,
+                        ),
+                        SizedBox(
+                          height: 100,
+                          child: FamilyTreeGeneration(
+                            generation: _familyTreeRoot!,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        SizedBox(
+                          height: 300,
+                          child: FamilyTreeGeneration(
+                            generation: _familyTreeRoot!,
+                            showChildren: true,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-          if (!_isLoading)
-            Positioned(
-              top: 220,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 100,
-                    child: FamilyTreeGeneration(
-                      generation: _familyTreeRoot,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    height: 300,
-                    child: FamilyTreeGeneration(
-                      generation: _familyTreeRoot,
-                      showChildren: true,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          // Container(color: Colors.black)
         ],
       ),
     );
@@ -197,27 +194,10 @@ class FamilyTreeGeneration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: showChildren ? generation.children!.length : 1,
+      itemCount: showChildren ? generation.children?.length : 1,
       itemBuilder: (context, index) {
         final List<Member> children =
             showChildren ? generation.children![index] : [generation];
-
-        // return Column(
-
-        //   children: children.map((child) {
-        //     // return ListTile(
-        //     //   title: Text(child.name ?? ''),
-        //     //   onTap: () {
-        //     //     _showChildrenOfMember(context, child);
-        //     //   },
-        //     // );
-        //     return ItemCayGiaPha(
-        //       name: child.name ?? '',
-        //       date: child.date ?? '',
-        //       relationship: '',
-        //     );
-        //   }).toList(),
-        // );
         return Column(
           mainAxisAlignment:
               MainAxisAlignment.center, // Căn giữa theo chiều dọc
@@ -278,6 +258,7 @@ class FamilyTreeGeneration extends StatelessWidget {
             ],
           );
         },
+        
       );
     } else {
       CommonService.showToast('Đã hết đời tiếp theo', context);

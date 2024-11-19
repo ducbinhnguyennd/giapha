@@ -5,6 +5,7 @@ class AssetsPathConst {
   static const String bggiapha = 'assets/images/bggiapha.png';
   static const String khungthongtin = 'assets/images/khungthongtin.png';
   static const String khungdongho = 'assets/images/khungdongho.png';
+  static const String khungdonghonew = 'assets/images/khungdonghonew.png';
 
   static const String khungho = 'assets/images/khungho.png';
 

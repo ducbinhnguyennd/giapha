@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:giapha/api_all/apitrangchu.dart';
 import 'package:giapha/constant/asset_path_const.dart';
 import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/model/chitietUser_model.dart';
-import 'package:giapha/screens/giapha_screen/item_chitiet.dart';
 
 class ItemCayGiaPha extends StatefulWidget {
   const ItemCayGiaPha({
@@ -342,30 +339,39 @@ class _ItemCayGiaPhaState extends State<ItemCayGiaPha> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: widget.avatar == ''
-                        ? Center(
-                            child: Text(
-                              widget.name.substring(0, 1),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30,
-                                color: ColorConst.colorBackgroundStory,
+                      borderRadius: BorderRadius.circular(50),
+                      child: widget.avatar == ''
+                          ? Center(
+                              child: Text(
+                                widget.name.substring(0, 1),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: ColorConst.colorBackgroundStory,
+                                ),
                               ),
-                            ),
-                          )
-                        : Container(
-                            height: 45,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: MemoryImage(base64Decode(widget.avatar)),
-                                fit: BoxFit.cover,
+                            )
+                          // : Container(
+                          //     height: 45,
+                          //     width: 45,
+                          //     decoration: BoxDecoration(
+                          //       shape: BoxShape.circle,
+                          //       image: DecorationImage(
+                          //         image: MemoryImage(base64Decode(widget.avatar)),
+                          //         fit: BoxFit.cover,
+                          //       ),
+                          //     ),
+                          //   ),
+                          : Center(
+                              child: Text(
+                                widget.name.substring(0, 1),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30,
+                                  color: ColorConst.colorBackgroundStory,
+                                ),
                               ),
-                            ),
-                          ),
-                  ),
+                            )),
                 ),
               ],
             ),

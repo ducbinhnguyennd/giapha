@@ -7,10 +7,12 @@ import 'package:giapha/constant/colors_const.dart';
 import 'package:giapha/mainscreen.dart';
 import 'package:giapha/model/user_model.dart';
 import 'package:giapha/model/user_model2.dart';
+import 'package:giapha/screens/giapha_screen/testfamilytree.dart';
 import 'package:giapha/screens/screen_setting/doimatkhau.dart';
 import 'package:giapha/screens/screen_setting/lienhe.dart';
 import 'package:giapha/screens/screen_setting/login_screen.dart';
 import 'package:giapha/screens/screen_setting/thayavatar.dart';
+import 'package:giapha/screens/services_screen/trondoi/test.dart';
 import 'package:giapha/user_Service.dart';
 
 class TaikhoanScreen extends StatefulWidget {
@@ -67,29 +69,59 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
         color: ColorConst.colorPrimary120,
         onRefresh: _refresh,
         child: Scaffold(
-            // resizeToAvoidBottomInset: false,
-            body: FutureBuilder<UserModel>(
-                future: futureUserData,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: ColorConst.colorPrimary120,
-                    ));
-                  } else if (snapshot.hasError) {
-                    return Text(
-                      'Error: ${snapshot.error}',
-                      style: const TextStyle(fontSize: 30),
-                    );
-                  } else {
-                    final userData = snapshot.data!;
-                    return ListView(
-                      padding: const EdgeInsets.all(0),
-                      children: [
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Container(
+          // resizeToAvoidBottomInset: false,
+          body: FutureBuilder<UserModel>(
+              future: futureUserData,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: ColorConst.colorPrimary120,
+                  ));
+                } else if (snapshot.hasError) {
+                  return Text(
+                    'Error: ${snapshot.error}',
+                    style: const TextStyle(fontSize: 30),
+                  );
+                } else {
+                  final userData = snapshot.data!;
+                  return ListView(
+                    padding: const EdgeInsets.all(0),
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height / 4,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(35),
+                                bottomRight: Radius.circular(35),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              color: Colors.grey[300],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(35),
+                                bottomRight: Radius.circular(35),
+                              ),
+                              child: Image.asset(
+                                AssetsPathConst.backgroundStoryDetail,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Container(
                               height: MediaQuery.of(context).size.height / 4,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
@@ -97,192 +129,173 @@ class _TaikhoanScreenState extends State<TaikhoanScreen>
                                   bottomLeft: Radius.circular(35),
                                   bottomRight: Radius.circular(35),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.grey[300],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(35),
-                                  bottomRight: Radius.circular(35),
-                                ),
-                                child: Image.asset(
-                                  AssetsPathConst.backgroundStoryDetail,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Container(
-                                height: MediaQuery.of(context).size.height / 4,
-                                width: MediaQuery.of(context).size.width,
+                                color: Colors.white.withOpacity(0.7),
+                              )),
+                          Column(
+                            children: [
+                              Container(
+                                height: 80,
+                                width: 80,
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(35),
-                                    bottomRight: Radius.circular(35),
-                                  ),
-                                  color: Colors.white.withOpacity(0.7),
-                                )),
-                            Column(
-                              children: [
-                                Container(
-                                  height: 80,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    boxShadow: const <BoxShadow>[
-                                      BoxShadow(
-                                        color: Color.fromRGBO(0, 0, 0, 0.17),
-                                        blurRadius: 10,
-                                      ),
-                                    ],
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: userData.avatar == ''
-                                        ? Center(
-                                            child: Text(
-                                              userData.username.substring(0, 1),
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 30,
-                                                color: ColorConst
-                                                    .colorBackgroundStory,
-                                              ),
-                                            ),
-                                          )
-                                        : Container(
-                                            height: 45,
-                                            width: 45,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: MemoryImage(base64Decode(
-                                                    userData.avatar ?? '')),
-                                                fit: BoxFit.cover,
-                                              ),
+                                  color: Colors.red,
+                                  boxShadow: const <BoxShadow>[
+                                    BoxShadow(
+                                      color: Color.fromRGBO(0, 0, 0, 0.17),
+                                      blurRadius: 10,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: userData.avatar == ''
+                                      ? Center(
+                                          child: Text(
+                                            userData.username.substring(0, 1),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 30,
+                                              color: ColorConst
+                                                  .colorBackgroundStory,
                                             ),
                                           ),
+                                        )
+                                      : Container(
+                                          height: 45,
+                                          width: 45,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: MemoryImage(base64Decode(
+                                                  userData.avatar ?? '')),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    userData.username,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Colors.black),
                                   ),
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      userData.username,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: Colors.black),
+                                  if (userData.role == 'admin')
+                                    Image.asset(
+                                      AssetsPathConst.tichxanh,
+                                      height: 20,
                                     ),
-                                    if (userData.role == 'admin')
-                                      Image.asset(
-                                        AssetsPathConst.tichxanh,
-                                        height: 20,
-                                      ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
+                        child: Text('Chức năng thành viên',
+                            style: TextStyle(
+                              color: Colors.pink,
+                              fontWeight: FontWeight.bold,
+                              // fontSize: 12
+                            )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                              spreadRadius: 0,
                             ),
                           ],
                         ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
-                          child: Text('Chức năng thành viên',
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.bold,
-                                // fontSize: 12
-                              )),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(0, 0),
-                                spreadRadius: 0,
-                              ),
-                            ],
+                        child: _buildSetting(),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
+                        child: Text('Cài đặt',
+                            style: TextStyle(
+                              color: Colors.pink,
+                              fontWeight: FontWeight.bold,
+                              // fontSize: 12
+                            )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          child: _buildSetting(),
-                        ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
-                          child: Text('Cài đặt',
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.bold,
-                                // fontSize: 12
-                              )),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                              spreadRadius: 0,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(0, 0),
-                                spreadRadius: 0,
-                              ),
-                            ],
+                          ],
+                        ),
+                        child: _buildSetting1(),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
+                        child: Text('Hỗ trợ người dùng',
+                            style: TextStyle(
+                              color: Colors.pink,
+                              fontWeight: FontWeight.bold,
+                              // fontSize: 12
+                            )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(20),
                           ),
-                          child: _buildSetting1(),
-                        ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(left: 20.0, top: 40, bottom: 5),
-                          child: Text('Hỗ trợ người dùng',
-                              style: TextStyle(
-                                color: Colors.pink,
-                                fontWeight: FontWeight.bold,
-                                // fontSize: 12
-                              )),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 10,
+                              offset: const Offset(0, 0),
+                              spreadRadius: 0,
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 10,
-                                offset: const Offset(0, 0),
-                                spreadRadius: 0,
-                              ),
-                            ],
-                          ),
-                          child: _buildSetting2(),
+                          ],
                         ),
-                        const SizedBox(height: 50),
-                      ],
-                    );
-                  }
-                })),
+                        child: _buildSetting2(),
+                      ),
+                      const SizedBox(height: 50),
+                    ],
+                  );
+                }
+              }),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.home),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Testfamilytree(),
+                  ));
+            },
+          ),
+        ),
       );
     }
   }

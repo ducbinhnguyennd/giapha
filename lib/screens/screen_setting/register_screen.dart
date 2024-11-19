@@ -45,7 +45,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _username = '';
   String _password = '';
   String _hovaten = '';
-  DateTime _date = DateTime.now();
+  DateTime? _date;
   String _address = '';
   String _hometown = '';
   String _phone = '';
@@ -106,6 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       CommonService.showToast('Họ tên đang để trống', context);
     } else if (address.isEmpty) {
       CommonService.showToast('Nơi thường trú đang trống', context);
+    } else if (dateEditingController.text.isEmpty) {
+      CommonService.showToast('Ngày sinh đang trống', context);
     } else if (phone.isEmpty) {
       CommonService.showToast('Số điện thoại đang trống', context);
     } else if (phone.length != 10) {
@@ -171,6 +173,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Align(
@@ -193,389 +196,392 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ]),
             ),
           ),
-          Positioned(
-            top: 60,
-            left: 10,
-            right: 10,
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: (() {
-                    Navigator.of(context).pop();
-                  }),
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.arrow_back_ios_new),
-                        Text(
-                          'Màn hình đăng nhập',
-                          style: TextStyle(fontSize: 20),
-                        )
-                      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 50, right: 10),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: (() {
+                      Navigator.of(context).pop();
+                    }),
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Icon(Icons.arrow_back_ios_new),
+                          Text(
+                            'Màn hình đăng nhập',
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Container(
-                  // margin: const EdgeInsets.all(16),
-                  height: 650,
-                  child: Form(
-                      key: _formKey,
-                      child: ListView(padding: EdgeInsets.all(0), children: [
-                        TextFormField(
-                          controller: userEditingController,
-                          key: _usernameKey,
-                          onChanged: (val) {
-                            _username = val;
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(12),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    // margin: const EdgeInsets.all(16),
+                    height: 650,
+                    child: Form(
+                        key: _formKey,
+                        child: ListView(padding: EdgeInsets.all(0), children: [
+                          TextFormField(
+                            controller: userEditingController,
+                            key: _usernameKey,
+                            onChanged: (val) {
+                              _username = val;
+                            },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: ColorConst.colorPrimary50),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              labelText: "Tên đăng nhập",
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: ColorConst.colorPrimary50),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            labelText: "Tên đăng nhập",
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          key: _passwordKey,
-                          controller: passwEditingController,
-                          onChanged: (val) {
-                            _password = val;
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: ColorConst.colorPrimary50),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            labelText: "Mật khẩu",
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          key: _hovatenKey,
-                          controller: hovatenEditingController,
-                          onChanged: (val) {
-                            _hovaten = val;
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.circular(12),
+                          TextFormField(
+                            key: _passwordKey,
+                            controller: passwEditingController,
+                            onChanged: (val) {
+                              _password = val;
+                            },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: ColorConst.colorPrimary50),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              labelText: "Mật khẩu",
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: ColorConst.colorPrimary50),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            labelText: "Họ Tên",
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Column(
-                          children: [
-                            TextFormField(
-                              key: _dateKey,
-                              controller: dateEditingController,
-                              readOnly: true, // Make the text field read-only
-                              onTap: () {
-                                // Show date picker dialog when the text field is tapped
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                      backgroundColor: const Color(0xffFBBA95),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(10),
-                                        height: 500,
-                                        width: 300,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              flex: 7,
-                                              child: ScrollDatePicker(
-                                                minimumDate:
-                                                    DateTime(1930, 1, 1),
-                                                maximumDate: DateTime.now(),
-                                                options:
-                                                    const DatePickerOptions(
-                                                  backgroundColor:
-                                                      Color(0xffFBBA95),
-                                                ),
-                                                selectedDate: _date,
-                                                locale: Locale('vi'),
-                                                onDateTimeChanged:
-                                                    (DateTime value) {
-                                                  setState(() {
-                                                    _date = value;
-                                                    dateEditingController.text =
-                                                        DateFormat('dd/MM/yyyy')
-                                                            .format(_date);
-                                                  });
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(10),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black
-                                                            .withOpacity(0.2),
-                                                        offset:
-                                                            const Offset(0, 3),
-                                                        blurRadius: 7,
-                                                        spreadRadius: 5,
-                                                      ),
-                                                    ],
-                                                    color:
-                                                        const Color(0xffFCCDB3),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            key: _hovatenKey,
+                            controller: hovatenEditingController,
+                            onChanged: (val) {
+                              _hovaten = val;
+                            },
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(color: Colors.black),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: ColorConst.colorPrimary50),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              labelText: "Họ Tên",
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            children: [
+                              TextFormField(
+                                key: _dateKey,
+                                controller: dateEditingController,
+                                readOnly: true, // Make the text field read-only
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                        backgroundColor: const Color(0xffFBBA95),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(10),
+                                          height: 500,
+                                          width: 300,
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                flex: 7,
+                                                child: ScrollDatePicker(
+                                                  minimumDate:
+                                                      DateTime(1930, 1, 1),
+                                                  maximumDate: DateTime(2060),
+                                                  options:
+                                                      const DatePickerOptions(
+                                                    backgroundColor:
+                                                        Color(0xffFBBA95),
                                                   ),
-                                                  child: const Center(
-                                                    child: Text(
-                                                      'Chọn ngày',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xffFF5C00),
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        //fontFamily: 'CCGabrielBautistaLito'
+                                                  selectedDate: DateTime.now(),
+                                                  locale: Locale('vi'),
+                                                  onDateTimeChanged:
+                                                      (DateTime value) {
+                                                    setState(() {
+                                                      _date = value;
+                                                      dateEditingController.text =
+                                                          DateFormat('dd/MM/yyyy')
+                                                              .format(_date ??
+                                                                  DateTime.now());
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 1,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Container(
+                                                    padding:
+                                                        const EdgeInsets.all(10),
+                                                    decoration: BoxDecoration(
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.black
+                                                              .withOpacity(0.2),
+                                                          offset:
+                                                              const Offset(0, 3),
+                                                          blurRadius: 7,
+                                                          spreadRadius: 5,
+                                                        ),
+                                                      ],
+                                                      color:
+                                                          const Color(0xffFCCDB3),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        'Chọn ngày',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffFF5C00),
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          //fontFamily: 'CCGabrielBautistaLito'
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Ngày sinh',
-                                hintText: dateEditingController.text,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.black),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: ColorConst.colorPrimary50),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              key: _phoneKey,
-                              onChanged: (val) {
-                                doValidation(_phoneKey, null);
-                                _phone = val;
-                              },
-                              keyboardType: TextInputType.phone,
-                              maxLength: 10,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.black),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: ColorConst.colorPrimary50),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                labelText: "Số điện thoại",
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(color: Colors.black)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DropdownButton<Province>(
-                                    value: _selectedProvince,
-                                    hint: Text('Nơi thường trú'),
-                                    onChanged: (Province? newValue) {
-                                      setState(() {
-                                        _selectedProvince = newValue;
-                                        _selectedDistrict = null;
-                                        _selectedWard = null;
-                                        _address = '';
-                                      });
-                                    },
-                                    items: _provinces
-                                        .map<DropdownMenuItem<Province>>(
-                                          (Province province) =>
-                                              DropdownMenuItem<Province>(
-                                            value: province,
-                                            child: Text(province.name),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                        .toList(),
-                                    underline: Container(),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'Ngày sinh',
+                                  hintText: dateEditingController.text,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  if (_selectedProvince != null)
-                                    DropdownButton<District>(
-                                      value: _selectedDistrict,
-                                      hint: Text('Chọn quận/huyện'),
-                                      onChanged: (District? newValue) {
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: ColorConst.colorPrimary50),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                key: _phoneKey,
+                                onChanged: (val) {
+                                  doValidation(_phoneKey, null);
+                                  _phone = val;
+                                },
+                                keyboardType: TextInputType.phone,
+                                maxLength: 10,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly
+                                ],
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: ColorConst.colorPrimary50),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  labelText: "Số điện thoại",
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: Colors.black)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    DropdownButton<Province>(
+                                      value: _selectedProvince,
+                                      hint: Text('Nơi thường trú'),
+                                      onChanged: (Province? newValue) {
                                         setState(() {
-                                          _selectedDistrict = newValue;
+                                          _selectedProvince = newValue;
+                                          _selectedDistrict = null;
                                           _selectedWard = null;
                                           _address = '';
                                         });
                                       },
-                                      items: _selectedProvince!.districts
-                                          .map<DropdownMenuItem<District>>(
-                                            (District district) =>
-                                                DropdownMenuItem<District>(
-                                              value: district,
-                                              child: Text(district.name),
+                                      items: _provinces
+                                          .map<DropdownMenuItem<Province>>(
+                                            (Province province) =>
+                                                DropdownMenuItem<Province>(
+                                              value: province,
+                                              child: Text(province.name),
                                             ),
                                           )
                                           .toList(),
                                       underline: Container(),
                                     ),
-
-                                  // Dropdown for wards
-                                  if (_selectedDistrict != null)
-                                    DropdownButton<Ward>(
-                                      value: _selectedWard,
-                                      hint: Text('Chọn xã/phường/thị trấn'),
-                                      onChanged: (Ward? newValue) {
-                                        setState(() {
-                                          _selectedWard = newValue;
-                                          _address = '';
-                                        });
-                                      },
-                                      items: _selectedDistrict!.wards
-                                          .map<DropdownMenuItem<Ward>>(
-                                            (Ward ward) =>
-                                                DropdownMenuItem<Ward>(
-                                              value: ward,
-                                              child: Text(ward.name),
-                                            ),
-                                          )
-                                          .toList(),
-                                      underline: Container(),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            TextFormField(
-                              key: _jobKey,
-                              controller: jobtownEditingController,
-                              onChanged: (val) {
-                                _job = val;
-                              },
-                              decoration: InputDecoration(
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.black),
-                                  borderRadius: BorderRadius.circular(12),
+                                    if (_selectedProvince != null)
+                                      DropdownButton<District>(
+                                        value: _selectedDistrict,
+                                        hint: Text('Chọn quận/huyện'),
+                                        onChanged: (District? newValue) {
+                                          setState(() {
+                                            _selectedDistrict = newValue;
+                                            _selectedWard = null;
+                                            _address = '';
+                                          });
+                                        },
+                                        items: _selectedProvince!.districts
+                                            .map<DropdownMenuItem<District>>(
+                                              (District district) =>
+                                                  DropdownMenuItem<District>(
+                                                value: district,
+                                                child: Text(district.name),
+                                              ),
+                                            )
+                                            .toList(),
+                                        underline: Container(),
+                                      ),
+            
+                                    // Dropdown for wards
+                                    if (_selectedDistrict != null)
+                                      DropdownButton<Ward>(
+                                        value: _selectedWard,
+                                        hint: Text('Chọn xã/phường/thị trấn'),
+                                        onChanged: (Ward? newValue) {
+                                          setState(() {
+                                            _selectedWard = newValue;
+                                            _address = '';
+                                          });
+                                        },
+                                        items: _selectedDistrict!.wards
+                                            .map<DropdownMenuItem<Ward>>(
+                                              (Ward ward) =>
+                                                  DropdownMenuItem<Ward>(
+                                                value: ward,
+                                                child: Text(ward.name),
+                                              ),
+                                            )
+                                            .toList(),
+                                        underline: Container(),
+                                      ),
+                                  ],
                                 ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      color: ColorConst.colorPrimary50),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                labelText: "Nghề nghiệp",
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                                onTap: () async {
-                                  // if (_address == '') {
-                                  //   CommonService.showToast(
-                                  //       'Nơi thường trú đang trống', context);
-                                  // } else {
-                                  //   _address =
-                                  //       '${_selectedWard?.name}, ${_selectedDistrict?.name}, ${_selectedProvince?.name}';
-                                  // }
-                                  _address =
-                                      '${_selectedWard?.name}, ${_selectedDistrict?.name}, ${_selectedProvince?.name}';
-                                  _hometown = '';
-                                  await register(
-                                      _username,
-                                      _password,
-                                      _hovaten,
-                                      DateFormat('dd/MM/yyyy').format(_date),
-                                      _address,
-                                      _hometown,
-                                      _phone,
-                                      _job);
+                              SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                key: _jobKey,
+                                controller: jobtownEditingController,
+                                onChanged: (val) {
+                                  _job = val;
                                 },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width / 3,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: ColorConst.colorPrimary50),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          'Đăng ký',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        )),
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                )),
-                          ],
-                        )
-                      ])),
-                ),
-              ],
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: ColorConst.colorPrimary50),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  labelText: "Nghề nghiệp",
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    // if (_address == '') {
+                                    //   CommonService.showToast(
+                                    //       'Nơi thường trú đang trống', context);
+                                    // } else {
+                                    //   _address =
+                                    //       '${_selectedWard?.name}, ${_selectedDistrict?.name}, ${_selectedProvince?.name}';
+                                    // }
+                                    _address =
+                                        '${_selectedWard?.name}, ${_selectedDistrict?.name}, ${_selectedProvince?.name}';
+                                    _hometown = '';
+                                    await register(
+                                        _username,
+                                        _password,
+                                        _hovaten,
+                                        DateFormat('dd/MM/yyyy')
+                                            .format(_date ?? DateTime.now()),
+                                        _address,
+                                        _hometown,
+                                        _phone,
+                                        _job);
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width / 3,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: ColorConst.colorPrimary50),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'Đăng ký',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          )),
+                                    ),
+                                  )),
+                            ],
+                          )
+                        ])),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
